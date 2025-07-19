@@ -125,7 +125,7 @@ export interface User {
   id: number;
   firstName: string;
   lastName: string;
-  roles?: ('admin' | 'user')[] | null;
+  roles?: ('admin' | 'user') | null;
   updatedAt: string;
   createdAt: string;
   email: string;

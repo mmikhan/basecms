@@ -8,7 +8,6 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   fields: [
-    // Email added by default
     {
       type: 'row',
       fields: [
@@ -27,8 +26,11 @@ export const Users: CollectionConfig = {
     {
       name: 'roles',
       type: 'select',
-      hasMany: true,
-      defaultValue: ['user'],
+      saveToJWT: true,
+      defaultValue: 'user',
+      admin: {
+        condition: (_, __, { user }) => Boolean(user),
+      },
       options: [
         {
           label: 'Admin',
@@ -39,34 +41,27 @@ export const Users: CollectionConfig = {
           value: 'user',
         },
       ],
-      admin: {
-        condition: (_, __, { user }) => Boolean(user),
-      },
       access: {
         create: isAdminFieldLevel,
         update: isAdminFieldLevel,
       },
-      saveToJWT: true,
+      hooks: {
+        beforeChange: [
+          async ({ operation, req: { payload } }) => {
+            if (operation === 'create') {
+              const users = await payload.count({
+                collection: 'users',
+              })
+
+              if (!Boolean(users.totalDocs)) {
+                return 'admin'
+              }
+
+              return 'user'
+            }
+          },
+        ],
+      },
     },
   ],
-  hooks: {
-    beforeChange: [
-      async ({ req, data, operation }) => {
-        if (operation === 'create') {
-          const users = await req.payload.find({
-            collection: 'users',
-            limit: 0,
-            depth: 0,
-          })
-
-          if (users.totalDocs === 0) {
-            // If this is the first user, assign 'admin' role
-            data.roles = ['admin']
-          }
-        }
-
-        return data
-      },
-    ],
-  },
 }
