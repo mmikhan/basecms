@@ -22,7 +22,7 @@ export default buildConfig({
     },
     autoLogin:
       process.env.NODE_ENV === 'development'
-        ? { email: 'mazedulislamkhan@gmail.com', password: 'password', prefillOnly: true }
+        ? { email: 'john@example.com', password: 'password', prefillOnly: true }
         : false,
   },
   collections: [Users, Media],
