@@ -1,4 +1,5 @@
-import { isAdminFieldLevel } from '@/access/isAdmin'
+import { admin } from '@/access/admin'
+import { adminOrSelf } from '@/access/adminOrSelf'
 import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
@@ -7,6 +8,16 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
+  access: {
+    // Only admins can create users
+    create: admin,
+    // Admins can read all, but any other logged in user can only read themselves
+    read: adminOrSelf,
+    // Admins can update all, but any other logged in user can only update themselves
+    update: adminOrSelf,
+    // Only admins can delete
+    delete: admin,
+  },
   fields: [
     {
       type: 'row',
@@ -42,8 +53,8 @@ export const Users: CollectionConfig = {
         },
       ],
       access: {
-        create: isAdminFieldLevel,
-        update: isAdminFieldLevel,
+        create: admin,
+        update: admin,
       },
       hooks: {
         beforeChange: [
