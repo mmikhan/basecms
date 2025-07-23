@@ -1,9 +1,10 @@
+import { adminOrSelf } from '@/access/adminOrSelf'
 import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-    read: () => true,
+    read: adminOrSelf,
   },
   fields: [
     {

@@ -1,3 +1,4 @@
+import { admin } from '@/access/admin'
 import { GlobalConfig } from 'payload'
 
 export const General: GlobalConfig = {
@@ -5,6 +6,10 @@ export const General: GlobalConfig = {
     group: 'Settings',
   },
   slug: 'general',
+  access: {
+    read: admin,
+    update: admin,
+  },
   fields: [
     {
       name: 'siteName',
