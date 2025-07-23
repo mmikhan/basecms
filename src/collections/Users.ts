@@ -74,5 +74,14 @@ export const Users: CollectionConfig = {
         ],
       },
     },
+    {
+      name: 'tw-test',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/components/test',
+        },
+      },
+    },
   ],
 }
