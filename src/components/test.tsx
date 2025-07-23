@@ -1,9 +1,10 @@
 import React from 'react'
+import { Button } from './ui/button'
 
 const TestField: React.FC = () => {
   return (
     <div className="test-component">
-      <h1 className="text-2xl font-bold dark:text-white">Tailwind CSS is working!</h1>
+      <Button type="button">Click Me</Button>
     </div>
   )
 }

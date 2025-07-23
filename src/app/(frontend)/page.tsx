@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
+import { Button } from '@/components/ui/button'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -29,6 +30,7 @@ export default async function HomePage() {
         </picture>
         {!user && <h1 className="text-3xl font-bold underline">Welcome to your new project.</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
+        <Button>Get Started</Button>
         <div className="links">
           <a
             className="admin"
