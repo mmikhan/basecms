@@ -1,14 +1,17 @@
-import { Icon } from './icon'
+import { cn } from '@/lib/utils'
+import Icon from './icon'
+import Link from 'next/link'
 
 interface LogoProps extends React.SVGProps<SVGSVGElement> {
   layout?: 'single' | 'double'
   subtitle?: boolean
+  className?: string
 }
 
-export const Logo = ({ layout = 'double', subtitle = false }: LogoProps) => {
+export default function Logo({ layout = 'single', subtitle = true, className }: LogoProps) {
   return (
-    <div className="flex items-center gap-4">
-      <Icon />
+    <Link href="/" className="flex items-center gap-4 no-underline">
+      <Icon className={cn('size-20', className)} />
 
       <div className="flex flex-col">
         <h1 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100 leading-tight">
@@ -28,6 +31,6 @@ export const Logo = ({ layout = 'double', subtitle = false }: LogoProps) => {
           </p>
         )}
       </div>
-    </div>
+    </Link>
   )
 }

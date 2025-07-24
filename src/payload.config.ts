@@ -24,6 +24,12 @@ export default buildConfig({
       process.env.NODE_ENV === 'development'
         ? { email: 'john@example.com', password: 'password', prefillOnly: true }
         : false,
+    components: {
+      graphics: {
+        Icon: '@/components/icon',
+        Logo: '@/components/logo',
+      },
+    },
   },
   collections: [Users, Media],
   editor: lexicalEditor(),

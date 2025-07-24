@@ -7,8 +7,8 @@ import { fileURLToPath } from 'url'
 import config from '@/payload.config'
 import './styles.css'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/icon'
-import { Logo } from '@/components/logo'
+import Icon from '@/components/icon'
+import Logo from '@/components/logo'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -32,7 +32,7 @@ export default async function HomePage() {
         </picture>
         <Logo className="size-10" layout="double" />
         <div className="flex items-center gap-4">
-          <Icon />
+          <Icon className="size-10" />
           <div className="flex flex-col">
             <h1 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100 leading-tight">
               AdMarket
