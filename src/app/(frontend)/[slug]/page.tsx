@@ -2,11 +2,19 @@ import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 import config from '@payload-config'
+import RichText from '@/components/richtext'
+import { notFound } from 'next/navigation'
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug = 'home' } = await params
 
   const page = await queryPageBySlug({ slug })
+
+  if (!page) {
+    return notFound()
+  }
+
+  const { hero } = page
 
   return (
     <div className="page">
@@ -15,6 +23,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <pre>
         <code>{JSON.stringify(page, null, 2)}</code>
       </pre>
+      {hero?.richText && <RichText lexicalData={hero.richText} />}
     </div>
   )
 }
