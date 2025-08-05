@@ -1,5 +1,6 @@
 import { admin } from '@/access/admin'
 import { anyone } from '@/access/anyone'
+import { CallToAction } from '@/blocks/CallToAction/config'
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -66,6 +67,20 @@ export const Pages: CollectionConfig = {
             },
           ],
           label: 'Hero',
+        },
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'content',
+              type: 'blocks',
+              blocks: [CallToAction],
+              required: true,
+              admin: {
+                initCollapsed: true,
+              },
+            },
+          ],
         },
       ],
     },

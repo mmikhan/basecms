@@ -2,8 +2,10 @@ import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 import config from '@payload-config'
-import RichText from '@/components/richtext'
 import { notFound } from 'next/navigation'
+import { CallToActionBlock } from '@/blocks/CallToAction/Component'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
+import RichText from '@/components/RichText'
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug = 'home' } = await params
@@ -14,16 +16,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     return notFound()
   }
 
-  const { hero } = page
+  const { hero, content } = page
 
   return (
     <div className="page">
       <h1 className="text-3xl font-bold underline">Page: {slug}</h1>
       <p>This is a dynamic page for the slug: {slug}</p>
-      <pre>
-        <code>{JSON.stringify(page, null, 2)}</code>
-      </pre>
-      {hero?.richText && <RichText lexicalData={hero.richText} />}
+      {hero?.richText && <RichText data={hero.richText} enableGutter={false} />}
+      {content && content.length > 0 && <RenderBlocks blocks={content} />}
+      <CallToActionBlock {...content[0]} />
     </div>
   )
 }

@@ -1,10 +1,20 @@
-import { DefaultNodeTypes, SerializedLinkNode } from '@payloadcms/richtext-lexical'
+import {
+  DefaultNodeTypes,
+  DefaultTypedEditorState,
+  SerializedBlockNode,
+  SerializedLinkNode,
+} from '@payloadcms/richtext-lexical'
 import {
   type JSXConvertersFunction,
   LinkJSXConverter,
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import { CallToActionBlock } from '@/blocks/CallToAction/Component'
+import { cn } from '@/lib/utils'
+
+// Extend the default node types with your custom blocks for full type safety
+type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CTABlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { relationTo, value } = linkNode.fields.doc!
@@ -25,11 +35,41 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   }
 }
 
-const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters }) => ({
+const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  blocks: {
+    cta: ({ node }: { node: SerializedBlockNode<CTABlockProps> }) => (
+      <CallToActionBlock {...node.fields} />
+    ),
+  },
 })
 
-export default function RichText({ lexicalData }: { lexicalData: SerializedEditorState }) {
-  return <ConvertRichText converters={jsxConverters} data={lexicalData} />
+type RichTextProps = {
+  data: DefaultTypedEditorState
+  enableGutter?: boolean
+  enableProse?: boolean
+} & React.HTMLAttributes<HTMLDivElement>
+
+export default function RichText({
+  className,
+  enableGutter = true,
+  enableProse = true,
+  ...rest
+}: RichTextProps) {
+  return (
+    <ConvertRichText
+      converters={jsxConverters}
+      className={cn(
+        'payload-richtext',
+        {
+          container: enableGutter,
+          'max-w-none': !enableGutter,
+          'mx-auto prose md:prose-md dark:prose-invert': enableProse,
+        },
+        className,
+      )}
+      {...rest}
+    />
+  )
 }
