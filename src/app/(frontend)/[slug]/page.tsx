@@ -6,9 +6,11 @@ import { notFound } from 'next/navigation'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import RichText from '@/components/RichText'
+import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug = 'home' } = await params
+  const { isEnabled: draft } = await draftMode()
 
   const page = await queryPageBySlug({ slug })
 
@@ -22,6 +24,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <div className="page">
       <h1 className="text-3xl font-bold underline">Page: {slug}</h1>
       <p>This is a dynamic page for the slug: {slug}</p>
+
+      {draft && <RefreshRouteOnSave />}
+
       {hero?.richText && <RichText data={hero.richText} enableGutter={false} />}
       {content && content.length > 0 && <RenderBlocks blocks={content} />}
       <CallToActionBlock {...content[0]} />

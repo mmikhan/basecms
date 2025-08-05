@@ -1,6 +1,7 @@
 import { admin } from '@/access/admin'
 import { anyone } from '@/access/anyone'
 import { CallToAction } from '@/blocks/CallToAction/config'
+import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -24,6 +25,22 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    livePreview: {
+      url: ({ data, req }) => {
+        return generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'pages',
+          req,
+        })
+      },
+    },
+    preview: (data, { req }) => {
+      return generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'pages',
+        req,
+      })
+    },
   },
   fields: [
     {
@@ -85,4 +102,8 @@ export const Pages: CollectionConfig = {
       ],
     },
   ],
+  versions: {
+    drafts: { autosave: { interval: 100 }, schedulePublish: true },
+    maxPerDoc: 50,
+  },
 }
