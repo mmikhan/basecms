@@ -4,7 +4,7 @@ export default function Icon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
-      fill="none"
+      fill="currentColor"
       className={cn('text-gray-800 dark:text-gray-200 w-full h-auto', props.className)}
     >
       <path
