@@ -1,14 +1,34 @@
 import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
-import config from '@payload-config'
+import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import RichText from '@/components/RichText'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'pages',
+    draft: false,
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+    select: {
+      slug: true,
+    },
+  })
+
+  return pages.docs
+    ?.filter(({ slug }) => slug !== 'home')
+    .map(({ slug }) => ({
+      slug,
+    }))
+}
+
+export default async function Page({ params }: { params: Promise<{ slug?: string }> }) {
   const { slug = 'home' } = await params
   const { isEnabled: draft } = await draftMode()
 
@@ -37,7 +57,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayload({ config })
+  const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'pages',
@@ -52,26 +72,5 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
     },
   })
 
-  return result.docs[0] || null
+  return result.docs?.[0] || null
 })
-
-export async function generateStaticParams() {
-  const payload = await getPayload({ config })
-
-  const pages = await payload.find({
-    collection: 'pages',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
-
-  return pages.docs
-    .filter(({ slug }) => slug !== 'home')
-    .map(({ slug }) => ({
-      slug,
-    }))
-}

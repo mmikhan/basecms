@@ -1,6 +1,8 @@
 import { admin } from '@/access/admin'
-import { anyone } from '@/access/anyone'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { CallToAction } from '@/blocks/CallToAction/config'
+import { slugField } from '@/fields/slug'
+import { populatePublishedAt } from '@/hooks/populatePublishedAt'
 import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import {
   FixedToolbarFeature,
@@ -14,7 +16,7 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   access: {
     create: admin,
-    read: anyone,
+    read: authenticatedOrPublished,
     update: admin,
     delete: admin,
   },
@@ -45,11 +47,6 @@ export const Pages: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
       type: 'text',
       required: true,
     },
@@ -101,7 +98,18 @@ export const Pages: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    ...slugField(),
   ],
+  hooks: {
+    beforeChange: [populatePublishedAt],
+  },
   versions: {
     drafts: { autosave: { interval: 100 }, schedulePublish: true },
     maxPerDoc: 50,

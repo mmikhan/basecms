@@ -134,7 +134,6 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  slug: string;
   hero?: {
     richText?: {
       root: {
@@ -153,6 +152,9 @@ export interface Page {
     } | null;
   };
   content: CallToActionBlock[];
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -398,7 +400,6 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   hero?:
     | T
     | {
@@ -409,6 +410,9 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         cta?: T | CallToActionBlockSelect<T>;
       };
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
