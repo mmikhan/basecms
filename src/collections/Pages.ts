@@ -3,6 +3,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
+import { revalidateDelete, revalidatePage } from '@/hooks/revalidatePage'
 import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import {
   FixedToolbarFeature,
@@ -109,6 +110,8 @@ export const Pages: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [populatePublishedAt],
+    afterChange: [revalidatePage],
+    afterDelete: [revalidateDelete],
   },
   versions: {
     drafts: { autosave: { interval: 100 }, schedulePublish: true },
