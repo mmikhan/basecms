@@ -2,11 +2,11 @@ import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 import configPromise from '@payload-config'
-import { notFound } from 'next/navigation'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import RichText from '@/components/RichText'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
+import { Redirects } from '@/components/Redirects'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -35,7 +35,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   const page = await queryPageBySlug({ slug })
 
   if (!page) {
-    return notFound()
+    return <Redirects url={`/${slug}`} />
   }
 
   const { hero, content } = page
@@ -44,6 +44,8 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     <div className="page">
       <h1 className="text-3xl font-bold underline">Page: {slug}</h1>
       <p>This is a dynamic page for the slug: {slug}</p>
+
+      <Redirects disableNotFound url={`/${slug}`} />
 
       {draft && <RefreshRouteOnSave />}
 
