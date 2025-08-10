@@ -153,7 +153,7 @@ export interface Page {
       [k: string]: unknown;
     } | null;
   };
-  content: CallToActionBlock[];
+  layout: CallToActionBlock[];
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -433,7 +433,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         richText?: T;
       };
-  content?:
+  layout?:
     | T
     | {
         cta?: T | CallToActionBlockSelect<T>;

@@ -87,7 +87,7 @@ export const Pages: CollectionConfig = {
           label: 'Content',
           fields: [
             {
-              name: 'content',
+              name: 'layout',
               type: 'blocks',
               blocks: [CallToAction],
               required: true,

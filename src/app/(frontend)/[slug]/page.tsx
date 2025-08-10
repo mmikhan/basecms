@@ -2,7 +2,6 @@ import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 import configPromise from '@payload-config'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import RichText from '@/components/RichText'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
@@ -38,7 +37,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     return <Redirects url={`/${slug}`} />
   }
 
-  const { hero, content } = page
+  const { hero, layout } = page
 
   return (
     <div className="page">
@@ -50,8 +49,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
       {draft && <RefreshRouteOnSave />}
 
       {hero?.richText && <RichText data={hero.richText} enableGutter={false} />}
-      {content && content.length > 0 && <RenderBlocks blocks={content} />}
-      <CallToActionBlock {...content[0]} />
+      {layout && layout.length > 0 && <RenderBlocks blocks={layout} />}
     </div>
   )
 }
