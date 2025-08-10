@@ -3,7 +3,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { CallToAction } from '@/blocks/CallToAction/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
-import { revalidateDelete, revalidatePage } from '@/hooks/revalidatePage'
+import { revalidateDelete, revalidatePage } from '@/hooks/revalidate'
 import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import {
   FixedToolbarFeature,

@@ -1,5 +1,5 @@
 import { admin } from '@/access/admin'
-import { revalidate } from '@/hooks/revalidate'
+import { revalidateCacheTag } from '@/hooks/revalidate'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { Field } from 'payload'
 
@@ -28,8 +28,8 @@ export default redirectsPlugin({
       })
     },
     hooks: {
-      afterChange: [revalidate('redirects')],
-      afterDelete: [revalidate('redirects')],
+      afterChange: [revalidateCacheTag('redirects')],
+      afterDelete: [revalidateCacheTag('redirects')],
     },
   },
 })
