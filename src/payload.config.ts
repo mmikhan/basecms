@@ -10,6 +10,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { General } from './globals/General'
 import { plugins } from './plugins'
+import { CallToAction } from './blocks/CallToAction/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,6 +54,7 @@ export default buildConfig({
       ],
     },
   },
+  blocks: [CallToAction],
   collections: [Pages, Users, Media],
   editor: lexicalEditor(),
   globals: [General],

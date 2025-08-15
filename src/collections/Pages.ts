@@ -1,6 +1,5 @@
 import { admin } from '@/access/admin'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
-import { CallToAction } from '@/blocks/CallToAction/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
 import { revalidateDelete, revalidatePage } from '@/hooks/revalidate'
@@ -89,7 +88,8 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction],
+              blockReferences: ['cta'],
+              blocks: [],
               required: true,
               admin: {
                 initCollapsed: true,
