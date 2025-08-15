@@ -9,6 +9,7 @@ import './styles.css'
 import { Button } from '@/components/ui/button'
 import Icon from '@/components/icon'
 import Logo from '@/components/logo'
+import { ModeToggle } from '@/components/mode-toggle'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -70,6 +71,7 @@ export default async function HomePage() {
           <code>app/(frontend)/page.tsx</code>
         </a>
       </div>
+      <ModeToggle />
     </div>
   )
 }

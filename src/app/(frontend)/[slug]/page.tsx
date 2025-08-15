@@ -6,6 +6,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import RichText from '@/components/RichText'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { Redirects } from '@/components/Redirects'
+import { ModeToggle } from '@/components/mode-toggle'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -50,6 +51,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
       {hero?.richText && <RichText data={hero.richText} enableGutter={false} />}
       {layout && layout.length > 0 && <RenderBlocks blocks={layout} />}
+      <ModeToggle />
     </div>
   )
 }
