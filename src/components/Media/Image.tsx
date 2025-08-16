@@ -66,7 +66,7 @@ export const ImageMedia: React.FC<MediaProps> = ({
   if (!imageSrc) return null
 
   return (
-    <picture className={cn(pictureClassName)}>
+    <picture className={cn('relative block h-full w-full', pictureClassName)}>
       <Image
         src={imageSrc}
         alt={imageAlt ?? ''}

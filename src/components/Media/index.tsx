@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { MediaProps } from './types'
 import { VideoMedia } from './Video'
 import { ImageMedia } from './Image'
+import { cn } from '@/lib/utils'
 
 export const Media: React.FC<MediaProps> = (props) => {
   const { className, htmlElement = 'div', resource } = props
@@ -13,7 +14,7 @@ export const Media: React.FC<MediaProps> = (props) => {
     <Tag
       {...(htmlElement !== null
         ? {
-            className,
+            className: cn('h-full w-full', className),
           }
         : {})}
     >
