@@ -213,7 +213,7 @@ export interface HighImpactHero {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: ('inline' | 'default' | 'destructive' | 'ghost' | 'link' | 'outline' | 'secondary') | null;
         };
         id?: string | null;
       }[]

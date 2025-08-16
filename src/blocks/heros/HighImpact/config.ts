@@ -32,7 +32,10 @@ export const HighImpactHero: Block = {
       }),
       label: false,
     },
-    linkGroup({ overrides: { maxRows: 2 } }),
+    linkGroup({
+      overrides: { maxRows: 2 },
+      appearances: ['inline', 'default', 'destructive', 'ghost', 'link', 'outline', 'secondary'],
+    }),
     {
       name: 'media',
       type: 'upload',

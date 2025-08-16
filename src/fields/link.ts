@@ -1,17 +1,8 @@
+import { buttonVariants } from '@/components/ui/button'
+import { VariantProps } from 'class-variance-authority'
 import { deepMerge, type Field, type GroupField } from 'payload'
 
-export type LinkAppearances = 'default' | 'outline'
-
-export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
-  default: {
-    label: 'Default',
-    value: 'default',
-  },
-  outline: {
-    label: 'Outline',
-    value: 'outline',
-  },
-}
+export type LinkAppearances = 'inline' | VariantProps<typeof buttonVariants>['variant']
 
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
@@ -117,11 +108,12 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
   }
 
   if (appearances !== false) {
-    let appearanceOptionsToUse = [appearanceOptions.default, appearanceOptions.outline]
-
-    if (appearances) {
-      appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance])
-    }
+    const appearanceOptionsToUse = (appearances || ['default'])
+      .filter((appearance) => !!appearance)
+      .map((appearance) => ({
+        label: appearance.charAt(0).toUpperCase() + appearance.slice(1),
+        value: appearance,
+      }))
 
     linkResult.fields.push({
       name: 'appearance',
@@ -129,7 +121,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       admin: {
         description: 'Choose how the link should be rendered.',
       },
-      defaultValue: 'default',
+      defaultValue: appearanceOptionsToUse[4]?.value,
       options: appearanceOptionsToUse,
     })
   }
