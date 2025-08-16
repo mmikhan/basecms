@@ -9,9 +9,13 @@ import {
   LinkJSXConverter,
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
-import { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import {
+  CallToActionBlock as CTABlockProps,
+  HighImpactHero as HighImpactHeroBlockProps,
+} from '@/payload-types'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/lib/utils'
+import { HighImpactHeroBlock } from '@/blocks/heros/HighImpact/Component'
 
 // Extend the default node types with your custom blocks for full type safety
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CTABlockProps>
@@ -41,6 +45,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   blocks: {
     cta: ({ node }: { node: SerializedBlockNode<CTABlockProps> }) => (
       <CallToActionBlock {...node.fields} />
+    ),
+    highImpactHero: ({ node }: { node: SerializedBlockNode<HighImpactHeroBlockProps> }) => (
+      <HighImpactHeroBlock {...node.fields} />
     ),
   },
 })

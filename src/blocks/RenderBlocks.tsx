@@ -1,30 +1,36 @@
 import { Page } from '@/payload-types'
 import { CallToActionBlock } from './CallToAction/Component'
+import { HighImpactHeroBlock } from './heros/HighImpact/Component'
 
-const blockComponents = {
-  cta: CallToActionBlock,
+type LayoutBlock = Page['layout'][number]
+type BlockType = LayoutBlock['blockType']
+
+// Map each blockType to its component with the correctly narrowed props
+type BlockComponentMap = {
+  [K in BlockType]?: React.ComponentType<Extract<LayoutBlock, { blockType: K }>>
 }
 
-export const RenderBlocks: React.FC<{ blocks: Page['layout'][number][] }> = ({ blocks }) => {
-  const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
+const blockComponents: BlockComponentMap = {
+  cta: CallToActionBlock,
+  highImpactHero: HighImpactHeroBlock,
+}
 
-  if (hasBlocks) {
-    return (
-      <>
-        {blocks.map((block, index) => {
-          const { blockType } = block
+// Generic helper preserves the specific block subtype
+function getBlockComponent<B extends LayoutBlock>(block: B) {
+  return blockComponents[block.blockType] as React.ComponentType<B> | undefined
+}
 
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+export const RenderBlocks: React.FC<{ blocks: LayoutBlock[] }> = ({ blocks }) => {
+  if (!Array.isArray(blocks) || blocks.length === 0) return null
 
-            return <Block key={index} {...block} />
-          }
+  return (
+    <>
+      {blocks.map((block, index) => {
+        const Block = getBlockComponent(block)
+        if (!Block) return null
 
-          return null
-        })}
-      </>
-    )
-  }
-
-  return null
+        return <Block key={index} {...block} />
+      })}
+    </>
+  )
 }

@@ -12,6 +12,20 @@ const nextConfig = {
 
     return webpackConfig
   },
+  images: {
+    remotePatterns: [
+      ...(process.env.NODE_ENV !== 'production'
+        ? [
+            {
+              protocol: 'http',
+              hostname: 'localhost',
+              port: '3000',
+              pathname: '/api/media/file/**',
+            },
+          ]
+        : []),
+    ],
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
