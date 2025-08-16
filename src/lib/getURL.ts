@@ -1,4 +1,8 @@
-import { CAN_USE_DOM } from '@payloadcms/richtext-lexical/client'
+export const canUseDOM = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+)
 
 export const getServerSideURL = () => {
   let url = process.env.NEXT_PUBLIC_SERVER_URL
@@ -15,7 +19,7 @@ export const getServerSideURL = () => {
 }
 
 export const getClientSideURL = () => {
-  if (CAN_USE_DOM) {
+  if (canUseDOM) {
     const protocol = window.location.protocol
     const domain = window.location.hostname
     const port = window.location.port ? `:${window.location.port}` : ''
