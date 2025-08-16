@@ -11,6 +11,7 @@ import { Media } from './collections/Media'
 import { General } from './globals/General'
 import { plugins } from './plugins'
 import { CallToAction } from './blocks/CallToAction/config'
+import { getServerSideURL } from './lib/getURL'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -59,6 +60,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   globals: [General],
   secret: process.env.PAYLOAD_SECRET || '',
+  cors: [getServerSideURL()].filter(Boolean),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
