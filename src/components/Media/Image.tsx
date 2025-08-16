@@ -39,7 +39,6 @@ export const ImageMedia: React.FC<MediaProps> = ({
   const [sizes, setSizes] = useState<string | undefined>()
 
   useEffect(() => {
-    console.log(src)
     if (!src && resource && typeof resource === 'object') {
       const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
 

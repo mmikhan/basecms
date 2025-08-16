@@ -5,9 +5,7 @@ import { type MediaProps } from './types'
 import { cn } from '@/lib/utils'
 import { getMediaUrl } from '@/lib/getURL'
 
-export const VideoMedia: React.FC<MediaProps> = (props) => {
-  const { onClick, resource, videoClassName } = props
-
+export const VideoMedia: React.FC<MediaProps> = ({ onClick, resource, videoClassName }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   // const [showFallback] = useState<boolean>()
 
