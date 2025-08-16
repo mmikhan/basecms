@@ -4,12 +4,6 @@ import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
 import { revalidateDelete, revalidatePage } from '@/hooks/revalidate'
 import { generatePreviewPath } from '@/lib/generatePreviewPath'
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
 import { CollectionConfig } from 'payload'
 
 export const Pages: CollectionConfig = {
@@ -54,40 +48,12 @@ export const Pages: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          fields: [
-            {
-              name: 'hero',
-              type: 'group',
-              label: false,
-              fields: [
-                {
-                  name: 'richText',
-                  type: 'richText',
-                  label: false,
-                  editor: lexicalEditor({
-                    features: ({ rootFeatures }) => {
-                      return [
-                        ...rootFeatures,
-                        HeadingFeature({
-                          enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-                        }),
-                        FixedToolbarFeature(),
-                        InlineToolbarFeature(),
-                      ]
-                    },
-                  }),
-                },
-              ],
-            },
-          ],
-          label: 'Hero',
-        },
-        {
           label: 'Content',
           fields: [
             {
               name: 'layout',
               type: 'blocks',
+              label: false,
               blockReferences: ['cta', 'highImpactHero'],
               blocks: [],
               required: true,

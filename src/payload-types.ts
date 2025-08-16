@@ -171,23 +171,6 @@ export interface CallToActionBlock {
 export interface Page {
   id: number;
   title: string;
-  hero?: {
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-  };
   layout: (CallToActionBlock | HighImpactHero)[];
   publishedAt?: string | null;
   slug?: string | null;
@@ -548,11 +531,6 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  hero?:
-    | T
-    | {
-        richText?: T;
-      };
   layout?: T | {};
   publishedAt?: T;
   slug?: T;

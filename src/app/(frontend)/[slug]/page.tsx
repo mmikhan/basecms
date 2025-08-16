@@ -3,7 +3,6 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 import configPromise from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import RichText from '@/components/RichText'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { Redirects } from '@/components/Redirects'
 import { ModeToggle } from '@/components/mode-toggle'
@@ -38,7 +37,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     return <Redirects url={`/${slug}`} />
   }
 
-  const { hero, layout } = page
+  const { layout } = page
 
   return (
     <div className="page">
@@ -49,7 +48,6 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
       {draft && <RefreshRouteOnSave />}
 
-      {hero?.richText && <RichText data={hero.richText} enableGutter={false} />}
       {layout && layout.length > 0 && <RenderBlocks blocks={layout} />}
       <ModeToggle />
     </div>
