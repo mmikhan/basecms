@@ -1,15 +1,11 @@
 import React from 'react'
 import './styles.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import { type Metadata } from 'next'
+import { getServerSideURL } from '@/lib/getURL'
+import { mergeOpenGraph } from '@/lib/mergeOpenGraph'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
-}
-
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
-
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
@@ -24,4 +20,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       </body>
     </html>
   )
+}
+
+export const metadata: Metadata = {
+  metadataBase: new URL(getServerSideURL()),
+  openGraph: mergeOpenGraph(),
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@mmikhan',
+  },
 }

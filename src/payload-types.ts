@@ -172,6 +172,14 @@ export interface Page {
   id: number;
   title: string;
   layout: (CallToActionBlock | HighImpactHero)[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -532,6 +540,13 @@ export interface PayloadMigration {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   layout?: T | {};
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
   publishedAt?: T;
   slug?: T;
   slugLock?: T;

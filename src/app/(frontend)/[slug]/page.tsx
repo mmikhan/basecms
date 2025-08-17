@@ -6,6 +6,8 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { Redirects } from '@/components/Redirects'
 import { ModeToggle } from '@/components/mode-toggle'
+import { type Metadata } from 'next'
+import { generateMeta } from '@/lib/generateMeta'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -27,7 +29,11 @@ export async function generateStaticParams() {
     }))
 }
 
-export default async function Page({ params }: { params: Promise<{ slug?: string }> }) {
+type PageProps = {
+  params: Promise<{ slug?: string }>
+}
+
+export default async function Page({ params }: PageProps) {
   const { slug = 'home' } = await params
   const { isEnabled: draft } = await draftMode()
 
@@ -74,3 +80,13 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
 
   return result.docs?.[0] || null
 })
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug = 'home' } = await params
+
+  const page = await queryPageBySlug({
+    slug,
+  })
+
+  return generateMeta({ doc: page })
+}
