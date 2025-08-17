@@ -1,5 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { defaultLexical } from './fields/defaultLexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -58,7 +58,7 @@ export default buildConfig({
   },
   blocks: [CallToAction, HighImpactHero],
   collections: [Pages, Users, Media],
-  editor: lexicalEditor(),
+  editor: defaultLexical,
   globals: [General],
   secret: process.env.PAYLOAD_SECRET || '',
   cors: [getServerSideURL()].filter(Boolean),
