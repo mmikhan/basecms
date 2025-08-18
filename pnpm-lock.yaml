@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@payloadcms/admin-bar':
+        specifier: 3.49.0
+        version: 3.49.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@payloadcms/db-postgres':
         specifier: 3.49.0
         version: 3.49.0(payload@3.49.0(graphql@16.11.0)(typescript@5.8.3))
@@ -1362,6 +1365,12 @@ packages:
   '@nolyfill/is-core-module@1.0.39':
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
+
+  '@payloadcms/admin-bar@3.49.0':
+    resolution: {integrity: sha512-PPSmKUtiJu+dMG7z9yNp2mVWkxweeeWjk359FG2B/P9LZ26/QWOSjgdmhu111Ry7cdyli8UlXdUSfYF2d2zkXw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   '@payloadcms/db-postgres@3.49.0':
     resolution: {integrity: sha512-FNMyzDu/Z4UMDXpro6U7S1+hB+Qae8wC9jUo4riTLEuOI1z3zumksww8mkn9x/pHjqH1oIUk640Gg4nDEYfGWw==}
@@ -6568,6 +6577,11 @@ snapshots:
       fastq: 1.19.1
 
   '@nolyfill/is-core-module@1.0.39': {}
+
+  '@payloadcms/admin-bar@3.49.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   '@payloadcms/db-postgres@3.49.0(payload@3.49.0(graphql@16.11.0)(typescript@5.8.3))':
     dependencies:
