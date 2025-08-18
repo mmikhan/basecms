@@ -61,7 +61,7 @@ export const Pages: CollectionConfig = {
               name: 'layout',
               type: 'blocks',
               label: false,
-              blockReferences: ['cta', 'highImpactHero'],
+              blockReferences: ['cta', 'highImpactHero', 'mediumImpactHero'],
               blocks: [],
               required: true,
               admin: {

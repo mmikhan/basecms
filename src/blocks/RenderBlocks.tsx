@@ -1,6 +1,7 @@
 import { Page } from '@/payload-types'
 import { CallToActionBlock } from './CallToAction/Component'
 import { HighImpactHeroBlock } from './heros/HighImpact/Component'
+import { MediumImpactHeroBlock } from './heros/MediumImpact/Component'
 
 type LayoutBlock = Page['layout'][number]
 type BlockType = LayoutBlock['blockType']
@@ -13,6 +14,7 @@ type BlockComponentMap = {
 const blockComponents: BlockComponentMap = {
   cta: CallToActionBlock,
   highImpactHero: HighImpactHeroBlock,
+  mediumImpactHero: MediumImpactHeroBlock,
 }
 
 // Generic helper preserves the specific block subtype

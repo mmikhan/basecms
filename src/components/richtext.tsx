@@ -12,10 +12,12 @@ import {
 import {
   CallToActionBlock as CTABlockProps,
   HighImpactHero as HighImpactHeroBlockProps,
+  MediumImpactHero as MediumImpactHeroBlockProps,
 } from '@/payload-types'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/lib/utils'
 import { HighImpactHeroBlock } from '@/blocks/heros/HighImpact/Component'
+import { MediumImpactHeroBlock } from '@/blocks/heros/MediumImpact/Component'
 
 // Extend the default node types with your custom blocks for full type safety
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CTABlockProps>
@@ -48,6 +50,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     highImpactHero: ({ node }: { node: SerializedBlockNode<HighImpactHeroBlockProps> }) => (
       <HighImpactHeroBlock {...node.fields} />
+    ),
+    mediumImpactHero: ({ node }: { node: SerializedBlockNode<MediumImpactHeroBlockProps> }) => (
+      <MediumImpactHeroBlock {...node.fields} />
     ),
   },
 })
