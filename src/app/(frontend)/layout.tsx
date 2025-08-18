@@ -8,7 +8,7 @@ import { mergeOpenGraph } from '@/lib/mergeOpenGraph'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className="min-h-[100vh] flex flex-col">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
