@@ -17,6 +17,7 @@ import { getServerSideURL } from './lib/getURL'
 import { LowImpactHero } from './blocks/heros/LowImpact/config'
 import { Content } from './blocks/Content/config'
 import { MediaBlock } from './blocks/MediaBlock/config'
+import { Code } from './blocks/Code/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -60,7 +61,15 @@ export default buildConfig({
       ],
     },
   },
-  blocks: [CallToAction, HighImpactHero, MediumImpactHero, LowImpactHero, Content, MediaBlock],
+  blocks: [
+    CallToAction,
+    HighImpactHero,
+    MediumImpactHero,
+    LowImpactHero,
+    Content,
+    MediaBlock,
+    Code,
+  ],
   collections: [Pages, Users, Media],
   editor: defaultLexical,
   globals: [General],

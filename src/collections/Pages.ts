@@ -68,6 +68,7 @@ export const Pages: CollectionConfig = {
                 'lowImpactHero',
                 'content',
                 'mediaBlock',
+                'code',
               ],
               blocks: [],
               required: true,

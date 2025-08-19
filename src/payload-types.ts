@@ -72,6 +72,7 @@ export interface Config {
     lowImpactHero: LowImpactHero;
     content: ContentBlock;
     mediaBlock: MediaBlock;
+    code: CodeBlock;
   };
   collections: {
     pages: Page;
@@ -186,7 +187,15 @@ export interface CallToActionBlock {
 export interface Page {
   id: number;
   title: string;
-  layout: (CallToActionBlock | HighImpactHero | MediumImpactHero | LowImpactHero | ContentBlock | MediaBlock)[];
+  layout: (
+    | CallToActionBlock
+    | HighImpactHero
+    | MediumImpactHero
+    | LowImpactHero
+    | ContentBlock
+    | MediaBlock
+    | CodeBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -479,6 +488,17 @@ export interface MediaBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeBlock".
+ */
+export interface CodeBlock {
+  language?: ('typescript' | 'javascript' | 'python' | 'java' | 'cpp') | null;
+  code: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
