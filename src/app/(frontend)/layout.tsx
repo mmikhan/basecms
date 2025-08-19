@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           disableTransitionOnChange
         >
           <AdminBar adminBarProps={{ preview: isEnabled }} />
-          <main>{children}</main>
+          {children}
         </ThemeProvider>
       </body>
     </html>

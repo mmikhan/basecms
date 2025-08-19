@@ -70,6 +70,7 @@ export interface Config {
     highImpactHero: HighImpactHero;
     mediumImpactHero: MediumImpactHero;
     lowImpactHero: LowImpactHero;
+    content: ContentBlock;
   };
   collections: {
     pages: Page;
@@ -184,7 +185,7 @@ export interface CallToActionBlock {
 export interface Page {
   id: number;
   title: string;
-  layout: (CallToActionBlock | HighImpactHero | MediumImpactHero | LowImpactHero)[];
+  layout: (CallToActionBlock | HighImpactHero | MediumImpactHero | LowImpactHero | ContentBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -422,6 +423,51 @@ export interface LowImpactHero {
   id?: string | null;
   blockName?: string | null;
   blockType: 'lowImpactHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlock".
+ */
+export interface ContentBlock {
+  columns?:
+    | {
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: 'default' | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
