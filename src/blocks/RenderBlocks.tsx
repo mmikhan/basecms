@@ -33,7 +33,11 @@ export const RenderBlocks: React.FC<{ blocks: LayoutBlock[] }> = ({ blocks }) =>
         const Block = getBlockComponent(block)
         if (!Block) return null
 
-        return <Block key={index} {...block} />
+        return (
+          <div className="my-16" key={index}>
+            <Block {...block} />
+          </div>
+        )
       })}
     </>
   )

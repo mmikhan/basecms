@@ -1,3 +1,4 @@
+import { linkGroup } from '@/fields/linkGroup'
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -8,6 +9,9 @@ import { Block } from 'payload'
 
 export const CallToAction: Block = {
   slug: 'cta',
+  admin: {
+    group: 'Call to Action',
+  },
   labels: {
     singular: 'Call to Action',
     plural: 'Calls to Action',
@@ -28,20 +32,9 @@ export const CallToAction: Block = {
         },
       }),
     },
-    {
-      name: 'link',
-      type: 'relationship',
-      relationTo: 'pages',
-      admin: {
-        description: 'Link to a page',
-      },
-    },
-    {
-      name: 'buttonText',
-      type: 'text',
-      admin: {
-        description: 'Text for the call to action button',
-      },
-    },
+    linkGroup({
+      overrides: { maxRows: 2 },
+      appearances: ['inline', 'default', 'destructive', 'ghost', 'link', 'outline', 'secondary'],
+    }),
   ],
 }

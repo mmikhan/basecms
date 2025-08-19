@@ -154,14 +154,25 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * Link to a page
-   */
-  link?: (number | null) | Page;
-  /**
-   * Text for the call to action button
-   */
-  buttonText?: string | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('inline' | 'default' | 'destructive' | 'ghost' | 'link' | 'outline' | 'secondary') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
