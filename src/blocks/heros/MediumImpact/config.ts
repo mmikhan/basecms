@@ -9,6 +9,9 @@ import { Block } from 'payload'
 
 export const MediumImpactHero: Block = {
   slug: 'mediumImpactHero',
+  admin: {
+    group: 'Hero',
+  },
   labels: {
     singular: 'Medium Impact Hero',
     plural: 'Medium Impact Heroes',
