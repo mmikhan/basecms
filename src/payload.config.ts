@@ -14,6 +14,7 @@ import { CallToAction } from './blocks/CallToAction/config'
 import { HighImpactHero } from './blocks/heros/HighImpact/config'
 import { MediumImpactHero } from './blocks/heros/MediumImpact/config'
 import { getServerSideURL } from './lib/getURL'
+import { LowImpactHero } from './blocks/heros/LowImpact/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -57,7 +58,7 @@ export default buildConfig({
       ],
     },
   },
-  blocks: [CallToAction, HighImpactHero, MediumImpactHero],
+  blocks: [CallToAction, HighImpactHero, MediumImpactHero, LowImpactHero],
   collections: [Pages, Users, Media],
   editor: defaultLexical,
   globals: [General],

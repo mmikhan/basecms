@@ -69,6 +69,7 @@ export interface Config {
     cta: CallToActionBlock;
     highImpactHero: HighImpactHero;
     mediumImpactHero: MediumImpactHero;
+    lowImpactHero: LowImpactHero;
   };
   collections: {
     pages: Page;
@@ -172,7 +173,7 @@ export interface CallToActionBlock {
 export interface Page {
   id: number;
   title: string;
-  layout: (CallToActionBlock | HighImpactHero | MediumImpactHero)[];
+  layout: (CallToActionBlock | HighImpactHero | MediumImpactHero | LowImpactHero)[];
   meta?: {
     title?: string | null;
     /**
@@ -367,6 +368,49 @@ export interface MediumImpactHero {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediumImpactHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LowImpactHero".
+ */
+export interface LowImpactHero {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('inline' | 'default' | 'destructive' | 'ghost' | 'link' | 'outline' | 'secondary') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'lowImpactHero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
