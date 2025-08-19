@@ -69,6 +69,7 @@ export const Pages: CollectionConfig = {
                 'content',
                 'mediaBlock',
                 'code',
+                'banner',
               ],
               blocks: [],
               required: true,

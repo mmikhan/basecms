@@ -73,6 +73,7 @@ export interface Config {
     content: ContentBlock;
     mediaBlock: MediaBlock;
     code: CodeBlock;
+    banner: BannerBlock;
   };
   collections: {
     pages: Page;
@@ -195,6 +196,7 @@ export interface Page {
     | ContentBlock
     | MediaBlock
     | CodeBlock
+    | BannerBlock
   )[];
   meta?: {
     title?: string | null;
@@ -499,6 +501,31 @@ export interface CodeBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'code';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerBlock".
+ */
+export interface BannerBlock {
+  style: 'info' | 'warning' | 'error' | 'success';
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'banner';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
