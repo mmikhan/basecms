@@ -71,6 +71,7 @@ export interface Config {
     mediumImpactHero: MediumImpactHero;
     lowImpactHero: LowImpactHero;
     content: ContentBlock;
+    mediaBlock: MediaBlock;
   };
   collections: {
     pages: Page;
@@ -185,7 +186,7 @@ export interface CallToActionBlock {
 export interface Page {
   id: number;
   title: string;
-  layout: (CallToActionBlock | HighImpactHero | MediumImpactHero | LowImpactHero | ContentBlock)[];
+  layout: (CallToActionBlock | HighImpactHero | MediumImpactHero | LowImpactHero | ContentBlock | MediaBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -468,6 +469,16 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

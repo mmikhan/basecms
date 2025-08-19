@@ -4,6 +4,7 @@ import { HighImpactHeroBlock } from './heros/HighImpact/Component'
 import { MediumImpactHeroBlock } from './heros/MediumImpact/Component'
 import { LowImpactHeroBlock } from './heros/LowImpact/Component'
 import { ContentBlock } from './Content/Component'
+import { MediaBlock } from './MediaBlock/Component'
 
 type LayoutBlock = Page['layout'][number]
 type BlockType = LayoutBlock['blockType']
@@ -19,6 +20,7 @@ const blockComponents: BlockComponentMap = {
   mediumImpactHero: MediumImpactHeroBlock,
   lowImpactHero: LowImpactHeroBlock,
   content: ContentBlock,
+  mediaBlock: MediaBlock,
 }
 
 // Generic helper preserves the specific block subtype
