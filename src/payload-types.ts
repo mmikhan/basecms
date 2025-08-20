@@ -200,6 +200,7 @@ export interface Page {
     | MediaBlock
     | CodeBlock
     | BannerBlock
+    | NavBlock
   )[];
   meta?: {
     title?: string | null;
