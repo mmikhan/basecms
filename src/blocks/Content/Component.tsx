@@ -5,11 +5,11 @@ import RichText from '@/components/RichText'
 import type { ContentBlock as ContentBlockProps } from '@/payload-types'
 
 export const ContentBlock: React.FC<ContentBlockProps> = ({ columns }) => {
-  const colsSpanClasses = {
-    full: '12',
-    half: '6',
-    oneThird: '4',
-    twoThirds: '8',
+  const sizeClasses = {
+    full: 'md:col-span-4 lg:col-span-12',
+    half: 'md:col-span-2 lg:col-span-6',
+    oneThird: 'md:col-span-4 lg:col-span-4',
+    twoThirds: 'md:col-span-4 lg:col-span-8',
   }
 
   return (
@@ -19,12 +19,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = ({ columns }) => {
           columns.length > 0 &&
           columns.map(({ enableLink, link, richText, size }, index) => {
             return (
-              <div
-                className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
-                  'md:col-span-2': size !== 'full',
-                })}
-                key={index}
-              >
+              <div className={cn('col-span-4', size ? sizeClasses[size] : '')} key={index}>
                 {richText && <RichText data={richText} enableGutter={false} />}
 
                 {enableLink && <CMSLink {...link} />}
