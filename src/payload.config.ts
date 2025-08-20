@@ -19,6 +19,8 @@ import { Content } from './blocks/Content/config'
 import { MediaBlock } from './blocks/MediaBlock/config'
 import { Code } from './blocks/Code/config'
 import { Banner } from './blocks/Banner/config'
+import { Header } from './globals/Header/config'
+import { Nav } from './blocks/Nav/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -71,10 +73,11 @@ export default buildConfig({
     MediaBlock,
     Code,
     Banner,
+    Nav,
   ],
   collections: [Pages, Users, Media],
   editor: defaultLexical,
-  globals: [General],
+  globals: [General, Header],
   secret: process.env.PAYLOAD_SECRET || '',
   cors: [getServerSideURL()].filter(Boolean),
   typescript: {

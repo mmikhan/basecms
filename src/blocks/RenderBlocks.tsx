@@ -1,4 +1,4 @@
-import { Page } from '@/payload-types'
+import { Header, Page } from '@/payload-types'
 import { CallToActionBlock } from './CallToAction/Component'
 import { HighImpactHeroBlock } from './heros/HighImpact/Component'
 import { MediumImpactHeroBlock } from './heros/MediumImpact/Component'
@@ -7,8 +7,9 @@ import { ContentBlock } from './Content/Component'
 import { MediaBlock } from './MediaBlock/Component'
 import { CodeBlock } from './Code/Component'
 import { BannerBlock } from './Banner/Component'
+import { NavBlock } from './Nav/Component'
 
-type LayoutBlock = Page['layout'][number]
+type LayoutBlock = Page['layout'][number] | Header['layout'][number]
 type BlockType = LayoutBlock['blockType']
 
 // Map each blockType to its component with the correctly narrowed props
@@ -25,6 +26,7 @@ const blockComponents: BlockComponentMap = {
   mediaBlock: MediaBlock,
   code: CodeBlock,
   banner: BannerBlock,
+  nav: NavBlock,
 }
 
 // Generic helper preserves the specific block subtype
@@ -41,11 +43,7 @@ export const RenderBlocks: React.FC<{ blocks: LayoutBlock[] }> = ({ blocks }) =>
         const Block = getBlockComponent(block)
         if (!Block) return null
 
-        return (
-          <div className="my-16" key={index}>
-            <Block {...block} />
-          </div>
-        )
+        return <Block key={index} {...block} />
       })}
     </>
   )

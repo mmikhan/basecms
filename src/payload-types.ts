@@ -74,6 +74,7 @@ export interface Config {
     mediaBlock: MediaBlock;
     code: CodeBlock;
     banner: BannerBlock;
+    nav: NavBlock;
   };
   collections: {
     pages: Page;
@@ -101,9 +102,11 @@ export interface Config {
   };
   globals: {
     general: General;
+    header: Header;
   };
   globalsSelect: {
     general: GeneralSelect<false> | GeneralSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
   };
   locale: null;
   user: User & {
@@ -526,6 +529,35 @@ export interface BannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NavBlock".
+ */
+export interface NavBlock {
+  media?: (number | null) | Media;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'destructive' | 'ghost' | 'link' | 'outline' | 'secondary') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nav';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -981,6 +1013,16 @@ export interface General {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  layout: (NavBlock | CallToActionBlock)[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "general_select".
  */
 export interface GeneralSelect<T extends boolean = true> {
@@ -995,6 +1037,16 @@ export interface GeneralSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  layout?: T | {};
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -46,17 +46,14 @@ export default async function Page({ params }: PageProps) {
   const { layout } = page
 
   return (
-    <div className="pt-16 pb-24">
-      <h1 className="text-3xl font-bold underline">Page: {slug}</h1>
-      <p>This is a dynamic page for the slug: {slug}</p>
-
+    <>
       <Redirects disableNotFound url={`/${slug}`} />
 
       {draft && <RefreshRouteOnSave />}
 
       {layout && layout.length > 0 && <RenderBlocks blocks={layout} />}
       <ModeToggle />
-    </div>
+    </>
   )
 }
 

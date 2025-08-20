@@ -10,7 +10,7 @@ export const MediumImpactHeroBlock: React.FC<MediumImpactHeroProps> = ({
   richText,
 }) => {
   return (
-    <div className="mx-auto container">
+    <div className="mx-auto container my-16">
       {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
 
       {Array.isArray(links) && links.length > 0 && (

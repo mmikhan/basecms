@@ -5,7 +5,7 @@ import { CMSLink } from '@/components/Link'
 
 export const LowImpactHeroBlock: React.FC<LowImpactHeroProps> = ({ links, richText }) => {
   return (
-    <div className="container mx-auto mt-16">
+    <div className="container mx-auto my-16">
       <div className="max-w-[48rem]">
         {richText && <RichText data={richText} enableGutter={false} />}
         {Array.isArray(links) && links.length > 0 && (
