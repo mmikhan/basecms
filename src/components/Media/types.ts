@@ -16,6 +16,6 @@ export interface MediaProps {
   ref?: Ref<HTMLImageElement | HTMLVideoElement | null>
   resource?: MediaType | string | number | null // for Payload media
   size?: string // for NextImage only
-  src?: StaticImageData // for static media
+  src?: StaticImageData | string // for static media
   videoClassName?: string
 }
