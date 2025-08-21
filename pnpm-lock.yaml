@@ -23,6 +23,9 @@ importers:
       '@payloadcms/payload-cloud':
         specifier: 3.49.0
         version: 3.49.0(payload@3.49.0(graphql@16.11.0)(typescript@5.8.3))
+      '@payloadcms/plugin-nested-docs':
+        specifier: 3.49.0
+        version: 3.49.0(payload@3.49.0(graphql@16.11.0)(typescript@5.8.3))
       '@payloadcms/plugin-redirects':
         specifier: 3.49.0
         version: 3.49.0(payload@3.49.0(graphql@16.11.0)(typescript@5.8.3))
@@ -1417,6 +1420,11 @@ packages:
 
   '@payloadcms/payload-cloud@3.49.0':
     resolution: {integrity: sha512-0bwuB19K6yA2n/iCYx5EFonEz2KGl1F6+zpCLtW4rzGZCV5ircN+vpTwuopnF/QXoCNNz0j2rsy1VhkNoONn2A==}
+    peerDependencies:
+      payload: 3.49.0
+
+  '@payloadcms/plugin-nested-docs@3.49.0':
+    resolution: {integrity: sha512-PbPRXiGPFlIT1CWHwfjIhvaEI9iErDLaxP2w6SxOtp2/fgQkpzbIDOheV8aDeuWOG05o0kZD+57wLqV7F8ftvQ==}
     peerDependencies:
       payload: 3.49.0
 
@@ -6741,6 +6749,10 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
       - encoding
+
+  '@payloadcms/plugin-nested-docs@3.49.0(payload@3.49.0(graphql@16.11.0)(typescript@5.8.3))':
+    dependencies:
+      payload: 3.49.0(graphql@16.11.0)(typescript@5.8.3)
 
   '@payloadcms/plugin-redirects@3.49.0(payload@3.49.0(graphql@16.11.0)(typescript@5.8.3))':
     dependencies:
