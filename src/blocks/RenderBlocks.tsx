@@ -8,6 +8,7 @@ import { MediaBlock } from './MediaBlock/Component'
 import { CodeBlock } from './Code/Component'
 import { BannerBlock } from './Banner/Component'
 import { NavBlock } from './Nav/Component'
+import { FooterBlockComponent } from './Footer/Component'
 
 type LayoutBlock = Page['layout'][number] | Header['layout'][number]
 type BlockType = LayoutBlock['blockType']
@@ -27,6 +28,7 @@ const blockComponents: BlockComponentMap = {
   code: CodeBlock,
   banner: BannerBlock,
   nav: NavBlock,
+  footerBlock: FooterBlockComponent,
 }
 
 // Generic helper preserves the specific block subtype

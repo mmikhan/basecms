@@ -16,6 +16,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { LinkFeatureClient as LinkFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { HeadingFeatureClient as HeadingFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { RowLabel as RowLabel_15b9a265c57b2abb242056abe705e4e2 } from '@/blocks/Nav/RowLabel'
+import { RowLabel as RowLabel_ce698ab5cac73f267bae9753933f20cc } from '@/blocks/Footer/RowLabel'
 import { default as default_f8022cf35b3d492829ec1a405bd134e9 } from '@/components/icon'
 import { default as default_7a89b5675912f3f4f82dd41bbb03d52e } from '@/components/logo'
 
@@ -38,6 +39,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#LinkFeatureClient": LinkFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#HeadingFeatureClient": HeadingFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/blocks/Nav/RowLabel#RowLabel": RowLabel_15b9a265c57b2abb242056abe705e4e2,
+  "@/blocks/Footer/RowLabel#RowLabel": RowLabel_ce698ab5cac73f267bae9753933f20cc,
   "@/components/icon#default": default_f8022cf35b3d492829ec1a405bd134e9,
   "@/components/logo#default": default_7a89b5675912f3f4f82dd41bbb03d52e
 }

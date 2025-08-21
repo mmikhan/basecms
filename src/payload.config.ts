@@ -21,6 +21,8 @@ import { Code } from './blocks/Code/config'
 import { Banner } from './blocks/Banner/config'
 import { Header } from './globals/Header'
 import { Nav } from './blocks/Nav/config'
+import { FooterBlock } from './blocks/Footer/config'
+import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -74,10 +76,11 @@ export default buildConfig({
     Code,
     Banner,
     Nav,
+    FooterBlock,
   ],
   collections: [Pages, Users, Media],
   editor: defaultLexical,
-  globals: [General, Header],
+  globals: [General, Header, Footer],
   secret: process.env.PAYLOAD_SECRET || '',
   cors: [getServerSideURL()].filter(Boolean),
   typescript: {

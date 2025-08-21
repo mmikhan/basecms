@@ -5,7 +5,6 @@ import configPromise from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { Redirects } from '@/components/Redirects'
-import { ModeToggle } from '@/components/mode-toggle'
 import { type Metadata } from 'next'
 import { generateMeta } from '@/lib/generateMeta'
 
@@ -52,7 +51,6 @@ export default async function Page({ params }: PageProps) {
       {draft && <RefreshRouteOnSave />}
 
       {layout && layout.length > 0 && <RenderBlocks blocks={layout} />}
-      <ModeToggle />
     </>
   )
 }

@@ -75,6 +75,7 @@ export interface Config {
     code: CodeBlock;
     banner: BannerBlock;
     nav: NavBlock;
+    footerBlock: FooterBlock;
   };
   collections: {
     pages: Page;
@@ -103,10 +104,12 @@ export interface Config {
   globals: {
     general: General;
     header: Header;
+    footer: Footer;
   };
   globalsSelect: {
     general: GeneralSelect<false> | GeneralSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   user: User & {
@@ -201,6 +204,7 @@ export interface Page {
     | CodeBlock
     | BannerBlock
     | NavBlock
+    | FooterBlock
   )[];
   meta?: {
     title?: string | null;
@@ -559,6 +563,35 @@ export interface NavBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'nav';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FooterBlock".
+ */
+export interface FooterBlock {
+  media?: (number | null) | Media;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'destructive' | 'ghost' | 'link' | 'outline' | 'secondary') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'footerBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1024,6 +1057,16 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  layout: FooterBlock[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "general_select".
  */
 export interface GeneralSelect<T extends boolean = true> {
@@ -1047,6 +1090,16 @@ export interface GeneralSelect<T extends boolean = true> {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  layout?: T | {};
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
   layout?: T | {};
   updatedAt?: T;
   createdAt?: T;

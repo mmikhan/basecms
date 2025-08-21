@@ -7,14 +7,15 @@ import { mergeOpenGraph } from '@/lib/mergeOpenGraph'
 import { AdminBar } from '@/components/AdminBar'
 import { draftMode } from 'next/headers'
 import configPromise from '@payload-config'
-import { Config, Header } from '@/payload-types'
+import type { Config, Footer, Header } from '@/payload-types'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
-  const { layout } = (await getCachedGlobal('header', 1)()) as Header
+  const { layout: headerLayout } = (await getCachedGlobal('header', 1)()) as Header
+  const { layout: footerLayout } = (await getCachedGlobal('footer', 1)()) as Footer
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -26,8 +27,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           disableTransitionOnChange
         >
           <AdminBar adminBarProps={{ preview: isEnabled }} />
-          <RenderBlocks blocks={layout} />
+          <RenderBlocks blocks={headerLayout} />
           {children}
+          <RenderBlocks blocks={footerLayout} />
         </ThemeProvider>
       </body>
     </html>

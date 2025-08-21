@@ -71,6 +71,7 @@ export const Pages: CollectionConfig = {
                 'code',
                 'banner',
                 'nav',
+                'footerBlock',
               ],
               blocks: [],
               required: true,
