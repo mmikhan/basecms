@@ -23,6 +23,7 @@ import { Header } from './globals/Header'
 import { Nav } from './blocks/Nav/config'
 import { FooterBlock } from './blocks/Footer/config'
 import { Footer } from './globals/Footer'
+import { Categories } from './collections/Categories'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -78,7 +79,7 @@ export default buildConfig({
     Nav,
     FooterBlock,
   ],
-  collections: [Pages, Users, Media],
+  collections: [Pages, Users, Media, Categories],
   editor: defaultLexical,
   globals: [General, Header, Footer],
   secret: process.env.PAYLOAD_SECRET || '',
