@@ -17,7 +17,7 @@ export const Header: GlobalConfig = {
       name: 'layout',
       type: 'blocks',
       label: false,
-      blockReferences: ['nav', 'cta'],
+      blockReferences: ['nav'],
       blocks: [],
       required: true,
       admin: {

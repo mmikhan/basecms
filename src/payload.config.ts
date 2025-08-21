@@ -19,7 +19,7 @@ import { Content } from './blocks/Content/config'
 import { MediaBlock } from './blocks/MediaBlock/config'
 import { Code } from './blocks/Code/config'
 import { Banner } from './blocks/Banner/config'
-import { Header } from './globals/Header/config'
+import { Header } from './globals/Header'
 import { Nav } from './blocks/Nav/config'
 
 const filename = fileURLToPath(import.meta.url)

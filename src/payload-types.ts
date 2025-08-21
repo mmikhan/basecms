@@ -1018,7 +1018,7 @@ export interface General {
  */
 export interface Header {
   id: number;
-  layout: (NavBlock | CallToActionBlock)[];
+  layout: NavBlock[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
