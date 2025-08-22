@@ -47,6 +47,7 @@ export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post> =
 
     revalidatePath(path)
     revalidateTag(sitemapTag)
+    revalidateTag(collection.slug)
   }
 
   // Revalidate the old path when a document is unpublished
@@ -57,6 +58,7 @@ export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post> =
 
     revalidatePath(oldPath)
     revalidateTag(sitemapTag)
+    revalidateTag(collection.slug)
   }
 
   return doc
@@ -72,6 +74,7 @@ export const revalidatePathAfterDelete: CollectionAfterDeleteHook<Page | Post> =
 
     revalidatePath(path)
     revalidateTag(`${collection.slug}-sitemap`)
+    revalidateTag(collection.slug)
   }
 
   return doc

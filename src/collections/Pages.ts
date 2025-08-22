@@ -2,20 +2,9 @@ import { admin } from '@/access/admin'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populate'
-import {
-  revalidateCacheTag,
-  revalidatePathAfterChange,
-  revalidatePathAfterDelete,
-} from '@/hooks/revalidate'
+import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
 import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import { CollectionConfig } from 'payload'
-import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
 import { seoFields } from '@/fields/seo'
 
 export const Pages: CollectionConfig = {
