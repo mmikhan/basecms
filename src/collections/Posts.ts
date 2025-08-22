@@ -1,5 +1,6 @@
 import { admin } from '@/access/admin'
 import { anyone } from '@/access/anyone'
+import { seoFields } from '@/fields/seo'
 import { slugField } from '@/fields/slug'
 import { populateAuthors } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
@@ -118,6 +119,7 @@ export const Posts: CollectionConfig = {
             },
           ],
         },
+        seoFields,
       ],
     },
     {
