@@ -1,6 +1,8 @@
 import { admin } from '@/access/admin'
 import { anyone } from '@/access/anyone'
 import { slugField } from '@/fields/slug'
+import { populateAuthors } from '@/hooks/populate'
+import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
 import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import {
   BlocksFeature,
@@ -149,8 +151,37 @@ export const Posts: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    // This field is only used to populate the user data via the `populateAuthors` hook
+    // This is because the `user` collection has access control locked to protect user privacy
+    // GraphQL will also not return mutated user data that differs from the underlying schema
+    {
+      name: 'populatedAuthors',
+      type: 'array',
+      access: {
+        update: () => false,
+      },
+      admin: {
+        disabled: true,
+        readOnly: true,
+      },
+      fields: [
+        {
+          name: 'id',
+          type: 'text',
+        },
+        {
+          name: 'name',
+          type: 'text',
+        },
+      ],
+    },
     ...slugField(),
   ],
+  hooks: {
+    afterRead: [populateAuthors],
+    afterChange: [revalidatePathAfterChange],
+    afterDelete: [revalidatePathAfterDelete],
+  },
   versions: {
     drafts: {
       autosave: {

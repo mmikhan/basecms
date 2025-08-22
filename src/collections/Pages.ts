@@ -1,8 +1,12 @@
 import { admin } from '@/access/admin'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
-import { populatePublishedAt } from '@/hooks/populatePublishedAt'
-import { revalidateDelete, revalidatePage } from '@/hooks/revalidate'
+import { populatePublishedAt } from '@/hooks/populate'
+import {
+  revalidateCacheTag,
+  revalidatePathAfterChange,
+  revalidatePathAfterDelete,
+} from '@/hooks/revalidate'
 import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import { CollectionConfig } from 'payload'
 import {
@@ -121,8 +125,8 @@ export const Pages: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [populatePublishedAt],
-    afterChange: [revalidatePage],
-    afterDelete: [revalidateDelete],
+    afterChange: [revalidatePathAfterChange],
+    afterDelete: [revalidatePathAfterDelete],
   },
   versions: {
     drafts: { autosave: { interval: 100 }, schedulePublish: true },

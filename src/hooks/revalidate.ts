@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, PayloadRequest } from 'payload'
 import { revalidatePath, revalidateTag } from 'next/cache'
-import { Page } from '@/payload-types'
+import type { Page, Post } from '@/payload-types'
 
 export const revalidateCacheTag =
   (tag: string) =>
@@ -12,40 +12,66 @@ export const revalidateCacheTag =
     return doc
   }
 
-export const revalidatePage: CollectionAfterChangeHook<Page> = ({
+/**
+ * Constructs the correct path for a document based on its collection slug.
+ * @param collectionSlug - The slug of the collection (e.g., 'pages', 'posts').
+ * @param docSlug - The slug of the document.
+ * @returns The revalidation-ready path (e.g., '/', '/about-us', '/posts/my-post').
+ */
+export const getPath = (collectionSlug: string, docSlug: string): string => {
+  switch (collectionSlug) {
+    case 'pages':
+      return docSlug === 'home' ? '/' : `/${docSlug}`
+    default:
+      return `/${collectionSlug}/${docSlug}`
+  }
+}
+
+export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post> = ({
   doc,
   previousDoc,
+  collection,
   req: { payload, context },
 }) => {
-  if (!context.disableRevalidate) {
-    if (doc._status === 'published') {
-      const path = doc.slug === 'home' ? '/' : `/${doc.slug}`
-
-      payload.logger.info(`Revalidating page at path: ${path}`)
-
-      revalidatePath(path)
-      revalidateTag('pages-sitemap')
-    }
-
-    // If the page was previously published, we need to revalidate the old path
-    if (previousDoc?._status === 'published' && doc._status !== 'published') {
-      const oldPath = previousDoc.slug === 'home' ? '/' : `/${previousDoc.slug}`
-
-      payload.logger.info(`Revalidating old page at path: ${oldPath}`)
-
-      revalidatePath(oldPath)
-      revalidateTag('pages-sitemap')
-    }
+  if (context.disableRevalidate || !collection) {
+    return doc
   }
+
+  const sitemapTag = `${collection.slug}-sitemap`
+
+  // Revalidate the path and sitemap when a document is published or updated
+  if (doc._status === 'published' && doc.slug) {
+    const path = getPath(collection.slug, doc.slug)
+
+    payload.logger.info(`Revalidating ${collection.slug} at path: ${path}`)
+
+    revalidatePath(path)
+    revalidateTag(sitemapTag)
+  }
+
+  // Revalidate the old path when a document is unpublished
+  if (previousDoc?._status === 'published' && doc._status !== 'published' && previousDoc.slug) {
+    const oldPath = getPath(collection.slug, previousDoc.slug)
+
+    payload.logger.info(`Revalidating old ${collection.slug} path: ${oldPath}`)
+
+    revalidatePath(oldPath)
+    revalidateTag(sitemapTag)
+  }
+
   return doc
 }
 
-export const revalidateDelete: CollectionAfterDeleteHook<Page> = ({ doc, req: { context } }) => {
-  if (!context.disableRevalidate) {
-    const path = doc?.slug === 'home' ? '/' : `/${doc?.slug}`
+export const revalidatePathAfterDelete: CollectionAfterDeleteHook<Page | Post> = ({
+  doc,
+  collection,
+  req: { context },
+}) => {
+  if (!context.disableRevalidate && collection && doc.slug) {
+    const path = getPath(collection.slug, doc.slug)
 
     revalidatePath(path)
-    revalidateTag('pages-sitemap')
+    revalidateTag(`${collection.slug}-sitemap`)
   }
 
   return doc
