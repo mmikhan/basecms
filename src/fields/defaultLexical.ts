@@ -17,7 +17,7 @@ export const defaultLexical = lexicalEditor({
     ItalicFeature(),
     LinkFeature({
       // TODO: custom post types. i.e. ['pages', 'posts']
-      enabledCollections: ['pages'],
+      enabledCollections: ['pages', 'posts'],
       fields: ({ defaultFields }) => {
         const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
           if ('name' in field && field.name === 'url') return false

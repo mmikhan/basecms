@@ -65,7 +65,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       },
       label: 'Document to link to',
       // TODO: implement custom post types. i.e. 'posts', 'products', etc.
-      relationTo: ['pages'],
+      relationTo: ['pages', 'posts'],
       required: true,
     },
     {

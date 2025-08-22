@@ -1,4 +1,4 @@
-import type { Config, Media, Page } from '@/payload-types'
+import type { Config, Media, Page, Post } from '@/payload-types'
 import { getServerSideURL } from './getURL'
 import { type Metadata } from 'next'
 import { mergeOpenGraph } from './mergeOpenGraph'
@@ -21,7 +21,7 @@ export const generateMeta = async ({
   doc,
 }: {
   // TODO: custom post types. i.e. Partial<Page> | Partial<Post> | null
-  doc: Partial<Page> | null
+  doc: Partial<Page> | Partial<Post> | null
 }): Promise<Metadata> => {
   const ogImage = getImageURL(doc?.meta?.image)
 

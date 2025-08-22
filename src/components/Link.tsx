@@ -1,4 +1,4 @@
-import { Page } from '@/payload-types'
+import type { Page, Post } from '@/payload-types'
 import { buttonVariants } from './ui/button'
 import { VariantProps } from 'class-variance-authority'
 import Link from 'next/link'
@@ -13,9 +13,9 @@ type CMSLinkType = {
   newTab?: boolean | null
   reference?: {
     // TODO: custom post types. i.e. 'posts', 'products', etc.
-    relationTo: 'pages'
+    relationTo: 'pages' | 'posts'
     // TODO: implement custom post types. i.e. 'posts', 'products', etc.
-    value: Page | string | number
+    value: Page | Post | string | number
   } | null
   size?: VariantProps<typeof buttonVariants>['size'] | null
   type?: 'custom' | 'reference' | null
