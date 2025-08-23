@@ -4,6 +4,7 @@ import configPromise from '@payload-config'
 import { PageRange } from '@/components/PageRange'
 import { PaginationComponent } from '@/components/Pagination'
 import { CollectionArchive } from '@/components/CollectionArchive'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-static'
 
@@ -49,3 +50,18 @@ const getCachedPosts = unstable_cache(
   ['posts'],
   { tags: ['posts'] },
 )
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Posts Archive',
+    description: 'A list of all posts on this site.',
+    openGraph: {
+      title: 'Posts Archive',
+      description: 'A list of all posts on this site.',
+      url: '/posts',
+      type: 'website',
+      siteName: 'AdMarket',
+      images: [{ url: '/website-template-OG.webp' }],
+    },
+  }
+}
