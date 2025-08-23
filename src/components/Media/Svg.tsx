@@ -1,25 +1,22 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import type { MediaProps } from './types'
 import { getMediaUrl } from '@/lib/getURL'
 import { cn } from '@/lib/utils'
 
-export const SvgMedia: React.FC<MediaProps> = ({ alt, src, resource, imgClassName, priority }) => {
-  const [imageSrc, setImageSrc] = useState<string | null>(null)
-  const [imageAlt, setImageAlt] = useState<typeof alt | null>(alt)
+export const SvgMedia: React.FC<MediaProps> = ({
+  alt: altFromProps,
+  src: srcFromProps,
+  resource,
+  imgClassName,
+  priority,
+}) => {
+  let imageAlt: string | null | undefined = altFromProps
+  let imageSrc: string | null = typeof srcFromProps === 'string' ? srcFromProps : null
 
-  useEffect(() => {
-    if (typeof src === 'string') {
-      setImageSrc(src)
-    }
-
-    if (resource && typeof resource === 'object') {
-      const { alt: altFromResource, url, updatedAt } = resource
-      setImageAlt(altFromResource)
-      setImageSrc(getMediaUrl(url, updatedAt))
-    }
-  }, [src, resource])
+  if (resource && typeof resource === 'object') {
+    const { alt: altFromResource, url, updatedAt } = resource
+    imageAlt = altFromResource
+    imageSrc = getMediaUrl(url, updatedAt)
+  }
 
   if (!imageSrc) {
     return null
