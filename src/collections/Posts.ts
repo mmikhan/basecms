@@ -17,6 +17,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  labels: {
+    singular: 'Post',
+    plural: 'Posts',
+  },
   access: {
     create: admin,
     read: anyone,

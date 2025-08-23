@@ -1,11 +1,12 @@
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { PageRange } from '@/components/PageRange'
 
 export const dynamic = 'force-static'
 
 export default async function PostsArchivePage() {
-  const posts = await getCachedPosts()
+  const { posts, labels } = await getCachedPosts()
 
   return (
     <div>
@@ -17,6 +18,9 @@ export default async function PostsArchivePage() {
         </div>
       ))}
     </div>
+      <div className="container mb-8">
+        <PageRange {...posts} {...labels} limit={12} />
+      </div>
   )
 }
 
@@ -24,7 +28,7 @@ const getCachedPosts = unstable_cache(
   async () => {
     const payload = await getPayload({ config: configPromise })
 
-    const result = await payload.find({
+    const posts = await payload.find({
       collection: 'posts',
       depth: 1,
       limit: 12,
@@ -36,7 +40,10 @@ const getCachedPosts = unstable_cache(
         meta: true,
       },
     })
-    return result.docs
+
+    const labels = payload.collections.posts.config.labels
+
+    return { posts, labels }
   },
   ['posts'],
   { tags: ['posts'] },
