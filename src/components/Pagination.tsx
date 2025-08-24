@@ -31,7 +31,7 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
               className={cn({
                 'pointer-events-none text-muted-foreground': !hasPrevPage,
               })}
-              href={`/posts/page/${page - 1}`}
+              href={page - 1 === 1 ? '/posts' : `/posts/page/${page - 1}`}
             />
           </PaginationItem>
 
@@ -43,7 +43,9 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
 
           {hasPrevPage && (
             <PaginationItem>
-              <PaginationLink href={`/posts/page/${page - 1}`}>{page - 1}</PaginationLink>
+              <PaginationLink href={page - 1 === 1 ? '/posts' : `/posts/page/${page - 1}`}>
+                {page - 1}
+              </PaginationLink>
             </PaginationItem>
           )}
 
@@ -52,7 +54,7 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
               aria-disabled={true}
               className="pointer-events-none text-muted-foreground"
               isActive
-              href={`/posts/page/${page}`}
+              href={page === 1 ? '/posts' : `/posts/page/${page}`}
             >
               {page}
             </PaginationLink>
