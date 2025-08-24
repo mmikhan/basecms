@@ -5,6 +5,7 @@ import { PageRange } from '@/components/PageRange'
 import { PaginationComponent } from '@/components/Pagination'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import type { Metadata } from 'next'
+import { POSTS_PER_PAGE } from '@/lib/utils'
 
 export const dynamic = 'force-static'
 
@@ -12,7 +13,7 @@ export default async function PostsArchivePage() {
   const { posts, slug, labels } = await getCachedPosts()
 
   return (
-    <div className="pt-24 pb-24 container mx-auto">
+    <div className="py-24 container mx-auto">
       <div className="mb-16">
         <div className="prose dark:prose-invert max-w-none">
           <h1>Posts</h1>
@@ -20,7 +21,7 @@ export default async function PostsArchivePage() {
       </div>
 
       <div className="mb-8">
-        <PageRange {...posts} {...labels} limit={12} />
+        <PageRange {...posts} {...labels} limit={POSTS_PER_PAGE} />
       </div>
 
       <CollectionArchive {...posts} collectionSlug={slug} />
@@ -37,7 +38,7 @@ const getCachedPosts = unstable_cache(
     const posts = await payload.find({
       collection: 'posts',
       depth: 1,
-      limit: 12,
+      limit: POSTS_PER_PAGE,
       overrideAccess: false,
     })
 
