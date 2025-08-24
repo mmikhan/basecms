@@ -25,9 +25,7 @@ export const generateMeta = async ({
 }): Promise<Metadata> => {
   const ogImage = getImageURL(doc?.meta?.image)
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | AdMarket'
-    : 'AdMarket - Marketplace Platform'
+  const title = doc?.meta?.title ?? doc?.title
 
   return {
     description: doc?.meta?.description,
