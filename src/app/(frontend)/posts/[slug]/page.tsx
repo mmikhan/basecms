@@ -8,6 +8,7 @@ import RichText from '@/components/RichText'
 import { PostHero } from '@/components/PostHero'
 import { Metadata } from 'next'
 import { generateMeta } from '@/lib/generateMeta'
+import { Card } from '@/components/Card'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -36,7 +37,7 @@ export default async function PostPage({ params }: Props) {
   const { slug } = await params
   const { isEnabled: draft } = await draftMode()
 
-  const post = await queryPostBySlug({ slug })
+  const { post, collectionSlug } = await queryPostBySlug({ slug })
 
   if (!post) return <Redirects url={`/posts/${slug}`} />
 
@@ -51,6 +52,22 @@ export default async function PostPage({ params }: Props) {
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
           <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+
+          {post.relatedPosts && post.relatedPosts.length > 0 && (
+            <div className="mt-12 max-w-[52rem] lg:container lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-stretch">
+                {post.relatedPosts
+                  .filter((post) => typeof post === 'object')
+                  ?.map((doc, index) => {
+                    if (typeof doc === 'string') return null
+
+                    return (
+                      <Card key={index} {...doc} collectionSlug={collectionSlug} showCategories />
+                    )
+                  })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </article>
@@ -74,13 +91,15 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string | undefined }) => 
     },
   })
 
-  return post.docs?.[0] || null
+  const config = payload.collections.posts.config
+
+  return { post: post.docs?.[0] || null, collectionSlug: config.slug }
 })
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
 
-  const post = await queryPostBySlug({ slug })
+  const { post } = await queryPostBySlug({ slug })
 
   return generateMeta({ doc: post })
 }
