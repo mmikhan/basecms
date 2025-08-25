@@ -799,10 +799,6 @@ export interface Search {
   priority?: number | null;
   doc:
     | {
-        relationTo: 'pages';
-        value: number | Page;
-      }
-    | {
         relationTo: 'posts';
         value: number | Post;
       };

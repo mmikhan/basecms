@@ -3,7 +3,7 @@ import { beforeSyncWithSearch } from '@/hooks/search'
 import { searchPlugin } from '@payloadcms/plugin-search'
 
 export default searchPlugin({
-  collections: ['pages', 'posts'],
+  collections: ['posts'],
   beforeSync: beforeSyncWithSearch,
   searchOverrides: {
     fields: ({ defaultFields }) => {

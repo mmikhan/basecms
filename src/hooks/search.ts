@@ -1,4 +1,4 @@
-import type { Page, Post } from '@/payload-types'
+import type { Post } from '@/payload-types'
 import type { BeforeSync, DocToSync } from '@payloadcms/plugin-search/types'
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 
@@ -14,7 +14,6 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
   } = searchDoc
 
   // TODO: custom post type
-  const { slug, id, categories, title, content, layout, heroImage } = originalDoc as Post & Page
 
   let descriptionFromContent = ''
 
@@ -73,6 +72,7 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
       descriptionFromContent = layoutText
     }
   }
+  const { slug, id, categories, content, heroImage } = originalDoc as Post
 
   const populatedCategories: SearchCategory[] = []
 
