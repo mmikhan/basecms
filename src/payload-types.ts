@@ -797,23 +797,18 @@ export interface Search {
   id: number;
   title?: string | null;
   priority?: number | null;
-  doc:
-    | {
-        relationTo: 'posts';
-        value: number | Post;
-      };
-  slug?: string | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
+  doc: {
+    relationTo: 'posts';
+    value: number | Post;
   };
+  slug?: string | null;
+  description?: string | null;
+  image?: (number | null) | Media;
   categories?:
     | {
-        relationTo?: string | null;
-        categoryID?: string | null;
-        title?: string | null;
         id?: string | null;
+        title?: string | null;
+        relation?: string | null;
       }[]
     | null;
   updatedAt: string;
@@ -1208,20 +1203,14 @@ export interface SearchSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   slug?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
+  description?: T;
+  image?: T;
   categories?:
     | T
     | {
-        relationTo?: T;
-        categoryID?: T;
-        title?: T;
         id?: T;
+        title?: T;
+        relation?: T;
       };
   updatedAt?: T;
   createdAt?: T;

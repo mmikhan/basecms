@@ -10,50 +10,42 @@ export const searchFields: Field[] = [
     },
   },
   {
-    name: 'meta',
-    label: 'Meta',
-    type: 'group',
+    name: 'description',
+    type: 'text',
+    label: 'Description',
     index: true,
     admin: {
       readOnly: true,
     },
-    fields: [
-      {
-        type: 'text',
-        name: 'title',
-        label: 'Title',
-      },
-      {
-        type: 'text',
-        name: 'description',
-        label: 'Description',
-      },
-      {
-        name: 'image',
-        label: 'Image',
-        type: 'upload',
-        relationTo: 'media',
-      },
-    ],
   },
   {
-    label: 'Categories',
+    name: 'image',
+    label: 'Image',
+    type: 'upload',
+    relationTo: 'media',
+    index: true,
+    admin: {
+      readOnly: true,
+    },
+  },
+  {
     name: 'categories',
+    label: 'Categories',
     type: 'array',
     admin: {
       readOnly: true,
     },
     fields: [
       {
-        name: 'relationTo',
-        type: 'text',
-      },
-      {
-        name: 'categoryID',
+        name: 'id',
         type: 'text',
       },
       {
         name: 'title',
+        type: 'text',
+      },
+      {
+        name: 'relation',
         type: 'text',
       },
     ],

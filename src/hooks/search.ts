@@ -3,9 +3,9 @@ import type { BeforeSync, DocToSync } from '@payloadcms/plugin-search/types'
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 
 type SearchCategory = {
-  relationTo: 'categories'
-  categoryID: string
+  id: string
   title: string
+  relation: 'categories'
 }
 
 export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searchDoc }) => {
@@ -14,64 +14,6 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
   } = searchDoc
 
   // TODO: custom post type
-
-  let descriptionFromContent = ''
-
-  if (collection === 'posts' && content) {
-    descriptionFromContent = convertLexicalToPlaintext({ data: content })
-  }
-
-  if (collection === 'pages' && layout) {
-    const layoutTextPromises = layout.map(async (block) => {
-      if (block.blockType === 'content' && block.columns) {
-        const columnTextPromises = block.columns.map((col) => {
-          if (col.richText) {
-            return convertLexicalToPlaintext({ data: col.richText })
-          }
-
-          return ''
-        })
-        const columnTexts = await Promise.all(columnTextPromises)
-
-        return columnTexts.join(' ')
-      }
-
-      if (block.blockType === 'highImpactHero' && block.richText) {
-        return convertLexicalToPlaintext({ data: block.richText })
-      }
-
-      if (block.blockType === 'mediumImpactHero' && block.richText) {
-        return convertLexicalToPlaintext({ data: block.richText })
-      }
-
-      if (block.blockType === 'lowImpactHero' && block.richText) {
-        return convertLexicalToPlaintext({ data: block.richText })
-      }
-
-      if (block.blockType === 'cta' && block.richText) {
-        return convertLexicalToPlaintext({ data: block.richText })
-      }
-
-      if (block.blockType === 'archive' && block.introContent) {
-        return convertLexicalToPlaintext({ data: block.introContent })
-      }
-
-      if (block.blockType === 'banner' && block.content) {
-        return convertLexicalToPlaintext({ data: block.content })
-      }
-
-      if (block.blockType === 'code' && block.code) {
-        return block.code
-      }
-
-      return ''
-    })
-
-    const layoutText = (await Promise.all(layoutTextPromises)).join(' ').trim()
-    if (layoutText) {
-      descriptionFromContent = layoutText
-    }
-  }
   const { slug, id, categories, content, heroImage } = originalDoc as Post
 
   const populatedCategories: SearchCategory[] = []
@@ -93,9 +35,9 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
 
       if (doc) {
         populatedCategories.push({
-          relationTo: 'categories',
-          categoryID: String(doc.id),
+          id: String(doc.id),
           title: doc.title,
+          relation: 'categories',
         })
       } else {
         console.error(
@@ -108,11 +50,8 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
   const modifiedDoc: DocToSync = {
     ...searchDoc,
     slug,
-    meta: {
-      title,
-      image: heroImage,
-      description: descriptionFromContent,
-    },
+    description: convertLexicalToPlaintext({ data: content }),
+    image: heroImage,
     categories: populatedCategories,
   }
 
