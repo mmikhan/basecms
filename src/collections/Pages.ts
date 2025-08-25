@@ -66,6 +66,7 @@ export const Pages: CollectionConfig = {
                 'banner',
                 'nav',
                 'footerBlock',
+                'archive',
               ],
               blocks: [],
               required: true,

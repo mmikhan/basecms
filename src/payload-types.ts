@@ -76,6 +76,7 @@ export interface Config {
     banner: BannerBlock;
     nav: NavBlock;
     footerBlock: FooterBlock;
+    archive: ArchiveBlock;
   };
   collections: {
     pages: Page;
@@ -214,6 +215,7 @@ export interface Page {
     | BannerBlock
     | NavBlock
     | FooterBlock
+    | ArchiveBlock
   )[];
   meta?: {
     title?: string | null;
@@ -726,6 +728,40 @@ export interface FooterBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'footerBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock".
+ */
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
