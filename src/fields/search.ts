@@ -10,19 +10,28 @@ export const searchFields: Field[] = [
     },
   },
   {
-    name: 'description',
+    name: 'content',
     type: 'text',
-    label: 'Description',
+    label: 'Content',
     index: true,
     admin: {
       readOnly: true,
     },
   },
   {
-    name: 'image',
-    label: 'Image',
+    name: 'heroImage',
+    label: 'Hero Image',
     type: 'upload',
     relationTo: 'media',
+    index: true,
+    admin: {
+      readOnly: true,
+    },
+  },
+  {
+    name: 'type',
+    label: 'Type',
+    type: 'text',
     index: true,
     admin: {
       readOnly: true,

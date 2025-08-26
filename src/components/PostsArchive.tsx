@@ -24,7 +24,7 @@ export const PostsArchive: React.FC<{ page: number }> = async ({ page }) => {
         <PageRange {...posts} {...labels} limit={POSTS_PER_PAGE} />
       </div>
 
-      <CollectionArchive data={posts} collectionSlug={slug} />
+      <CollectionArchive data={posts.docs} collectionSlug={slug} />
 
       <PaginationComponent {...posts} />
     </div>

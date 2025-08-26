@@ -50,8 +50,9 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
   const modifiedDoc: DocToSync = {
     ...searchDoc,
     slug,
-    description: convertLexicalToPlaintext({ data: content }),
-    image: heroImage,
+    content: convertLexicalToPlaintext({ data: content }),
+    heroImage,
+    type: collection,
     categories: populatedCategories,
   }
 

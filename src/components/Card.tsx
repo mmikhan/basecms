@@ -6,13 +6,16 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 
-export const Card: React.FC<
-  Post & { collectionSlug: CollectionConfig['slug'] } & {
-    className?: string
-    showCategories?: boolean
-    customTitle?: string
-  }
-> = ({
+export type CardPostData = Pick<Post, 'title' | 'slug' | 'content' | 'heroImage' | 'categories'>
+
+type CardProps = CardPostData & {
+  collectionSlug: CollectionConfig['slug']
+  className?: string
+  showCategories?: boolean
+  customTitle?: string
+}
+
+export const Card: React.FC<CardProps> = ({
   title: propTitle,
   slug,
   heroImage,

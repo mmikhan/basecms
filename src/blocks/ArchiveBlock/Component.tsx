@@ -51,7 +51,7 @@ export const ArchiveBlock: React.FC<ArchiveBlockProps> = async ({
           <RichText className="ms-0 max-w-[48rem]" data={introContent} enableGutter={false} />
         </div>
       )}
-      <CollectionArchive docs={posts} collectionSlug="posts" />
+      <CollectionArchive data={posts} collectionSlug="posts" />
     </div>
   )
 }

@@ -802,8 +802,9 @@ export interface Search {
     value: number | Post;
   };
   slug?: string | null;
-  description?: string | null;
-  image?: (number | null) | Media;
+  content?: string | null;
+  heroImage?: (number | null) | Media;
+  type?: string | null;
   categories?:
     | {
         id?: string | null;
@@ -1203,8 +1204,9 @@ export interface SearchSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   slug?: T;
-  description?: T;
-  image?: T;
+  content?: T;
+  heroImage?: T;
+  type?: T;
   categories?:
     | T
     | {

@@ -19,6 +19,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
     "@payloadcms/admin-bar": "3.49.0",
     "@payloadcms/db-postgres": "3.49.0",
     "@payloadcms/live-preview-react": "3.49.0",
@@ -31,6 +32,7 @@
     "@payloadcms/richtext-lexical": "3.49.0",
     "@payloadcms/ui": "3.49.0",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -43,8 +45,10 @@
     "payload": "3.49.0",
     "prism-react-renderer": "^2.4.1",
     "react": "19.1.0",
+    "react-hook-form": "^7.62.0",
     "sharp": "0.34.3",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.1.1"
   },
   "devDependencies": {
     "@playwright/test": "1.54.1",
