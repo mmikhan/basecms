@@ -20,7 +20,6 @@ import {
   BannerBlock as BannerBlockProps,
   NavBlock as NavBlockProps,
   FooterBlock as FooterBlockProps,
-  ArchiveBlock as ArchiveBlockProps,
 } from '@/payload-types'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/lib/utils'
@@ -33,7 +32,6 @@ import { CodeBlock } from '@/blocks/Code/Component'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { NavBlock } from '@/blocks/Nav/Component'
 import { FooterBlockComponent } from '@/blocks/Footer/Component'
-import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 
 // Extend the default node types with your custom blocks for full type safety
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CTABlockProps>
@@ -88,9 +86,6 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     nav: ({ node }: { node: SerializedBlockNode<NavBlockProps> }) => <NavBlock {...node.fields} />,
     footerBlock: ({ node }: { node: SerializedBlockNode<FooterBlockProps> }) => (
       <FooterBlockComponent {...node.fields} />
-    ),
-    archiveBlock: ({ node }: { node: SerializedBlockNode<ArchiveBlockProps> }) => (
-      <ArchiveBlock {...node.fields} />
     ),
   },
 })
