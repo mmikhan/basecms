@@ -67,6 +67,7 @@ export const Pages: CollectionConfig = {
                 'nav',
                 'footerBlock',
                 'archive',
+                'formBlock',
               ],
               blocks: [],
               required: true,
