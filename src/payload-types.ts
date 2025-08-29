@@ -458,6 +458,7 @@ export interface User {
   firstName: string;
   lastName: string;
   roles?: ('admin' | 'user') | null;
+  stripeCustomerId?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1248,6 +1249,7 @@ export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
   roles?: T;
+  stripeCustomerId?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

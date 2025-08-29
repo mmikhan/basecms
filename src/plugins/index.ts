@@ -5,11 +5,13 @@ import seo from './seo'
 import nestedDocs from './nestedDocs'
 import search from './search'
 import formBuilder from './formBuilder'
+import stripe from './stripe'
 
 export const plugins: Plugin[] = [
   payloadCloudPlugin(),
   redirects,
   seo,
+  stripe,
   nestedDocs,
   search,
   formBuilder,

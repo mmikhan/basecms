@@ -74,5 +74,28 @@ export const Users: CollectionConfig = {
         ],
       },
     },
+    {
+      name: 'stripeCustomerId',
+      type: 'text',
+      required: false,
+      unique: true,
+      admin: {
+        readOnly: true,
+        condition: (_, __, { user }) => Boolean(user?.roles?.includes('admin')),
+      },
+      hooks: {
+        beforeChange: [
+          async ({ operation, value, req: { payload, user } }) => {
+            if (operation === 'create') {
+              if (process.env.NODE_ENV === 'development') {
+                return Math.random().toString(36).slice(2)
+              }
+              // In production, use a placeholder or actual Stripe ID logic
+              return 'cus_12345'
+            }
+          },
+        ],
+      },
+    },
   ],
 }
