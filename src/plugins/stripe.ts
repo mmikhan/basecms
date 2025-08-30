@@ -8,4 +8,21 @@ export default stripePlugin({
       console.log('Subscription updated event received:', event)
     },
   },
+  sync: [
+    {
+      collection: 'users',
+      stripeResourceType: 'customers',
+      stripeResourceTypeSingular: 'customer',
+      fields: [
+        {
+          fieldPath: 'firstName',
+          stripeProperty: 'name',
+        },
+        {
+          fieldPath: 'email',
+          stripeProperty: 'email',
+        },
+      ],
+    },
+  ],
 })

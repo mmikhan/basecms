@@ -458,7 +458,8 @@ export interface User {
   firstName: string;
   lastName: string;
   roles?: ('admin' | 'user') | null;
-  stripeCustomerId?: string | null;
+  stripeID?: string | null;
+  skipSync?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1249,7 +1250,8 @@ export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
   roles?: T;
-  stripeCustomerId?: T;
+  stripeID?: T;
+  skipSync?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
