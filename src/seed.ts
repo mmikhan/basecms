@@ -7,10 +7,9 @@ const seed = async () => {
   await payload.create({
     collection: 'users',
     data: {
+      name: 'John Doe',
       email: 'john@example.com',
       password: 'password',
-      firstName: 'John',
-      lastName: 'Doe',
       roles: 'admin',
     },
   })
@@ -18,10 +17,9 @@ const seed = async () => {
   await payload.create({
     collection: 'users',
     data: {
+      name: 'Jane Doe',
       email: 'jane@example.com',
       password: 'password',
-      firstName: 'Jane',
-      lastName: 'Doe',
       roles: 'user',
     },
   })

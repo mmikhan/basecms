@@ -15,7 +15,7 @@ export default stripePlugin({
       stripeResourceTypeSingular: 'customer',
       fields: [
         {
-          fieldPath: 'firstName',
+          fieldPath: 'name',
           stripeProperty: 'name',
         },
         {

@@ -23,12 +23,7 @@ export const Users: CollectionConfig = {
       type: 'row',
       fields: [
         {
-          name: 'firstName',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'lastName',
+          name: 'name',
           type: 'text',
           required: true,
         },
