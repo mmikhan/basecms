@@ -68,6 +68,7 @@ export const Pages: CollectionConfig = {
                 'footerBlock',
                 'archive',
                 'formBlock',
+                'pricingTable',
               ],
               blocks: [],
               required: true,

@@ -5,7 +5,7 @@ export default stripePlugin({
   stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOKS_ENDPOINT_SECRET,
   webhooks: {
     'customer.subscription.updated': ({ event, stripe }) => {
-      console.log('Subscription updated event received:', event)
+      console.log('Subscription updated event received:', event, stripe)
     },
   },
   sync: [
