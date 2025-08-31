@@ -1,4 +1,3 @@
-import { currencies } from '@/lib/stripe'
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -71,15 +70,6 @@ export const PricingTable: Block = {
               value: 'subscription',
             },
           ] as { label: string; value: Stripe.Checkout.SessionCreateParams.Mode }[],
-        },
-        {
-          name: 'currency',
-          label: 'Currency',
-          type: 'select',
-          options: currencies().map(({ code, country }) => ({
-            label: `${country} (${code})`,
-            value: code,
-          })),
         },
         {
           name: 'priceId',
