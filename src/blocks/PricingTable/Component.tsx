@@ -44,8 +44,6 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plan
               action={async () => {
                 'use server'
 
-                if (!user) return redirect('/login')
-
                 const session = await createCheckoutSession(
                   plan.mode,
                   [
@@ -55,7 +53,7 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plan
                       adjustable_quantity: { enabled: true, minimum: 1 },
                     },
                   ],
-                  user,
+                  user ?? undefined,
                 )
                 redirect(session.url ?? '')
               }}

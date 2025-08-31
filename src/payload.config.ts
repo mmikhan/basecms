@@ -28,6 +28,7 @@ import { Posts } from './collections/Posts'
 import { Archive } from './blocks/ArchiveBlock/config'
 import { FormBlock } from './blocks/Form/config'
 import { PricingTable } from './blocks/PricingTable/config'
+import { Orders } from './collections/Orders'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -86,7 +87,7 @@ export default buildConfig({
     FormBlock,
     PricingTable,
   ],
-  collections: [Pages, Users, Media, Categories, Posts],
+  collections: [Pages, Users, Media, Categories, Posts, Orders],
   editor: defaultLexical,
   globals: [General, Header, Footer],
   secret: process.env.PAYLOAD_SECRET || '',
