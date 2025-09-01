@@ -30,7 +30,7 @@ export const GET = async (request: NextRequest) => {
         quantity: session.line_items?.data?.[0]?.quantity ?? 1,
         total: (session.line_items?.data?.[0].amount_total ?? 0) / 100,
         status: session.payment_status,
-        type: session.mode,
+        mode: session.mode,
         user: await getUserByEmail(
           session.customer_email ?? session.customer_details?.email ?? session.metadata?.email,
         ),

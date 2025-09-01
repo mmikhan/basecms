@@ -1,3 +1,4 @@
+import { currencies } from '@/lib/stripe'
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -72,10 +73,70 @@ export const PricingTable: Block = {
           ] as { label: string; value: Stripe.Checkout.SessionCreateParams.Mode }[],
         },
         {
+          name: 'type',
+          label: 'Type',
+          type: 'select',
+          required: true,
+          options: [
+            {
+              label: 'Ad Hoc Pricing',
+              value: 'ad_hoc',
+            },
+            {
+              label: 'Fixed Pricing',
+              value: 'fixed',
+            },
+          ],
+        },
+        {
           name: 'priceId',
           label: 'Stripe Price ID',
           type: 'text',
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData.type === 'fixed',
+          },
+        },
+        {
+          name: 'currency',
+          label: 'Currency',
+          type: 'select',
+          required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData.type === 'ad_hoc',
+          },
+          options: currencies().map(({ code, country }) => ({
+            label: `${country} (${code})`,
+            value: code,
+          })),
+        },
+        {
+          name: 'interval',
+          label: 'Interval',
+          type: 'select',
+          required: true,
+          options: [
+            {
+              label: 'Daily',
+              value: 'day',
+            },
+            {
+              label: 'Weekly',
+              value: 'week',
+            },
+            {
+              label: 'Monthly',
+              value: 'month',
+            },
+            {
+              label: 'Yearly',
+              value: 'year',
+            },
+          ],
+          admin: {
+            condition: (_, siblingData) =>
+              siblingData.mode === 'subscription' && siblingData.type === 'ad_hoc',
+          },
         },
       ],
     },

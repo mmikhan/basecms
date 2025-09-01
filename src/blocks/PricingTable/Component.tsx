@@ -48,7 +48,20 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plan
                   plan.mode,
                   [
                     {
-                      price: plan.priceId,
+                      ...(plan.type === 'fixed'
+                        ? { price: plan.priceId ?? '' }
+                        : {
+                            price_data: {
+                              currency: plan.currency ?? 'usd',
+                              unit_amount: plan.price * 100,
+                              product_data: {
+                                name: plan.name,
+                              },
+                              ...(plan.mode === 'subscription'
+                                ? { recurring: { interval: plan.interval ?? 'month' } }
+                                : {}),
+                            },
+                          }),
                       quantity: 1,
                       adjustable_quantity: { enabled: true, minimum: 1 },
                     },

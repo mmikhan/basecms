@@ -56,8 +56,8 @@ export const Orders: CollectionConfig = {
       admin: { readOnly: true },
     },
     {
-      name: 'type',
-      label: 'Type',
+      name: 'mode',
+      label: 'Mode',
       type: 'text',
       required: true,
       admin: { readOnly: true },
