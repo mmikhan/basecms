@@ -17,10 +17,18 @@ export const BillingPortal: Block = {
       label: 'Type',
       type: 'select',
       required: true,
+      admin: {
+        description:
+          'Existing billing portal needs configuration from Stripe Billing Portal settings',
+      },
       options: [
         {
           label: 'Existing',
           value: 'existing',
+        },
+        {
+          label: 'Link',
+          value: 'link',
         },
         {
           label: 'Custom',
@@ -29,12 +37,12 @@ export const BillingPortal: Block = {
       ],
     },
     {
-      name: 'link',
-      label: 'Link',
+      name: 'url',
+      label: 'URL',
       type: 'text',
       required: true,
       admin: {
-        condition: (_, siblingData) => siblingData.type === 'existing',
+        condition: (_, siblingData) => siblingData.type === 'link',
       },
     },
     {
@@ -59,50 +67,19 @@ export const BillingPortal: Block = {
               required: true,
             },
             {
-              name: 'name',
-              label: 'Name',
-              type: 'checkbox',
-              defaultValue: true,
-              required: true,
-              admin: { condition: (_, sd) => !!sd.customer },
-            },
-            {
-              name: 'email',
-              label: 'Email',
-              type: 'checkbox',
-              defaultValue: true,
-              required: true,
-              admin: { condition: (_, sd) => !!sd.customer },
-            },
-            {
-              name: 'billingAddress',
-              label: 'Billing address',
-              type: 'checkbox',
-              defaultValue: true,
-              required: true,
-              admin: { condition: (_, sd) => !!sd.customer },
-            },
-            {
-              name: 'shippingAddress',
-              label: 'Shipping address',
-              type: 'checkbox',
-              required: true,
-              admin: { condition: (_, sd) => !!sd.customer },
-            },
-            {
-              name: 'phoneNumber',
-              label: 'Phone number',
-              type: 'checkbox',
-              defaultValue: true,
-              required: true,
-              admin: { condition: (_, sd) => !!sd.customer },
-            },
-            {
-              name: 'taxId',
-              label: 'Tax ID',
-              type: 'checkbox',
-              required: true,
-              admin: { condition: (_, sd) => !!sd.customer },
+              name: 'info',
+              label: 'Info',
+              type: 'select',
+              hasMany: true,
+              defaultValue: ['address', 'email', 'phone'],
+              dbName: 'customer_info',
+              options: [
+                { label: 'Address', value: 'address' },
+                { label: 'Email', value: 'email' },
+                { label: 'Phone', value: 'phone' },
+                { label: 'Shipping', value: 'shipping' },
+                { label: 'Tax ID', value: 'tax_id' },
+              ],
             },
           ],
         },

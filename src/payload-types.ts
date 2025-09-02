@@ -1182,17 +1182,15 @@ export interface PricingTableBlock {
  * via the `definition` "BillingPortalBlock".
  */
 export interface BillingPortalBlock {
-  type: 'existing' | 'custom';
-  link?: string | null;
+  /**
+   * Existing billing portal needs configuration from Stripe Billing Portal settings
+   */
+  type: 'existing' | 'link' | 'custom';
+  url?: string | null;
   configuration?: {
     customerInfo: {
       customer: boolean;
-      name?: boolean | null;
-      email?: boolean | null;
-      billingAddress?: boolean | null;
-      shippingAddress?: boolean | null;
-      phoneNumber?: boolean | null;
-      taxId?: boolean | null;
+      info?: ('address' | 'email' | 'phone' | 'shipping' | 'tax_id')[] | null;
     };
     subscriptionControls: {
       paymentMethods: boolean;
