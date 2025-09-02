@@ -29,6 +29,7 @@ import { Archive } from './blocks/ArchiveBlock/config'
 import { FormBlock } from './blocks/Form/config'
 import { PricingTable } from './blocks/PricingTable/config'
 import { Orders } from './collections/Orders'
+import { BillingPortal } from './blocks/BillingPortal/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -86,6 +87,7 @@ export default buildConfig({
     Archive,
     FormBlock,
     PricingTable,
+    BillingPortal,
   ],
   collections: [Pages, Users, Media, Categories, Posts, Orders],
   editor: defaultLexical,

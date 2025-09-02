@@ -69,6 +69,7 @@ export const Pages: CollectionConfig = {
                 'archive',
                 'formBlock',
                 'pricingTable',
+                'billingPortal',
               ],
               blocks: [],
               required: true,

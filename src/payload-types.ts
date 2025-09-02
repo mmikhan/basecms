@@ -79,6 +79,7 @@ export interface Config {
     archive: ArchiveBlock;
     formBlock: FormBlock;
     pricingTable: PricingTableBlock;
+    billingPortal: BillingPortalBlock;
   };
   collections: {
     pages: Page;
@@ -228,6 +229,7 @@ export interface Page {
     | ArchiveBlock
     | FormBlock
     | PricingTableBlock
+    | BillingPortalBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1174,6 +1176,72 @@ export interface PricingTableBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'pricingTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BillingPortalBlock".
+ */
+export interface BillingPortalBlock {
+  type: 'existing' | 'custom';
+  link?: string | null;
+  configuration?: {
+    invoice: boolean;
+    customer: boolean;
+    name?: boolean | null;
+    email?: boolean | null;
+    billingAddress?: boolean | null;
+    shippingAddress?: boolean | null;
+    phoneNumber?: boolean | null;
+    taxId?: boolean | null;
+    paymentMethods: boolean;
+    cancel: boolean;
+    settings?: ('immediately' | 'end_of_period') | null;
+    reason?: boolean | null;
+    too_expensive?: boolean | null;
+    missing_features?: boolean | null;
+    switched_service?: boolean | null;
+    unused?: boolean | null;
+    customer_service?: boolean | null;
+    too_complex?: boolean | null;
+    low_quality?: boolean | null;
+    other?: boolean | null;
+    switchPlans: boolean;
+    changeQuantity: boolean;
+    heading: string;
+    terms: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+    };
+    privacy: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: number | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: number | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+    };
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'billingPortal';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
