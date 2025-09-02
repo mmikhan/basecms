@@ -1182,66 +1182,7 @@ export interface PricingTableBlock {
  * via the `definition` "BillingPortalBlock".
  */
 export interface BillingPortalBlock {
-  /**
-   * Existing billing portal needs configuration from Stripe Billing Portal settings
-   */
-  type: 'existing' | 'link' | 'custom';
-  url?: string | null;
-  configuration?: {
-    customerInfo: {
-      customer: boolean;
-      info?: ('address' | 'email' | 'phone' | 'shipping' | 'tax_id')[] | null;
-    };
-    subscriptionControls: {
-      paymentMethods: boolean;
-      cancel: boolean;
-      settings?: ('immediately' | 'end_of_period') | null;
-      reason?: boolean | null;
-    };
-    cancellationReasons?: {
-      too_expensive: boolean;
-      missing_features: boolean;
-      switched_service: boolean;
-      unused: boolean;
-      customer_service: boolean;
-      too_complex: boolean;
-      low_quality: boolean;
-      other: boolean;
-    };
-    switchPlans: boolean;
-    changeQuantity: boolean;
-    heading: string;
-    terms: {
-      type?: ('reference' | 'custom') | null;
-      newTab?: boolean | null;
-      reference?:
-        | ({
-            relationTo: 'pages';
-            value: number | Page;
-          } | null)
-        | ({
-            relationTo: 'posts';
-            value: number | Post;
-          } | null);
-      url?: string | null;
-      label: string;
-    };
-    privacy: {
-      type?: ('reference' | 'custom') | null;
-      newTab?: boolean | null;
-      reference?:
-        | ({
-            relationTo: 'pages';
-            value: number | Page;
-          } | null)
-        | ({
-            relationTo: 'posts';
-            value: number | Post;
-          } | null);
-      url?: string | null;
-      label: string;
-    };
-  };
+  label: string;
   id?: string | null;
   blockName?: string | null;
   blockType: 'billingPortal';
