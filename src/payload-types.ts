@@ -1185,26 +1185,31 @@ export interface BillingPortalBlock {
   type: 'existing' | 'custom';
   link?: string | null;
   configuration?: {
-    invoice: boolean;
-    customer: boolean;
-    name?: boolean | null;
-    email?: boolean | null;
-    billingAddress?: boolean | null;
-    shippingAddress?: boolean | null;
-    phoneNumber?: boolean | null;
-    taxId?: boolean | null;
-    paymentMethods: boolean;
-    cancel: boolean;
-    settings?: ('immediately' | 'end_of_period') | null;
-    reason?: boolean | null;
-    too_expensive?: boolean | null;
-    missing_features?: boolean | null;
-    switched_service?: boolean | null;
-    unused?: boolean | null;
-    customer_service?: boolean | null;
-    too_complex?: boolean | null;
-    low_quality?: boolean | null;
-    other?: boolean | null;
+    customerInfo: {
+      customer: boolean;
+      name?: boolean | null;
+      email?: boolean | null;
+      billingAddress?: boolean | null;
+      shippingAddress?: boolean | null;
+      phoneNumber?: boolean | null;
+      taxId?: boolean | null;
+    };
+    subscriptionControls: {
+      paymentMethods: boolean;
+      cancel: boolean;
+      settings?: ('immediately' | 'end_of_period') | null;
+      reason?: boolean | null;
+    };
+    cancellationReasons?: {
+      too_expensive: boolean;
+      missing_features: boolean;
+      switched_service: boolean;
+      unused: boolean;
+      customer_service: boolean;
+      too_complex: boolean;
+      low_quality: boolean;
+      other: boolean;
+    };
     switchPlans: boolean;
     changeQuantity: boolean;
     heading: string;
