@@ -1920,13 +1920,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface General {
   id: number;
-  siteName: string;
-  /**
-   * Upload a logo for the site. Recommended size: 200x200px.
-   */
-  siteLogo: number | Media;
-  siteDescription: string;
-  contactEmail: string;
+  siteName?: string | null;
+  siteLogo?: (number | null) | Media;
+  siteDescription?: string | null;
+  contactEmail?: string | null;
   socialMediaLinks?:
     | {
         platform: 'Facebook' | 'Twitter' | 'Instagram' | 'LinkedIn';
