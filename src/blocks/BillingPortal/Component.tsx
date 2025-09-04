@@ -15,6 +15,8 @@ export const BillingPortalBlock: React.FC<BillingPortalBlockProps> = async ({ la
       action={async () => {
         'use server'
 
+        if (!user) return redirect('/login')
+
         const session = await stripe.billingPortal.sessions.create({
           customer: user?.stripeID ?? '',
         })
