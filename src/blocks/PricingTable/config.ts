@@ -1,4 +1,4 @@
-import { currencies } from '@/lib/stripe'
+import { currencies } from '@/lib/utils'
 import {
   FixedToolbarFeature,
   HeadingFeature,
