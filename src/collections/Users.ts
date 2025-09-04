@@ -18,6 +18,7 @@ export const Users: CollectionConfig = {
     // Only admins can delete
     delete: admin,
   },
+  enableQueryPresets: true,
   fields: [
     {
       type: 'row',

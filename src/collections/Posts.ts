@@ -27,6 +27,7 @@ export const Posts: CollectionConfig = {
     update: admin,
     delete: admin,
   },
+  enableQueryPresets: true,
   defaultPopulate: {
     title: true,
     slug: true,

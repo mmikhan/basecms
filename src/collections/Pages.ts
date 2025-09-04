@@ -15,6 +15,7 @@ export const Pages: CollectionConfig = {
     update: admin,
     delete: admin,
   },
+  enableQueryPresets: true,
   defaultPopulate: {
     title: true,
     slug: true,
