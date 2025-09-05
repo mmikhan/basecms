@@ -11,7 +11,7 @@ interface LogoProps extends React.SVGProps<SVGSVGElement> {
 export default function Logo({ layout = 'single', subtitle = true, className }: LogoProps) {
   return (
     <Link href="/" className="flex items-center gap-4 no-underline">
-      <Icon className={cn('size-20', className)} />
+      <Icon className={cn('size-5/12', className)} />
 
       <div className="flex flex-col">
         <h1 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100 leading-tight">

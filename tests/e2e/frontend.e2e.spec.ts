@@ -1,8 +1,10 @@
 import { test, expect, Page } from '@playwright/test'
 
 test.describe('Frontend', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let page: Page
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   test.beforeAll(async ({ browser }, testInfo) => {
     const context = await browser.newContext()
     page = await context.newPage()
