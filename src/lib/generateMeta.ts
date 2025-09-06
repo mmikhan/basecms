@@ -1,21 +1,6 @@
-import type { Config, Media, Page, Post } from '@/payload-types'
-import { getServerSideURL } from './getURL'
+import type { Page, Post } from '@/payload-types'
 import { type Metadata } from 'next'
 import { mergeOpenGraph } from './mergeOpenGraph'
-
-const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
-  const serverUrl = getServerSideURL()
-
-  let url = serverUrl + '/website-template-OG.webp'
-
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
-
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
-  }
-
-  return url
-}
 
 export const generateMeta = async ({
   doc,
@@ -23,9 +8,13 @@ export const generateMeta = async ({
   // TODO: custom post types. i.e. Partial<Page> | Partial<Post> | null
   doc: Partial<Page> | Partial<Post> | null
 }): Promise<Metadata> => {
-  const ogImage = getImageURL(doc?.meta?.image)
-
   const title = doc?.meta?.title ?? doc?.title
+  const image = doc?.meta?.image
+
+  const ogImage =
+    image && typeof image === 'object'
+      ? image.transformedUrl
+      : 'https://res.cloudinary.com/dpvyuluiq/image/upload/f_auto/q_auto/cld-sample'
 
   return {
     description: doc?.meta?.description,

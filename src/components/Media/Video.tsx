@@ -1,43 +1,27 @@
-'use client'
+type VideoMediaProps = React.VideoHTMLAttributes<HTMLVideoElement> & {
+  src: string
+  className?: string
+  onClick?: () => void
+}
 
-import { useEffect, useRef } from 'react'
-import { type MediaProps } from './types'
-import { cn } from '@/lib/utils'
-import { getMediaUrl } from '@/lib/getURL'
-
-export const VideoMedia: React.FC<MediaProps> = ({ onClick, resource, videoClassName }) => {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  // const [showFallback] = useState<boolean>()
-
-  useEffect(() => {
-    const { current: video } = videoRef
-
-    if (video) {
-      video.addEventListener('suspend', () => {
-        // setShowFallback(true);
-        // console.warn('Video was suspended, rendering fallback image.')
-      })
-    }
-  }, [])
-
-  if (resource && typeof resource === 'object') {
-    const { filename } = resource
-
-    return (
-      <video
-        autoPlay
-        className={cn(videoClassName)}
-        controls={false}
-        loop
-        muted
-        onClick={onClick}
-        playsInline
-        ref={videoRef}
-      >
-        <source src={getMediaUrl(`/media/${filename}`)} />
-      </video>
-    )
-  }
-
-  return null
+export const VideoMedia: React.FC<VideoMediaProps> = ({
+  src,
+  className,
+  onClick,
+  ...videoProps
+}) => {
+  return (
+    <video
+      autoPlay
+      {...(className && { className })}
+      controls={false}
+      loop
+      muted
+      onClick={onClick}
+      playsInline
+      {...videoProps}
+    >
+      <source src={src} />
+    </video>
+  )
 }

@@ -8,8 +8,8 @@ export const FooterBlockComponent: React.FC<FooterBlock> = async ({ links, media
   return (
     <footer className="mt-auto border-t border-border bg-black dark:bg-card">
       <div className="container mx-auto py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        <Link className="flex items-center" href="/">
-          <Media priority resource={media} className="size-10" />
+        <Link className="flex items-center size-10" href="/">
+          {media && typeof media === 'object' && <Media priority resource={media} />}
         </Link>
 
         <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">

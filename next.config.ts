@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
   images: {
     qualities: [25, 50, 75, 100],
     remotePatterns: [
-      ...[getServerSideURL()].map((item) => {
+      ...[getServerSideURL(), 'https://res.cloudinary.com'].map((item) => {
         const url = new URL(item)
 
         return {

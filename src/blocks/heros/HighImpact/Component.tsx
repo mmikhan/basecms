@@ -24,7 +24,7 @@ export const HighImpactHeroBlock: React.FC<HighImpactHeroProps> = ({ richText, m
       </div>
       <div className="absolute inset-0 select-none -z-10">
         {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
+          <Media className="-z-10 object-cover" fill resource={media} />
         )}
       </div>
     </div>

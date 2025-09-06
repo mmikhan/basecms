@@ -67,8 +67,8 @@ export const PostHero: React.FC<Post> = ({
         </div>
       </div>
       <div className="absolute inset-0">
-        {heroImage && typeof heroImage !== 'string' && (
-          <Media fill priority imgClassName="-z-10 object-cover" resource={heroImage} />
+        {heroImage && typeof heroImage === 'object' && (
+          <Media fill priority className="-z-10 object-cover" resource={heroImage} />
         )}
         <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
       </div>

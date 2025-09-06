@@ -34,8 +34,8 @@ export const Card: React.FC<CardProps> = ({
   return (
     <article className={cn('border border-border rounded-lg overflow-hidden bg-card', className)}>
       <div className="relative w-full">
-        {heroImage ? (
-          <Media resource={heroImage} size="33vw" />
+        {heroImage && typeof heroImage === 'object' ? (
+          <Media resource={heroImage} sizes="33vw" />
         ) : (
           <div className="aspect-video w-full bg-muted" />
         )}

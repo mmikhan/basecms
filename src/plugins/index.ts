@@ -6,6 +6,7 @@ import nestedDocs from './nestedDocs'
 import search from './search'
 import formBuilder from './formBuilder'
 import stripe from './stripe'
+import cloudinary from './cloudinary'
 
 export const plugins: Plugin[] = [
   payloadCloudPlugin(),
@@ -15,4 +16,5 @@ export const plugins: Plugin[] = [
   nestedDocs,
   search,
   formBuilder,
+  cloudinary,
 ]

@@ -8,8 +8,8 @@ export const NavBlock: React.FC<NavBlockProps> = async ({ media, links }) => {
   return (
     <header className="container mx-auto relative z-20 ">
       <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Media priority resource={media} className="size-10" />
+        <Link href="/" className="size-10">
+          {media && typeof media === 'object' && <Media priority resource={media} />}
         </Link>
         <nav className="flex gap-3 items-center">
           {links?.map(({ link }, i) => (
