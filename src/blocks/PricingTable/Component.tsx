@@ -15,6 +15,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import type { Route } from 'next'
 
 const getCurrentUser = cache(async () => {
   const payload = await getPayload({ config })
@@ -70,7 +71,7 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plan
                   ],
                   user ?? undefined,
                 )
-                redirect(session.url ?? '')
+                redirect(session.url as Route)
               }}
             >
               <Button type="submit">Buy Now</Button>

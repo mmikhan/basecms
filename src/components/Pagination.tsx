@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import { cn } from '@/lib/utils'
+import type { Route } from 'next'
 
 export const PaginationComponent: React.FC<PaginatedDocs & { className?: string }> = ({
   className,
@@ -31,7 +32,7 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
               className={cn({
                 'pointer-events-none text-muted-foreground': !hasPrevPage,
               })}
-              href={page - 1 === 1 ? '/posts' : `/posts/page/${page - 1}`}
+              href={(page - 1 === 1 ? '/posts' : `/posts/page/${page - 1}`) as Route}
             />
           </PaginationItem>
 
@@ -43,7 +44,9 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
 
           {hasPrevPage && (
             <PaginationItem>
-              <PaginationLink href={page - 1 === 1 ? '/posts' : `/posts/page/${page - 1}`}>
+              <PaginationLink
+                href={(page - 1 === 1 ? '/posts' : `/posts/page/${page - 1}`) as Route}
+              >
                 {page - 1}
               </PaginationLink>
             </PaginationItem>
@@ -54,7 +57,7 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
               aria-disabled={true}
               className="pointer-events-none text-muted-foreground"
               isActive
-              href={page === 1 ? '/posts' : `/posts/page/${page}`}
+              href={(page === 1 ? '/posts' : `/posts/page/${page}`) as Route}
             >
               {page}
             </PaginationLink>
@@ -62,7 +65,7 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
 
           {hasNextPage && (
             <PaginationItem>
-              <PaginationLink href={`/posts/page/${page + 1}`}>{page + 1}</PaginationLink>
+              <PaginationLink href={`/posts/page/${page + 1}` as Route}>{page + 1}</PaginationLink>
             </PaginationItem>
           )}
 
@@ -78,7 +81,7 @@ export const PaginationComponent: React.FC<PaginatedDocs & { className?: string 
               className={cn({
                 'pointer-events-none text-muted-foreground': !hasNextPage,
               })}
-              href={`/posts/page/${page + 1}`}
+              href={`/posts/page/${page + 1}` as Route}
             />
           </PaginationItem>
         </PaginationContent>

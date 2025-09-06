@@ -59,5 +59,5 @@ export async function GET(
 
   draft.enable()
 
-  redirect(path)
+  redirect(path as Route)
 }

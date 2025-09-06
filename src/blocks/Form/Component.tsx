@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { getClientSideURL } from '@/lib/getURL'
 import { fields } from '@/fields/form/fields'
 import { FormBlock as FormBlockProps } from '@/payload-types'
+import type { Route } from 'next'
 
 export const FormBlock: React.FC<FormBlockProps> = ({ enableIntro, form, introContent }) => {
   const formObj = typeof form === 'object' && form !== null ? form : undefined
@@ -101,9 +102,7 @@ export const FormBlock: React.FC<FormBlockProps> = ({ enableIntro, form, introCo
           if (confirmationType === 'redirect' && redirect) {
             const { url } = redirect
 
-            const redirectUrl = url
-
-            if (redirectUrl) router.push(redirectUrl)
+            if (url) router.push(url as Route)
           }
         } catch (err) {
           console.warn(err)

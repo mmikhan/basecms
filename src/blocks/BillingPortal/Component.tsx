@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { headers } from 'next/headers'
 import { stripe } from '@/lib/stripe'
 import { redirect } from 'next/navigation'
+import type { Route } from 'next'
 
 export const BillingPortalBlock: React.FC<BillingPortalBlockProps> = async ({ label }) => {
   const payload = await getPayload({ config })
@@ -21,7 +22,7 @@ export const BillingPortalBlock: React.FC<BillingPortalBlockProps> = async ({ la
           customer: user?.stripeID ?? '',
         })
 
-        redirect(session.url)
+        redirect(session.url as Route)
       }}
     >
       <Button type="submit">{label}</Button>

@@ -4,6 +4,7 @@ import { VariantProps } from 'class-variance-authority'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
+import type { Route } from 'next'
 
 type CMSLinkType = {
   appearance?: 'inline' | VariantProps<typeof buttonVariants>['variant']
@@ -47,7 +48,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
     return (
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link className={cn(className)} href={(href || url) as Route} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
@@ -56,7 +57,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
 
   return (
     <Button asChild className={className} size={size} variant={appearance}>
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link className={cn(className)} href={(href || url) as Route} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>

@@ -3,6 +3,7 @@ import type { Page } from '@/payload-types'
 import { notFound, redirect } from 'next/navigation'
 import { getCachedRedirects } from '@/lib/getRedirects'
 import { getCachedDocument } from '@/lib/getDocument'
+import type { Route } from 'next'
 
 interface Props {
   disableNotFound?: boolean
@@ -17,7 +18,7 @@ export const Redirects: React.FC<Props> = async ({ disableNotFound, url }) => {
 
   if (redirectItem) {
     if (redirectItem.to?.url) {
-      redirect(redirectItem.to.url)
+      redirect(redirectItem.to.url as Route)
     }
 
     let redirectUrl: string
@@ -38,7 +39,7 @@ export const Redirects: React.FC<Props> = async ({ disableNotFound, url }) => {
       }`
     }
 
-    if (redirectUrl) redirect(redirectUrl)
+    if (redirectUrl) redirect(redirectUrl as Route)
   }
 
   if (disableNotFound) return null

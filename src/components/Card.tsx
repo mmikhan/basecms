@@ -5,6 +5,7 @@ import { Media } from './Media'
 import { Fragment } from 'react'
 import Link from 'next/link'
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
+import type { Route } from 'next'
 
 export type CardPostData = Pick<Post, 'title' | 'slug' | 'content' | 'heroImage' | 'categories'>
 
@@ -70,7 +71,7 @@ export const Card: React.FC<CardProps> = ({
 
         <div className="prose">
           <h3>
-            <Link className="not-prose text-primary" href={href}>
+            <Link className="not-prose text-primary" href={href as Route}>
               {title}
             </Link>
           </h3>
