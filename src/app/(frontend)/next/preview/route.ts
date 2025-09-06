@@ -4,18 +4,12 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import configPromise from '@payload-config'
+import config from '@payload-config'
+import { NextRequest } from 'next/server'
+import type { Route } from 'next'
 
-export async function GET(
-  req: {
-    cookies: {
-      get: (name: string) => {
-        value: string
-      }
-    }
-  } & Request,
-): Promise<Response> {
-  const payload = await getPayload({ config: configPromise })
+export async function GET(req: NextRequest): Promise<Response> {
+  const payload = await getPayload({ config })
 
   const { searchParams } = new URL(req.url)
 

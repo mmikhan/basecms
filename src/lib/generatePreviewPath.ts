@@ -14,6 +14,8 @@ type Props = {
 }
 
 export const generatePreviewPath = ({ collection, slug }: Props) => {
+  if (!slug) return 'about:blank'
+
   const encodedParams = new URLSearchParams({
     slug,
     collection,

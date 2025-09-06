@@ -24,9 +24,11 @@ export async function generateStaticParams() {
     },
   })
 
-  return posts.docs.map(({ slug }) => ({
-    slug,
-  }))
+  return posts.docs
+    .map(({ slug }) => ({
+      slug: slug ?? '',
+    }))
+    .filter((item) => item.slug)
 }
 
 type Props = {
