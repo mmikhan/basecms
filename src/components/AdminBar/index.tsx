@@ -39,7 +39,7 @@ export const AdminBar: React.FC<{ adminBarProps?: PayloadAdminBarProps }> = ({ a
 
   return (
     <div
-      className={cn('admin-bar', 'py-2 bg-black text-white', {
+      className={cn('admin-bar', 'py-2 bg-black text-white z-10', {
         block: show,
         hidden: !show,
       })}
