@@ -3,7 +3,15 @@
 import React, { useCallback, useEffect } from 'react'
 import { TextFieldClientProps } from 'payload'
 
-import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from '@payloadcms/ui'
+import {
+  useField,
+  Button,
+  TextInput,
+  FieldLabel,
+  useFormFields,
+  useForm,
+  useDebounce,
+} from '@payloadcms/ui'
 
 import { formatSlug } from './formatSlug'
 import './index.scss'
@@ -41,17 +49,15 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
     return fields[fieldToUse]?.value as string
   })
 
+  const debouncedValue = useDebounce(targetFieldValue, 500)
+
   useEffect(() => {
     if (checkboxValue) {
-      if (targetFieldValue) {
-        const formattedSlug = formatSlug(targetFieldValue)
+      const formattedSlug = formatSlug(debouncedValue || '')
 
-        if (value !== formattedSlug) setValue(formattedSlug)
-      } else {
-        if (value !== '') setValue('')
-      }
+      if (value !== formattedSlug) setValue(formattedSlug)
     }
-  }, [targetFieldValue, checkboxValue, setValue, value])
+  }, [debouncedValue, checkboxValue, setValue, value])
 
   const handleLock = useCallback(
     (e: React.MouseEvent<Element>) => {
