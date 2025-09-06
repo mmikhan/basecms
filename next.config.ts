@@ -1,11 +1,8 @@
+import { getServerSideURL } from '@/lib/getURL'
 import { withPayload } from '@payloadcms/next/withPayload'
+import type { NextConfig } from 'next'
 
-const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : undefined || process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   typedRoutes: true,
   turbopack: {
     resolveExtensions: [
@@ -30,7 +27,7 @@ const nextConfig = {
   images: {
     qualities: [25, 50, 75, 100],
     remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
+      ...[getServerSideURL()].map((item) => {
         const url = new URL(item)
 
         return {
@@ -38,7 +35,7 @@ const nextConfig = {
           hostname: url.hostname,
           port: url.port,
           pathname: '/**',
-        }
+        } as URL
       }),
     ],
   },
