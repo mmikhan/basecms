@@ -29,6 +29,18 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'cloudinaryFolder',
+      label: 'Cloudinary Folder',
+      type: 'text',
+      admin: {
+        components: {
+          Field: {
+            path: '@/fields/cloudinary#selectField',
+          },
+        },
+      },
+    },
   ],
   upload: {
     disableLocalStorage: true,

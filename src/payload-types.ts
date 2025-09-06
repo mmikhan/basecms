@@ -366,6 +366,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  cloudinaryFolder?: string | null;
   cloudinaryPublicId?: string | null;
   cloudinaryUrl?: string | null;
   cloudinaryResourceType?: string | null;
@@ -1551,6 +1552,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  cloudinaryFolder?: T;
   cloudinaryPublicId?: T;
   cloudinaryUrl?: T;
   cloudinaryResourceType?: T;

@@ -8,7 +8,12 @@ export default cloudinaryStorage({
   },
   collections: {
     media: {
-      folder: 'admarket',
+      folder: {
+        path: 'admarket',
+        enableDynamic: true,
+        fieldName: 'cloudinaryFolder',
+        skipFieldCreation: true,
+      },
       transformations: {
         default: {
           quality: 'auto',
