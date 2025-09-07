@@ -71,6 +71,7 @@ export const Pages: CollectionConfig = {
                 'formBlock',
                 'pricingTable',
                 'billingPortal',
+                'loginBlock',
               ],
               blocks: [],
               required: true,

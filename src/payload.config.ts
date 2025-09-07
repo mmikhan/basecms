@@ -30,6 +30,8 @@ import { FormBlock } from './blocks/Form/config'
 import { PricingTable } from './blocks/PricingTable/config'
 import { Orders } from './collections/Orders'
 import { BillingPortal } from './blocks/BillingPortal/config'
+import { Customers } from './collections/Customers'
+import { LoginBlock } from './blocks/login/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -88,8 +90,9 @@ export default buildConfig({
     FormBlock,
     PricingTable,
     BillingPortal,
+    LoginBlock,
   ],
-  collections: [Pages, Users, Media, Categories, Posts, Orders],
+  collections: [Pages, Users, Media, Categories, Posts, Orders, Customers],
   editor: defaultLexical,
   globals: [General, Header, Footer],
   secret: process.env.PAYLOAD_SECRET || '',

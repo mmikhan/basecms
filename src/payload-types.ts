@@ -64,6 +64,7 @@ export type SupportedTimezones =
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    customers: CustomerAuthOperations;
   };
   blocks: {
     cta: CallToActionBlock;
@@ -80,6 +81,7 @@ export interface Config {
     formBlock: FormBlock;
     pricingTable: PricingTableBlock;
     billingPortal: BillingPortalBlock;
+    loginBlock: LoginBlock;
   };
   collections: {
     pages: Page;
@@ -88,6 +90,7 @@ export interface Config {
     categories: Category;
     posts: Post;
     orders: Order;
+    customers: Customer;
     redirects: Redirect;
     search: Search;
     forms: Form;
@@ -106,6 +109,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
+    customers: CustomersSelect<false> | CustomersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -130,9 +134,13 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user:
+    | (User & {
+        collection: 'users';
+      })
+    | (Customer & {
+        collection: 'customers';
+      });
   jobs: {
     tasks: {
       schedulePublish: TaskSchedulePublish;
@@ -145,6 +153,24 @@ export interface Config {
   };
 }
 export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+export interface CustomerAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -232,6 +258,7 @@ export interface Page {
     | FormBlock
     | PricingTableBlock
     | BillingPortalBlock
+    | LoginBlock
   )[];
   meta?: {
     title?: string | null;
@@ -483,8 +510,6 @@ export interface User {
   id: number;
   name: string;
   roles?: ('admin' | 'user') | null;
-  stripeID?: string | null;
-  skipSync?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1209,6 +1234,29 @@ export interface BillingPortalBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LoginBlock".
+ */
+export interface LoginBlock {
+  redirect?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'loginBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "orders".
  */
 export interface Order {
@@ -1220,9 +1268,38 @@ export interface Order {
   total: number;
   status: string;
   mode: string;
-  user: number | User;
+  customer: number | Customer;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers".
+ */
+export interface Customer {
+  id: number;
+  name: string;
+  stripeID?: string | null;
+  skipSync?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1415,6 +1492,10 @@ export interface PayloadLockedDocument {
         value: number | Order;
       } | null)
     | ({
+        relationTo: 'customers';
+        value: number | Customer;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1435,10 +1516,15 @@ export interface PayloadLockedDocument {
         value: number | PayloadJob;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'customers';
+        value: number | Customer;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -1448,10 +1534,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: number;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'customers';
+        value: number | Customer;
+      };
   key?: string | null;
   value?:
     | {
@@ -1552,8 +1643,6 @@ export interface PagesSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   roles?: T;
-  stripeID?: T;
-  skipSync?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1670,9 +1759,36 @@ export interface OrdersSelect<T extends boolean = true> {
   total?: T;
   status?: T;
   mode?: T;
-  user?: T;
+  customer?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "customers_select".
+ */
+export interface CustomersSelect<T extends boolean = true> {
+  name?: T;
+  stripeID?: T;
+  skipSync?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  _verified?: T;
+  _verificationToken?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
