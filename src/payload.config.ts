@@ -32,6 +32,7 @@ import { Orders } from './collections/Orders'
 import { BillingPortal } from './blocks/BillingPortal/config'
 import { Customers } from './collections/Customers'
 import { LoginBlock } from './blocks/login/config'
+import { LogoutBlock } from './blocks/logout/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -91,6 +92,7 @@ export default buildConfig({
     PricingTable,
     BillingPortal,
     LoginBlock,
+    LogoutBlock,
   ],
   collections: [Pages, Users, Media, Categories, Posts, Orders, Customers],
   editor: defaultLexical,

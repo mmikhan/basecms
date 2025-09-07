@@ -14,6 +14,7 @@ import { FormBlock } from './Form/Component'
 import { PricingTableBlock } from './PricingTable/Component'
 import { BillingPortalBlock } from './BillingPortal/Component'
 import { LoginBlock } from './login/Component'
+import { LogoutBlock } from './logout/Component'
 
 type LayoutBlock = Page['layout'][number] | Header['layout'][number] | Footer['layout'][number]
 type BlockType = LayoutBlock['blockType']
@@ -39,6 +40,7 @@ const blockComponents: BlockComponentMap = {
   pricingTable: PricingTableBlock,
   billingPortal: BillingPortalBlock,
   loginBlock: LoginBlock,
+  logoutBlock: LogoutBlock,
 }
 
 // Generic helper preserves the specific block subtype

@@ -82,6 +82,7 @@ export interface Config {
     pricingTable: PricingTableBlock;
     billingPortal: BillingPortalBlock;
     loginBlock: LoginBlock;
+    logoutBlock: LogoutBlock;
   };
   collections: {
     pages: Page;
@@ -259,6 +260,7 @@ export interface Page {
     | PricingTableBlock
     | BillingPortalBlock
     | LoginBlock
+    | LogoutBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1254,6 +1256,34 @@ export interface LoginBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'loginBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoutBlock".
+ */
+export interface LogoutBlock {
+  redirect: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'destructive' | 'ghost' | 'link' | 'outline' | 'secondary') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'logoutBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
