@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
-import Image, { type ImageProps } from 'next/image'
+import type { ImageProps } from 'next/image'
+import CldImage from '../CldImage'
 
 // Keep these in sync with the CSS variables in your tailwind configuration
 const breakpoints = {
@@ -36,8 +37,8 @@ export const ImageMedia: React.FC<ImageProps & { className?: string }> = ({
 
   return (
     <picture className="relative block h-full w-full">
-      <Image
-        src={src}
+      <CldImage
+        src={src.toString()}
         alt={alt}
         className={cn(className)}
         fill={fill}
@@ -48,6 +49,7 @@ export const ImageMedia: React.FC<ImageProps & { className?: string }> = ({
         quality={100}
         loading={loading}
         sizes={computedSizes}
+        preserveTransformations
       />
     </picture>
   )
