@@ -10,7 +10,7 @@ export default stripePlugin({
   },
   sync: [
     {
-      collection: 'users',
+      collection: 'customers',
       stripeResourceType: 'customers',
       stripeResourceTypeSingular: 'customer',
       fields: [

@@ -10,22 +10,12 @@ import {
 import { Button } from '@/components/ui/button'
 import { PricingTableBlock as PricingTableBlockProps } from '@/payload-types'
 import { createCheckoutSession } from '@/lib/stripe'
-import { cache } from 'react'
-import { getPayload } from 'payload'
-import config from '@payload-config'
-import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import type { Route } from 'next'
-
-const getCurrentUser = cache(async () => {
-  const payload = await getPayload({ config })
-  const { user } = await payload.auth({ headers: await headers() })
-
-  return user
-})
+import { isAuth } from '@/actions/auth'
 
 export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plans }) => {
-  const user = await getCurrentUser()
+  const { user: customer } = await isAuth()
 
   return (
     <div className="container mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -45,7 +35,7 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plan
               action={async () => {
                 'use server'
 
-                if (!user) return redirect('/login')
+                if (!customer) return redirect('/login')
 
                 const session = await createCheckoutSession(
                   plan.mode,
@@ -69,7 +59,7 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plan
                       adjustable_quantity: { enabled: true, minimum: 1 },
                     },
                   ],
-                  user ?? undefined,
+                  customer ?? undefined,
                 )
                 redirect(session.url as Route)
               }}

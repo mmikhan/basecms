@@ -31,7 +31,7 @@ export const GET = async (request: NextRequest) => {
         total: (session.line_items?.data?.[0].amount_total ?? 0) / 100,
         status: session.payment_status,
         mode: session.mode,
-        user: await getUserByEmail(
+        customer: await getCustomerByEmail(
           session.customer_email ?? session.customer_details?.email ?? session.metadata?.email,
         ),
       },
@@ -43,10 +43,10 @@ export const GET = async (request: NextRequest) => {
   }
 }
 
-const getUserByEmail = cache(async (email: string | undefined) => {
+const getCustomerByEmail = cache(async (email: string | undefined) => {
   const payload = await getPayload({ config })
-  const user = await payload.find({
-    collection: 'users',
+  const customer = await payload.find({
+    collection: 'customers',
     where: {
       email: {
         equals: email,
@@ -54,5 +54,5 @@ const getUserByEmail = cache(async (email: string | undefined) => {
     },
   })
 
-  return user.docs[0]
+  return customer.docs[0]
 })

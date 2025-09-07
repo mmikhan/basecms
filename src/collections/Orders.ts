@@ -4,7 +4,7 @@ import { CollectionConfig } from 'payload'
 export const Orders: CollectionConfig = {
   slug: 'orders',
   admin: {
-    useAsTitle: 'user',
+    useAsTitle: 'customer',
   },
   access: {
     create: () => false,
@@ -63,10 +63,10 @@ export const Orders: CollectionConfig = {
       admin: { readOnly: true },
     },
     {
-      name: 'user',
-      label: 'User',
+      name: 'customer',
+      label: 'Customer',
       type: 'relationship',
-      relationTo: 'users',
+      relationTo: 'customers',
       required: true,
       admin: { readOnly: true },
     },
