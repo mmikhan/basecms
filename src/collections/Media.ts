@@ -45,4 +45,15 @@ export const Media: CollectionConfig = {
   upload: {
     disableLocalStorage: true,
   },
+  hooks: {
+    afterRead: [
+      ({ doc, req }) => {
+        if ((doc.requiresSignedURL || doc.isPrivate) && !req.user) {
+          return null
+        }
+
+        return doc
+      },
+    ],
+  },
 }

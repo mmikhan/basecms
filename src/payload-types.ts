@@ -413,6 +413,32 @@ export interface Media {
         | 'progressive'
       )[]
     | null;
+  /**
+   * Private files require signed URLs to access
+   */
+  isPrivate?: boolean | null;
+  requiresSignedURL?: boolean | null;
+  /**
+   * Generate a public URL with transformations for this private file
+   */
+  enablePublicPreview?: boolean | null;
+  /**
+   * Choose the type of transformation for public preview
+   */
+  transformationType?: ('watermark' | 'blur') | null;
+  /**
+   * Text to display as watermark on public preview
+   */
+  watermarkText?: string | null;
+  /**
+   * Public URL with applied transformations
+   */
+  publicTransformationUrl?: string | null;
+  publicTransformationPublicId?: string | null;
+  /**
+   * Preview URL with selected transformation presets applied
+   */
+  previewUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1561,6 +1587,14 @@ export interface MediaSelect<T extends boolean = true> {
   originalUrl?: T;
   transformedUrl?: T;
   transformationPreset?: T;
+  isPrivate?: T;
+  requiresSignedURL?: T;
+  enablePublicPreview?: T;
+  transformationType?: T;
+  watermarkText?: T;
+  publicTransformationUrl?: T;
+  publicTransformationPublicId?: T;
+  previewUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

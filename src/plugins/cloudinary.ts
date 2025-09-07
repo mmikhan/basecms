@@ -1,3 +1,4 @@
+import type { PayloadRequest } from 'payload'
 import { cloudinaryStorage, commonPresets } from 'payload-storage-cloudinary'
 
 export default cloudinaryStorage({
@@ -22,6 +23,47 @@ export default cloudinaryStorage({
         presets: commonPresets,
         preserveOriginal: true,
         enablePresetSelection: true,
+        publicTransformation: {
+          enabled: true,
+          fieldName: 'enablePublicPreview',
+          typeFieldName: 'transformationType',
+          watermark: {
+            textFieldName: 'watermarkText',
+            defaultText: 'PREVIEW',
+            style: {
+              fontFamily: 'Verdana',
+              fontSize: 50,
+              fontWeight: 'bold',
+              letterSpacing: 15,
+              color: 'rgb:808080',
+              opacity: 50,
+              angle: -45,
+              position: 'center',
+            },
+          },
+          blur: {
+            effect: 'blur:2000',
+            quality: 30,
+            width: 600,
+            height: 600,
+          },
+        },
+      },
+      uploadQueue: {
+        enabled: true,
+        maxConcurrentUploads: 3,
+        enableChunkedUploads: true,
+        largeFileThreshold: 100,
+        chunkSize: 20,
+      },
+      privateFiles: {
+        enabled: true,
+        expiresIn: 7200,
+        authTypes: ['upload', 'authenticated'],
+        includeTransformations: true,
+        customAuthCheck: (req: PayloadRequest) => {
+          return !!req.user
+        },
       },
     },
   },

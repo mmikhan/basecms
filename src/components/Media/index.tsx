@@ -4,6 +4,7 @@ import { SvgMedia } from './Svg'
 import { Media as MediaType } from '@/payload-types'
 import type { ImageProps } from 'next/image'
 import { getMediaUrl } from '@/lib/getURL'
+import { BasicImage, PremiumImage, ProtectedImage } from '../ProtectedImage'
 
 type MediaProps = {
   resource: MediaType
@@ -13,34 +14,34 @@ type MediaProps = {
   sizes?: ImageProps['sizes']
 }
 
-export const Media: React.FC<MediaProps> = ({
-  resource: { alt, transformedUrl, mimeType, updatedAt, width, height },
-  className,
-  fill,
-  priority,
-  sizes,
-}) => {
+export const Media: React.FC<MediaProps> = ({ resource, className, fill, priority, sizes }) => {
   return (
     <>
-      {mimeType?.includes('video') ? (
+      {resource.mimeType?.includes('video') ? (
         <VideoMedia
-          src={getMediaUrl(transformedUrl, updatedAt)}
+          src={getMediaUrl(resource.transformedUrl, resource.updatedAt)}
           className="h-full w-full object-cover"
         />
-      ) : mimeType?.includes('svg') ? (
+      ) : resource.mimeType?.includes('svg') ? (
         <SvgMedia
-          src={getMediaUrl(transformedUrl, updatedAt)}
-          alt={alt ?? ''}
+          src={getMediaUrl(resource.transformedUrl, resource.updatedAt)}
+          alt={resource.alt ?? ''}
           className={className}
         />
+      ) : resource.enablePublicPreview && resource.previewUrl ? (
+        <PremiumImage media={resource} />
+      ) : resource.requiresSignedURL ? (
+        <ProtectedImage doc={resource} />
+      ) : resource.isPrivate ? (
+        <BasicImage media={resource} />
       ) : (
         <ImageMedia
           className={className}
-          src={getMediaUrl(transformedUrl, updatedAt)}
-          alt={alt ?? ''}
+          src={getMediaUrl(resource.transformedUrl, resource.updatedAt)}
+          alt={resource.alt ?? ''}
           fill={fill}
-          width={width ?? undefined}
-          height={height ?? undefined}
+          width={resource.width ?? undefined}
+          height={resource.height ?? undefined}
           priority={priority}
           sizes={sizes ?? undefined}
         />
