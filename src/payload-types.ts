@@ -83,6 +83,7 @@ export interface Config {
     billingPortal: BillingPortalBlock;
     loginBlock: LoginBlock;
     logoutBlock: LogoutBlock;
+    registerBlock: RegisterBlock;
   };
   collections: {
     pages: Page;
@@ -261,6 +262,7 @@ export interface Page {
     | BillingPortalBlock
     | LoginBlock
     | LogoutBlock
+    | RegisterBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1284,6 +1286,29 @@ export interface LogoutBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'logoutBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RegisterBlock".
+ */
+export interface RegisterBlock {
+  redirect?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'registerBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

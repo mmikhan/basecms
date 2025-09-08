@@ -3,8 +3,9 @@
 import { cache } from 'react'
 import { headers } from 'next/headers'
 import config from '@payload-config'
-import { CollectionSlug, getPayload } from 'payload'
+import { CollectionSlug, getPayload, PayloadRequest } from 'payload'
 import * as auth from '@payloadcms/next/auth'
+import { Customer } from '@/payload-types'
 
 export const isAuth = cache(async () => {
   const payload = await getPayload({ config })
@@ -48,5 +49,31 @@ export async function refresh() {
     })
   } catch (error) {
     throw new Error(`Refresh failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
+}
+
+export async function register({
+  name,
+  email,
+  password,
+  collection = 'customers',
+}: Pick<Customer, 'name' | 'email' | 'password'> & {
+  collection?: CollectionSlug
+}) {
+  try {
+    const payload = await getPayload({ config })
+    const req = { headers: await headers() } as PayloadRequest
+
+    return await payload.create({
+      collection,
+      req,
+      data: {
+        name,
+        email,
+        password,
+      },
+    })
+  } catch (error) {
+    throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
