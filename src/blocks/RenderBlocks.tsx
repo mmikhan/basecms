@@ -13,8 +13,8 @@ import { ArchiveBlock } from './ArchiveBlock/Component'
 import { FormBlock } from './Form/Component'
 import { PricingTableBlock } from './PricingTable/Component'
 import { BillingPortalBlock } from './BillingPortal/Component'
-import { LoginBlock } from './login/Component'
-import { LogoutBlock } from './logout/Component'
+import { LoginBlock } from './Login/Component'
+import { LogoutBlock } from './Logout/Component'
 
 type LayoutBlock = Page['layout'][number] | Header['layout'][number] | Footer['layout'][number]
 type BlockType = LayoutBlock['blockType']

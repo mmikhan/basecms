@@ -31,8 +31,8 @@ import { PricingTable } from './blocks/PricingTable/config'
 import { Orders } from './collections/Orders'
 import { BillingPortal } from './blocks/BillingPortal/config'
 import { Customers } from './collections/Customers'
-import { LoginBlock } from './blocks/login/config'
-import { LogoutBlock } from './blocks/logout/config'
+import { LoginBlock } from './blocks/Login/config'
+import { LogoutBlock } from './blocks/Logout/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
