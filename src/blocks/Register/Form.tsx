@@ -39,6 +39,7 @@ const formSchema = z.object({
 
 export const RegisterForm: React.FC<RegisterBlock> = ({ redirect: link }) => {
   const router = useRouter()
+  const [isRegistered, setIsRegistered] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,11 +50,28 @@ export const RegisterForm: React.FC<RegisterBlock> = ({ redirect: link }) => {
     try {
       setError(null)
       await register({ ...data })
+      setIsRegistered(true)
 
       router.push((link?.url as Route) ?? '/')
     } catch (error) {
+      setIsRegistered(false)
       setError(error instanceof Error ? error.message : 'Unknown error')
     }
+  }
+
+  if (isRegistered) {
+    return (
+      <Card className="container mx-auto w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Registration Successful</CardTitle>
+          <CardDescription>Please check your email to verify your account.</CardDescription>
+          <CardAction>
+            <Link href={(link?.url as Route) ?? '/'}>Login</Link>
+          </CardAction>
+        </CardHeader>
+        <CardContent>Thank you for registering!</CardContent>
+      </Card>
+    )
   }
 
   return (
