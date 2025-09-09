@@ -22,46 +22,60 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { login } from '@/actions/auth'
+import Link from 'next/link'
+import { forgotPassword } from '@/actions/auth'
 import { useState } from 'react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { AlertCircleIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { LoginBlock } from '@/payload-types'
+import { ForgotPasswordBlock } from '@/payload-types'
 import type { Route } from 'next'
-import { CMSLink } from '@/components/Link'
 
 const formSchema = z.object({
-  email: z.email().min(1, 'Email is required'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().min(1, 'Email is required'),
 })
 
-export const LoginForm: React.FC<LoginBlock> = ({ forgotPassword, redirect: link }) => {
-  const router = useRouter()
+export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ redirect: link }) => {
+  const [isSent, setIsSent] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { email: '' },
   })
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       setError(null)
-      await login({ ...data })
-
-      router.push((link?.url as Route) ?? '/')
+      await forgotPassword({ ...data })
+      setIsSent(true)
     } catch (error) {
+      setIsSent(false)
       setError(error instanceof Error ? error.message : 'Unknown error')
     }
+  }
+
+  if (isSent) {
+    return (
+      <Card className="container mx-auto w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Forgot Password</CardTitle>
+          <CardDescription>
+            Please check your email for password reset instructions.
+          </CardDescription>
+          <CardAction>
+            <Link href={(link?.url as Route) ?? '/'}>Login</Link>
+          </CardAction>
+        </CardHeader>
+      </Card>
+    )
   }
 
   return (
     <Card className="container mx-auto w-full max-w-sm">
       <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
-        <CardDescription>Enter your email below to login to your account</CardDescription>
+        <CardTitle>Register to your account</CardTitle>
+        <CardDescription>Enter your email below to register for an account</CardDescription>
         <CardAction>
-          <Button variant="link">Sign Up</Button>
+          <Button variant="link">Login</Button>
         </CardAction>
       </CardHeader>
       <Form {...form}>
@@ -80,38 +94,16 @@ export const LoginForm: React.FC<LoginBlock> = ({ forgotPassword, redirect: link
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center justify-between">
-                    <FormLabel>Password</FormLabel>
-                    <CMSLink
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                      {...forgotPassword}
-                    />
-                  </div>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </CardContent>
           <CardFooter className="flex-col gap-2">
             <Button type="submit" className="w-full">
-              Login
-            </Button>
-            <Button variant="outline" className="w-full">
-              Login with Google
+              Send Reset Link
             </Button>
 
             {error && (
               <Alert variant="destructive">
                 <AlertCircleIcon />
-                <AlertTitle>Login Failed</AlertTitle>
+                <AlertTitle>Forgot Password Failed</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}

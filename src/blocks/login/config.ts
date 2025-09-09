@@ -14,6 +14,12 @@ export const LoginBlock: Block = {
   fields: [
     link({
       overrides: {
+        name: 'forgotPassword',
+      },
+      appearances: false,
+    }),
+    link({
+      overrides: {
         name: 'redirect',
       },
       appearances: false,

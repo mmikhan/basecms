@@ -74,6 +74,7 @@ export const Pages: CollectionConfig = {
                 'loginBlock',
                 'logoutBlock',
                 'registerBlock',
+                'forgotPasswordBlock',
               ],
               blocks: [],
               required: true,

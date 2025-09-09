@@ -77,3 +77,25 @@ export async function register({
     throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
+
+export async function forgotPassword({
+  email,
+  collection = 'customers',
+  disableEmail = false,
+}: Pick<Customer, 'email'> & { collection?: CollectionSlug; disableEmail?: boolean }) {
+  try {
+    const payload = await getPayload({ config })
+    const req = { headers: await headers() } as PayloadRequest
+
+    return await payload.forgotPassword({
+      collection,
+      req,
+      data: {
+        email,
+      },
+      disableEmail,
+    })
+  } catch (error) {
+    throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
+}
