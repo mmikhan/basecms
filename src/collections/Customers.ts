@@ -31,6 +31,13 @@ export const Customers: CollectionConfig = {
         return `A new account has just been created for you to access. Please click on the following link or paste the URL below into your browser to verify your email: <a href="${getServerSideURL()}/next/verify?token=${token}">${getServerSideURL()}/next/verify?token=${token}</a>. After verifying your email, you will be able to log in successfully.`
       },
     },
+    forgotPassword: {
+      generateEmailHTML: (args) => {
+        const token = args?.token ?? ''
+
+        return `We received a request to reset the password for your account. Please click on the following link or paste the URL below into your browser to reset your password: <a href="${getServerSideURL()}/reset?token=${token}">${getServerSideURL()}/reset?token=${token}</a>. If you did not request this, please ignore this email and your password will remain unchanged.`
+      },
+    },
   },
   labels: {
     plural: 'Customers',

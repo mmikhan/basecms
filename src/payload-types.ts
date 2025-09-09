@@ -85,6 +85,7 @@ export interface Config {
     logoutBlock: LogoutBlock;
     registerBlock: RegisterBlock;
     forgotPasswordBlock: ForgotPasswordBlock;
+    resetPasswordBlock: ResetPasswordBlock;
   };
   collections: {
     pages: Page;
@@ -265,6 +266,7 @@ export interface Page {
     | LogoutBlock
     | RegisterBlock
     | ForgotPasswordBlock
+    | ResetPasswordBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1332,7 +1334,7 @@ export interface RegisterBlock {
  * via the `definition` "ForgotPasswordBlock".
  */
 export interface ForgotPasswordBlock {
-  redirect?: {
+  redirect: {
     type?: ('reference' | 'custom') | null;
     newTab?: boolean | null;
     reference?:
@@ -1345,10 +1347,35 @@ export interface ForgotPasswordBlock {
           value: number | Post;
         } | null);
     url?: string | null;
+    label: string;
   };
   id?: string | null;
   blockName?: string | null;
   blockType: 'forgotPasswordBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResetPasswordBlock".
+ */
+export interface ResetPasswordBlock {
+  redirect: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resetPasswordBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

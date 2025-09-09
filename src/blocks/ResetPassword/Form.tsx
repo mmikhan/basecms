@@ -22,44 +22,74 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { forgotPassword } from '@/actions/auth'
+import { resetPassword } from '@/actions/auth'
 import { useState } from 'react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { AlertCircleIcon } from 'lucide-react'
-import { ForgotPasswordBlock } from '@/payload-types'
+import { ResetPasswordBlock } from '@/payload-types'
+import { useSearchParams } from 'next/navigation'
 import { CMSLink } from '@/components/Link'
 
-const formSchema = z.object({
-  email: z.string().min(1, 'Email is required'),
-})
+const formSchema = z
+  .object({
+    password: z.string().min(6, 'Password must be at least 6 characters long'),
+    confirmPassword: z.string().min(6, 'Please confirm your password'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  })
 
-export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ redirect: link }) => {
-  const [isSent, setIsSent] = useState<boolean>(false)
+export const ResetPasswordForm: React.FC<ResetPasswordBlock> = ({ redirect: link }) => {
+  const [isSuccess, setIsSuccess] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { email: '' },
+    defaultValues: { password: '', confirmPassword: '' },
   })
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       setError(null)
-      await forgotPassword({ ...data })
-      setIsSent(true)
+      await resetPassword({ ...data, resetPasswordToken: token })
+      setIsSuccess(true)
     } catch (error) {
-      setIsSent(false)
+      setIsSuccess(false)
       setError(error instanceof Error ? error.message : 'Unknown error')
     }
   }
 
-  if (isSent) {
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+
+  if (!token) {
     return (
       <Card className="container mx-auto w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Forgot Password</CardTitle>
-          <CardDescription>
-            Please check your email for password reset instructions.
-          </CardDescription>
+          <CardTitle>Reset Password</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Alert variant="destructive">
+            <AlertCircleIcon />
+            <AlertTitle>Invalid or missing token</AlertTitle>
+            <AlertDescription>
+              The password reset link is invalid or has expired. Please request a new one.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+        <CardFooter>
+          <CMSLink {...link} />
+        </CardFooter>
+      </Card>
+    )
+  }
+
+  if (isSuccess) {
+    return (
+      <Card className="container mx-auto w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Your password has been successfully reset.</CardTitle>
+          <CardDescription>You can now log in with your new password.</CardDescription>
           <CardAction>
             <CMSLink {...link} />
           </CardAction>
@@ -82,12 +112,25 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ redirect: li
           <CardContent className="flex flex-col gap-6">
             <FormField
               control={form.control}
-              name="email"
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="m@example.com" {...field} />
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -96,7 +139,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ redirect: li
           </CardContent>
           <CardFooter className="flex-col gap-2">
             <Button type="submit" className="w-full">
-              Send Reset Link
+              Reset Password
             </Button>
 
             {error && (

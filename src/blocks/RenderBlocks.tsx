@@ -17,6 +17,7 @@ import { LoginBlock } from './Login/Component'
 import { LogoutBlock } from './Logout/Component'
 import { RegisterBlock } from './Register/Component'
 import { ForgotPasswordBlock } from './ForgotPassword/Component'
+import { ResetPasswordBlock } from './ResetPassword/Component'
 
 type LayoutBlock = Page['layout'][number] | Header['layout'][number] | Footer['layout'][number]
 type BlockType = LayoutBlock['blockType']
@@ -45,6 +46,7 @@ const blockComponents: BlockComponentMap = {
   logoutBlock: LogoutBlock,
   registerBlock: RegisterBlock,
   forgotPasswordBlock: ForgotPasswordBlock,
+  resetPasswordBlock: ResetPasswordBlock,
 }
 
 // Generic helper preserves the specific block subtype

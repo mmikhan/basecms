@@ -1,16 +1,16 @@
 import { link } from '@/fields/link'
 import type { Block } from 'payload'
 
-export const ForgotPasswordBlock: Block = {
-  slug: 'forgotPasswordBlock',
+export const ResetPasswordBlock: Block = {
+  slug: 'resetPasswordBlock',
   admin: {
-    group: 'Forgot Password',
+    group: 'Reset Password',
   },
   labels: {
-    singular: 'Forgot Password Block',
-    plural: 'Forgot Password Blocks',
+    singular: 'Reset Password Block',
+    plural: 'Reset Password Blocks',
   },
-  interfaceName: 'ForgotPasswordBlock',
+  interfaceName: 'ResetPasswordBlock',
   fields: [
     link({
       overrides: {

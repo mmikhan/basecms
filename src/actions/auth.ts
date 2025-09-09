@@ -99,3 +99,26 @@ export async function forgotPassword({
     throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
+
+export async function resetPassword({
+  password,
+  resetPasswordToken,
+  collection = 'customers',
+}: Pick<Customer, 'password' | 'resetPasswordToken'> & { collection?: CollectionSlug }) {
+  try {
+    const payload = await getPayload({ config })
+    const req = { headers: await headers() } as PayloadRequest
+
+    return await payload.resetPassword({
+      collection,
+      req,
+      data: {
+        token: resetPasswordToken ?? '',
+        password: password ?? '',
+      },
+      overrideAccess: true,
+    })
+  } catch (error) {
+    throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
+}
