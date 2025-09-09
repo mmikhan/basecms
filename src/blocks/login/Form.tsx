@@ -36,7 +36,7 @@ const formSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 })
 
-export const LoginForm: React.FC<LoginBlock> = ({ forgotPassword, redirect: link }) => {
+export const LoginForm: React.FC<LoginBlock> = ({ register, forgotPassword, redirect: link }) => {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -61,7 +61,7 @@ export const LoginForm: React.FC<LoginBlock> = ({ forgotPassword, redirect: link
         <CardTitle>Login to your account</CardTitle>
         <CardDescription>Enter your email below to login to your account</CardDescription>
         <CardAction>
-          <Button variant="link">Sign Up</Button>
+          <CMSLink {...register} />
         </CardAction>
       </CardHeader>
       <Form {...form}>

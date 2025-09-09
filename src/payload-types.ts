@@ -1245,6 +1245,21 @@ export interface BillingPortalBlock {
  * via the `definition` "LoginBlock".
  */
 export interface LoginBlock {
+  register: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+  };
   forgotPassword: {
     type?: ('reference' | 'custom') | null;
     newTab?: boolean | null;
