@@ -4,7 +4,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
+import { resendAdapter } from '@payloadcms/email-resend'
 import { Pages } from './collections/Pages'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -111,4 +111,9 @@ export default buildConfig({
   }),
   sharp,
   plugins: [...plugins],
+  email: resendAdapter({
+    defaultFromAddress: 'dev@resend.dev',
+    defaultFromName: 'AdMarket',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
 })
