@@ -6,11 +6,9 @@ import { getServerSideURL } from '@/lib/getURL'
 import { mergeOpenGraph } from '@/lib/mergeOpenGraph'
 import { AdminBar } from '@/components/AdminBar'
 import { draftMode } from 'next/headers'
-import configPromise from '@payload-config'
-import type { Config, Footer, Header } from '@/payload-types'
+import type { Footer, Header } from '@/payload-types'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { unstable_cache } from 'next/cache'
-import { getPayload } from 'payload'
+import { getCachedGlobal } from '@/lib/getGlobals'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -35,17 +33,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     </html>
   )
 }
-
-const getCachedGlobal = (slug: keyof Config['globals'], depth = 0) =>
-  unstable_cache(
-    async () => {
-      const payload = await getPayload({ config: configPromise })
-
-      return await payload.findGlobal({ slug, depth })
-    },
-    [slug],
-    { tags: [`global_${slug}`] },
-  )
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
