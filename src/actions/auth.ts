@@ -1,16 +1,16 @@
 'use server'
 
 import { cache } from 'react'
-import { headers } from 'next/headers'
+import { headers as NextHeaders } from 'next/headers'
 import config from '@payload-config'
 import { CollectionSlug, getPayload, PayloadRequest } from 'payload'
 import * as auth from '@payloadcms/next/auth'
 import { Customer } from '@/payload-types'
 
-export const isAuth = cache(async () => {
+export const isAuth = cache(async (headers?: Headers) => {
   const payload = await getPayload({ config })
 
-  return await payload.auth({ headers: await headers() })
+  return await payload.auth({ headers: headers ?? (await NextHeaders()) })
 })
 
 export const login = async ({
@@ -62,7 +62,7 @@ export async function register({
 }) {
   try {
     const payload = await getPayload({ config })
-    const req = { headers: await headers() } as PayloadRequest
+    const req = { headers: await NextHeaders() } as PayloadRequest
 
     return await payload.create({
       collection,
@@ -85,7 +85,7 @@ export async function forgotPassword({
 }: Pick<Customer, 'email'> & { collection?: CollectionSlug; disableEmail?: boolean }) {
   try {
     const payload = await getPayload({ config })
-    const req = { headers: await headers() } as PayloadRequest
+    const req = { headers: await NextHeaders() } as PayloadRequest
 
     return await payload.forgotPassword({
       collection,
@@ -107,7 +107,7 @@ export async function resetPassword({
 }: Pick<Customer, 'password' | 'resetPasswordToken'> & { collection?: CollectionSlug }) {
   try {
     const payload = await getPayload({ config })
-    const req = { headers: await headers() } as PayloadRequest
+    const req = { headers: await NextHeaders() } as PayloadRequest
 
     return await payload.resetPassword({
       collection,

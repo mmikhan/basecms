@@ -26,7 +26,7 @@ import { login } from '@/actions/auth'
 import { useState } from 'react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { AlertCircleIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { LoginBlock } from '@/payload-types'
 import type { Route } from 'next'
 import { CMSLink } from '@/components/Link'
@@ -38,6 +38,7 @@ const formSchema = z.object({
 
 export const LoginForm: React.FC<LoginBlock> = ({ register, forgotPassword, redirect: link }) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [error, setError] = useState<string | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,7 +50,7 @@ export const LoginForm: React.FC<LoginBlock> = ({ register, forgotPassword, redi
       setError(null)
       await login({ ...data })
 
-      router.push((link?.url as Route) ?? '/')
+      router.push((searchParams.get('redirect') ?? link?.url ?? '/') as Route)
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Unknown error')
     }
