@@ -1,3 +1,4 @@
+import type { Media } from '@/payload-types'
 import type { PayloadRequest } from 'payload'
 import { cloudinaryStorage, commonPresets } from 'payload-storage-cloudinary'
 
@@ -61,8 +62,8 @@ export default cloudinaryStorage({
         expiresIn: 7200,
         authTypes: ['upload', 'authenticated'],
         includeTransformations: true,
-        customAuthCheck: (req: PayloadRequest) => {
-          return !!req.user
+        customAuthCheck: (req: PayloadRequest, doc: Media) => {
+          return !!req.user || !doc.isPrivate
         },
       },
     },
