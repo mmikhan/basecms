@@ -122,3 +122,50 @@ export async function resetPassword({
     throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
+
+export async function updatePassword({
+  email,
+  password,
+  collection = 'customers',
+}: Pick<Customer, 'email' | 'password'> & { collection?: CollectionSlug }) {
+  try {
+    const payload = await getPayload({ config })
+    const req = { headers: await NextHeaders() } as PayloadRequest
+
+    const token = await payload.forgotPassword({
+      collection,
+      req,
+      data: { email },
+      disableEmail: false,
+    })
+
+    return await resetPassword({
+      password,
+      resetPasswordToken: token,
+    })
+  } catch (error) {
+    throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
+}
+
+export async function updateAccount({
+  id,
+  name,
+  collection = 'customers',
+}: Pick<Customer, 'id' | 'name'> & { collection?: CollectionSlug }) {
+  try {
+    const payload = await getPayload({ config })
+    const req = { headers: await NextHeaders() } as PayloadRequest
+
+    return await payload.update({
+      id,
+      collection,
+      req,
+      data: {
+        name,
+      },
+    })
+  } catch (error) {
+    throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
+}
