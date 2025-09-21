@@ -2,10 +2,12 @@ import { unstable_cache } from 'next/cache'
 import { getPayload, GlobalSlug } from 'payload'
 import config from '@payload-config'
 
-/**
- * Returns a unstable_cache function mapped with the cache tag for the slug
- */
-export const getCachedGlobal = (slug: GlobalSlug, depth = 0) =>
+type GlobalIdentifier = {
+  slug: GlobalSlug
+  depth?: number | undefined
+}
+
+export const getCachedGlobal = ({ slug, depth }: GlobalIdentifier) =>
   unstable_cache(
     async () => {
       const payload = await getPayload({ config })

@@ -1,4 +1,4 @@
-import { getPayload } from 'payload'
+import { type CollectionSlug, getPayload } from 'payload'
 import { cache } from 'react'
 import config from '@payload-config'
 import { POSTS_PER_PAGE } from '@/lib/utils'
@@ -14,7 +14,7 @@ export default async function SearchPage({
 }) {
   const { q: query } = await searchParams
   const { docs } = await querySearchByQuery({ query })
-  const type = docs?.[0]?.type
+  const type = docs?.[0]?.type as CollectionSlug
 
   return (
     <div className="container mx-auto py-24">

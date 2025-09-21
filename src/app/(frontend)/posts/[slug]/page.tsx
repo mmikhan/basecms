@@ -1,6 +1,5 @@
 import { draftMode } from 'next/headers'
-import { getPayload } from 'payload'
-import { cache } from 'react'
+import { CollectionSlug, getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Redirects } from '@/components/Redirects'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
@@ -9,6 +8,8 @@ import { PostHero } from '@/components/PostHero'
 import { Metadata } from 'next'
 import { generateMeta } from '@/lib/generateMeta'
 import { Card } from '@/components/Card'
+import { getCachedDocument } from '@/lib/getDocument'
+import type { Post } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -39,7 +40,14 @@ export default async function PostPage({ params }: Props) {
   const { slug } = await params
   const { isEnabled: draft } = await draftMode()
 
-  const { post, collectionSlug } = await queryPostBySlug({ slug })
+  const post = (await getCachedDocument({
+    collection: 'posts',
+    slug: slug as CollectionSlug,
+    draft,
+    limit: 1,
+    overrideAccess: draft,
+    pagination: false,
+  })()) as Post
 
   if (!post) return <Redirects url={`/posts/${slug}`} />
 
@@ -63,9 +71,7 @@ export default async function PostPage({ params }: Props) {
                   ?.map((doc, index) => {
                     if (typeof doc === 'string') return null
 
-                    return (
-                      <Card key={index} {...doc} collectionSlug={collectionSlug} showCategories />
-                    )
+                    return <Card key={index} {...doc} collectionSlug={'posts'} showCategories />
                   })}
               </div>
             </div>
@@ -76,32 +82,13 @@ export default async function PostPage({ params }: Props) {
   )
 }
 
-const queryPostBySlug = cache(async ({ slug }: { slug: string | undefined }) => {
-  const { isEnabled: draft } = await draftMode()
-  const payload = await getPayload({ config: configPromise })
-
-  const post = await payload.find({
-    collection: 'posts',
-    draft,
-    limit: 1,
-    overrideAccess: draft,
-    pagination: false,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  const config = payload.collections.posts.config
-
-  return { post: post.docs?.[0] || null, collectionSlug: config.slug }
-})
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
 
-  const { post } = await queryPostBySlug({ slug })
+  const post = (await getCachedDocument({
+    collection: 'posts',
+    slug: slug as CollectionSlug,
+  })()) as Post
 
   return generateMeta({ doc: post })
 }

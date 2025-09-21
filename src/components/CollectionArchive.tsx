@@ -1,11 +1,11 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { CollectionConfig } from 'payload'
+import type { CollectionSlug } from 'payload'
 import { Card, CardPostData } from './Card'
 
 type CollectionArchiveProps = {
   data?: CardPostData[]
-  collectionSlug: CollectionConfig['slug']
+  collectionSlug: CollectionSlug
 }
 
 export const CollectionArchive: React.FC<CollectionArchiveProps> = ({ data, collectionSlug }) => {

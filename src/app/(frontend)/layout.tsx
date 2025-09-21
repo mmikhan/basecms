@@ -12,8 +12,8 @@ import { getCachedGlobal } from '@/lib/getGlobals'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
-  const { layout: headerLayout } = (await getCachedGlobal('header', 1)()) as Header
-  const { layout: footerLayout } = (await getCachedGlobal('footer', 1)()) as Footer
+  const { layout: headerLayout } = (await getCachedGlobal({ slug: 'header', depth: 1 })()) as Header
+  const { layout: footerLayout } = (await getCachedGlobal({ slug: 'footer', depth: 1 })()) as Footer
 
   return (
     <html lang="en" suppressHydrationWarning>

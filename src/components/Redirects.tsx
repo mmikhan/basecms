@@ -27,7 +27,7 @@ export const Redirects: React.FC<Props> = async ({ disableNotFound, url }) => {
       const collection = redirectItem.to?.reference?.relationTo
       const id = redirectItem.to?.reference?.value
 
-      const document = (await getCachedDocument(collection, id)()) as Page
+      const document = (await getCachedDocument({ collection, slug: id })()) as Page
       redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
         document?.slug
       }`

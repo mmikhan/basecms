@@ -3,14 +3,25 @@ import config from '@payload-config'
 import { CollectionSlug, getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
 
-/**
- * Returns a unstable_cache function mapped with the cache tag for the slug
- */
-export const getCachedDocument = (
-  collection: keyof Config['collections'],
-  slug: CollectionSlug,
-  depth = 0,
-) =>
+type DocumentQueryParams = {
+  collection: keyof Config['collections']
+  slug: CollectionSlug
+  depth?: number | undefined
+  draft?: boolean | undefined
+  limit?: number | undefined
+  pagination?: boolean | undefined
+  overrideAccess?: boolean | undefined
+}
+
+export const getCachedDocument = ({
+  collection,
+  slug,
+  depth,
+  draft,
+  limit,
+  pagination,
+  overrideAccess,
+}: DocumentQueryParams) =>
   unstable_cache(
     async () => {
       const payload = await getPayload({ config })
@@ -18,6 +29,10 @@ export const getCachedDocument = (
       const page = await payload.find({
         collection,
         depth,
+        draft,
+        limit,
+        pagination,
+        overrideAccess,
         where: {
           slug: {
             equals: slug,

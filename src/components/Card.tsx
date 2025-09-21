@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import type { Post } from '@/payload-types'
-import { CollectionConfig } from 'payload'
+import type { CollectionSlug } from 'payload'
 import { Media } from './Media'
 import { Fragment } from 'react'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import type { Route } from 'next'
 export type CardPostData = Pick<Post, 'title' | 'slug' | 'content' | 'heroImage' | 'categories'>
 
 type CardProps = CardPostData & {
-  collectionSlug: CollectionConfig['slug']
+  collectionSlug: CollectionSlug
   className?: string
   showCategories?: boolean
   customTitle?: string
