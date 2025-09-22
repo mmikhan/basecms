@@ -4,7 +4,7 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { Field } from 'payload'
 
 export default redirectsPlugin({
-  collections: ['pages'],
+  collections: ['pages', 'posts'],
   redirectTypes: ['301', '302', '303', '307', '308'],
   overrides: {
     access: {
