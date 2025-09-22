@@ -36,7 +36,7 @@ export const MediumImpactHero: Block = {
       label: false,
     },
     linkGroup({
-      overrides: { maxRows: 2 },
+      overrides: { maxRows: 2, dbName: 'links' },
       appearances: ['inline', 'default', 'destructive', 'ghost', 'link', 'outline', 'secondary'],
     }),
     {
