@@ -95,6 +95,7 @@ export interface Config {
     posts: Post;
     orders: Order;
     customers: Customer;
+    dashboard: Dashboard;
     redirects: Redirect;
     search: Search;
     forms: Form;
@@ -114,6 +115,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
+    dashboard: DashboardSelect<false> | DashboardSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -225,6 +227,10 @@ export interface CallToActionBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'dashboard';
+                value: number | Dashboard;
               } | null);
           url?: string | null;
           label: string;
@@ -316,6 +322,10 @@ export interface HighImpactHero {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'dashboard';
+                value: number | Dashboard;
               } | null);
           url?: string | null;
           label: string;
@@ -538,6 +548,44 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dashboard".
+ */
+export interface Dashboard {
+  id: number;
+  _order?: string | null;
+  title: string;
+  layout: (
+    | CallToActionBlock
+    | HighImpactHero
+    | MediumImpactHero
+    | LowImpactHero
+    | ContentBlock
+    | MediaBlock
+    | CodeBlock
+    | BannerBlock
+    | NavBlock
+    | FooterBlock
+    | ArchiveBlock
+    | FormBlock
+    | PricingTableBlock
+    | BillingPortalBlock
+    | LoginBlock
+    | LogoutBlock
+    | RegisterBlock
+    | ForgotPasswordBlock
+    | ResetPasswordBlock
+    | AccountNameBlock
+    | AccountPasswordBlock
+  )[];
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MediumImpactHero".
  */
 export interface MediumImpactHero {
@@ -569,6 +617,10 @@ export interface MediumImpactHero {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'dashboard';
+                value: number | Dashboard;
               } | null);
           url?: string | null;
           label: string;
@@ -618,6 +670,10 @@ export interface LowImpactHero {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'dashboard';
+                value: number | Dashboard;
               } | null);
           url?: string | null;
           label: string;
@@ -668,6 +724,10 @@ export interface ContentBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'dashboard';
+                value: number | Dashboard;
               } | null);
           url?: string | null;
           label: string;
@@ -748,6 +808,10 @@ export interface NavBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'dashboard';
+                value: number | Dashboard;
               } | null);
           url?: string | null;
           label: string;
@@ -782,6 +846,10 @@ export interface FooterBlock {
             | ({
                 relationTo: 'posts';
                 value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'dashboard';
+                value: number | Dashboard;
               } | null);
           url?: string | null;
           label: string;
@@ -1256,6 +1324,10 @@ export interface LoginBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     url?: string | null;
     label: string;
@@ -1271,6 +1343,10 @@ export interface LoginBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     url?: string | null;
     label: string;
@@ -1286,6 +1362,10 @@ export interface LoginBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     url?: string | null;
   };
@@ -1309,6 +1389,10 @@ export interface LogoutBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     url?: string | null;
     label: string;
@@ -1337,6 +1421,10 @@ export interface RegisterBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     url?: string | null;
   };
@@ -1360,6 +1448,10 @@ export interface ForgotPasswordBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     url?: string | null;
     label: string;
@@ -1384,6 +1476,10 @@ export interface ResetPasswordBlock {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     url?: string | null;
     label: string;
@@ -1633,6 +1729,10 @@ export interface PayloadLockedDocument {
         value: number | Customer;
       } | null)
     | ({
+        relationTo: 'dashboard';
+        value: number | Dashboard;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1744,7 +1844,7 @@ export interface PayloadQueryPreset {
     | number
     | boolean
     | null;
-  relatedCollection: 'pages' | 'users' | 'posts';
+  relatedCollection: 'pages' | 'users' | 'posts' | 'dashboard';
   /**
    * This is a tempoary field used to determine if updating the preset would remove the user's access to it. When `true`, this record will be deleted after running the preset's `validate` function.
    */
@@ -1926,6 +2026,21 @@ export interface CustomersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dashboard_select".
+ */
+export interface DashboardSelect<T extends boolean = true> {
+  _order?: T;
+  title?: T;
+  layout?: T | {};
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2310,6 +2425,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'dashboard';
+          value: number | Dashboard;
         } | null);
     global?: string | null;
     user?: (number | null) | User;

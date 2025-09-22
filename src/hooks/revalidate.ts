@@ -22,6 +22,10 @@ export const getPath = (collectionSlug: string, docSlug: string): string => {
   switch (collectionSlug) {
     case 'pages':
       return docSlug === 'home' ? '/' : `/${docSlug}`
+    case 'dashboard':
+      return docSlug === 'dashboard' ? '/dashboard' : `/dashboard/${docSlug}`
+    case 'posts':
+      return `/posts/${docSlug}`
     default:
       return `/${collectionSlug}/${docSlug}`
   }

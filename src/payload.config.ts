@@ -36,6 +36,7 @@ import { LogoutBlock } from './blocks/Logout/config'
 import { RegisterBlock } from './blocks/Register/config'
 import { ForgotPasswordBlock } from './blocks/ForgotPassword/config'
 import { ResetPasswordBlock } from './blocks/ResetPassword/config'
+import { Dashboard } from './collections/Dashboard'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -100,7 +101,7 @@ export default buildConfig({
     ForgotPasswordBlock,
     ResetPasswordBlock,
   ],
-  collections: [Pages, Users, Media, Categories, Posts, Orders, Customers],
+  collections: [Pages, Users, Media, Categories, Posts, Orders, Customers, Dashboard],
   editor: defaultLexical,
   globals: [General, Header, Footer],
   secret: process.env.PAYLOAD_SECRET || '',

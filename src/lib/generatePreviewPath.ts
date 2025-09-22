@@ -3,6 +3,7 @@ import { PayloadRequest, CollectionSlug } from 'payload'
 
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   // TODO: custom post types. i.e. product
+  dashboard: '/dashboard',
   posts: '/posts',
   pages: '',
 }
