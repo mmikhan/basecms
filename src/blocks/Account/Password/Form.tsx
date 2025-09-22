@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Customer } from '@/payload-types'
+import { AccountPasswordBlock, Customer } from '@/payload-types'
 import {
   Form,
   FormControl,
@@ -37,7 +37,15 @@ const formSchema = z
     path: ['confirmPassword'],
   })
 
-export default function UpdatePasswordForm({ email }: { email: Customer['email'] }) {
+type AccountPasswordFormProps = AccountPasswordBlock & {
+  user: Customer
+}
+
+export const AccountPasswordForm: React.FC<AccountPasswordFormProps> = ({
+  title,
+  description,
+  user: { email },
+}) => {
   const [error, setError] = useState<string | null>(null)
   const [isSuccess, setIsSuccess] = useState<boolean>(false)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,8 +67,8 @@ export default function UpdatePasswordForm({ email }: { email: Customer['email']
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Password</CardTitle>
-        <CardDescription>Update your password.</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">

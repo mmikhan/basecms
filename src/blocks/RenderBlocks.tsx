@@ -1,4 +1,4 @@
-import { Footer, Header, Page } from '@/payload-types'
+import type { Dashboard, Footer, Header, Page } from '@/payload-types'
 import { CallToActionBlock } from './CallToAction/Component'
 import { HighImpactHeroBlock } from './heros/HighImpact/Component'
 import { MediumImpactHeroBlock } from './heros/MediumImpact/Component'
@@ -18,8 +18,15 @@ import { LogoutBlock } from './Logout/Component'
 import { RegisterBlock } from './Register/Component'
 import { ForgotPasswordBlock } from './ForgotPassword/Component'
 import { ResetPasswordBlock } from './ResetPassword/Component'
+import { AccountNameBlock } from './Account/Name/Component'
+import { AccountPasswordBlock } from './Account/Password/Component'
 
-type LayoutBlock = Page['layout'][number] | Header['layout'][number] | Footer['layout'][number]
+type LayoutBlock =
+  | Page['layout'][number]
+  | Dashboard['layout'][number]
+  | Header['layout'][number]
+  | Footer['layout'][number]
+
 type BlockType = LayoutBlock['blockType']
 
 // Map each blockType to its component with the correctly narrowed props
@@ -47,6 +54,8 @@ const blockComponents: BlockComponentMap = {
   registerBlock: RegisterBlock,
   forgotPasswordBlock: ForgotPasswordBlock,
   resetPasswordBlock: ResetPasswordBlock,
+  accountName: AccountNameBlock,
+  accountPassword: AccountPasswordBlock,
 }
 
 // Generic helper preserves the specific block subtype

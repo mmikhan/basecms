@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Customer } from '@/payload-types'
+import type { Customer, AccountNameBlock } from '@/payload-types'
 import {
   Form,
   FormControl,
@@ -31,7 +31,15 @@ const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters long'),
 })
 
-export default function UpdateAccountForm({ id, name }: Pick<Customer, 'id' | 'name'>) {
+type AccountNameFormProps = AccountNameBlock & {
+  user: Customer
+}
+
+export const AccountNameForm: React.FC<AccountNameFormProps> = ({
+  title,
+  description,
+  user: { id, name },
+}) => {
   const [error, setError] = useState<string | null>(null)
   const [isSuccess, setIsSuccess] = useState<boolean>(false)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,8 +61,8 @@ export default function UpdateAccountForm({ id, name }: Pick<Customer, 'id' | 'n
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Name</CardTitle>
-        <CardDescription>Update your name.</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">

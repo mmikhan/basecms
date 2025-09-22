@@ -86,6 +86,8 @@ export interface Config {
     registerBlock: RegisterBlock;
     forgotPasswordBlock: ForgotPasswordBlock;
     resetPasswordBlock: ResetPasswordBlock;
+    accountName: AccountNameBlock;
+    accountPassword: AccountPasswordBlock;
   };
   collections: {
     pages: Page;
@@ -1487,6 +1489,28 @@ export interface ResetPasswordBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'resetPasswordBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccountNameBlock".
+ */
+export interface AccountNameBlock {
+  title?: string | null;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accountName';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccountPasswordBlock".
+ */
+export interface AccountPasswordBlock {
+  title?: string | null;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accountPassword';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
