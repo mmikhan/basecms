@@ -30,6 +30,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { LoginBlock } from '@/payload-types'
 import type { Route } from 'next'
 import { CMSLink } from '@/components/Link'
+import { generateHref } from '@/lib/generateHref'
 
 const formSchema = z.object({
   email: z.email().min(1, 'Email is required'),
@@ -50,7 +51,7 @@ export const LoginForm: React.FC<LoginBlock> = ({ register, forgotPassword, redi
       setError(null)
       await login({ ...data })
 
-      router.push((searchParams.get('redirect') ?? link?.url ?? '/') as Route)
+      router.push((searchParams.get('redirect') ?? generateHref(link) ?? '/') as Route)
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Unknown error')
     }

@@ -1,4 +1,4 @@
-import type { Page, Post } from '@/payload-types'
+import { generateHref, type LinkType } from '@/lib/generateHref'
 import { buttonVariants } from './ui/button'
 import { VariantProps } from 'class-variance-authority'
 import Link from 'next/link'
@@ -6,21 +6,13 @@ import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
 import type { Route } from 'next'
 
-type CMSLinkType = {
+type CMSLinkType = LinkType & {
   appearance?: 'inline' | VariantProps<typeof buttonVariants>['variant']
   children?: React.ReactNode
   className?: string
   label?: string | null
   newTab?: boolean | null
-  reference?: {
-    // TODO: custom post types. i.e. 'posts', 'products', etc.
-    relationTo: 'pages' | 'posts'
-    // TODO: implement custom post types. i.e. 'posts', 'products', etc.
-    value: Page | Post | string | number
-  } | null
   size?: VariantProps<typeof buttonVariants>['size'] | null
-  type?: 'custom' | 'reference' | null
-  url?: string | null
 }
 
 export const CMSLink: React.FC<CMSLinkType> = ({
@@ -34,12 +26,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   size,
   url,
 }) => {
-  const href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
-          reference.value.slug
-        }`
-      : url
+  const href = generateHref({ type, reference, url })
 
   if (!href) return null
 
@@ -48,7 +35,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
     return (
-      <Link className={cn(className)} href={(href || url) as Route} {...newTabProps}>
+      <Link className={cn(className)} href={href as Route} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
@@ -57,7 +44,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
 
   return (
     <Button asChild className={className} size={size} variant={appearance}>
-      <Link className={cn(className)} href={(href || url) as Route} {...newTabProps}>
+      <Link className={cn(className)} href={href as Route} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
