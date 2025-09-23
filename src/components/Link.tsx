@@ -1,4 +1,4 @@
-import { generateHref, type LinkType } from '@/lib/generateHref'
+import { getUrl, type LinkType } from '@/lib/getURL'
 import { buttonVariants } from './ui/button'
 import { VariantProps } from 'class-variance-authority'
 import Link from 'next/link'
@@ -26,7 +26,7 @@ export const CMSLink: React.FC<CMSLinkType> = ({
   size,
   url,
 }) => {
-  const href = generateHref({ type, reference, url })
+  const href = getUrl({ type, reference, url })
 
   if (!href) return null
 

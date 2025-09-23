@@ -1,3 +1,5 @@
+import type { Dashboard, Page, Post } from '@/payload-types'
+
 export const canUseDOM = !!(
   typeof window !== 'undefined' &&
   window.document &&
@@ -47,4 +49,35 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
   const baseUrl = getClientSideURL()
 
   return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
+}
+
+export type LinkType = {
+  type?: 'custom' | 'reference' | null
+  reference?: {
+    relationTo: 'pages' | 'posts' | 'dashboard'
+    value: Page | Post | Dashboard | string | number
+  } | null
+  url?: string | null
+}
+
+export const getUrl = (link: LinkType | null | undefined): string => {
+  if (
+    link?.type === 'reference' &&
+    typeof link.reference?.value === 'object' &&
+    link.reference.value.slug
+  ) {
+    const { relationTo, value } = link.reference
+
+    if (relationTo === 'pages' && value.slug === 'home') {
+      return '/'
+    }
+
+    if (relationTo === 'dashboard' && value.slug === 'dashboard') {
+      return '/dashboard'
+    }
+
+    return `${relationTo !== 'pages' ? `/${relationTo}` : ''}/${value.slug}`
+  }
+
+  return link?.url || '/'
 }
