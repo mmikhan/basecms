@@ -17,11 +17,9 @@ export const getServerSideURL = () => {
 
 export const getClientSideURL = () => {
   if (canUseDOM) {
-    const protocol = window.location.protocol
-    const domain = window.location.hostname
-    const port = window.location.port ? `:${window.location.port}` : ''
+    const { protocol, hostname, port } = window.location
 
-    return `${protocol}//${domain}${port}`
+    return `${protocol}//${hostname}${port ? `:${port}` : ''}`
   }
 
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
@@ -45,10 +43,7 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     return cacheTag ? `${url}?${cacheTag}` : url
   }
 
-  // Otherwise prepend client-side URL
-  const baseUrl = getClientSideURL()
-
-  return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
+  return cacheTag ? `${getClientSideURL()}${url}?${cacheTag}` : `${getServerSideURL()}${url}`
 }
 
 export type LinkType = {
