@@ -4,7 +4,7 @@ import { seoFields } from '@/fields/seo'
 import { slugField } from '@/fields/slug'
 import { populateAuthors } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
-import { generatePreviewPath } from '@/lib/generatePreviewPath'
+import type { Post } from '@/payload-types'
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -41,20 +41,22 @@ export const Posts: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, req }) => {
-        return generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'posts',
-          req,
-        })
+      url: ({ data, collectionConfig }) => {
+        const { slug } = data as unknown as Post
+
+        return `/${collectionConfig?.slug}/${slug}`
       },
     },
-    preview: (data, { req }) => {
-      return generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
+    preview: (doc) => {
+      const { slug } = doc as unknown as Post
+
+      const encodedParams = new URLSearchParams({
+        slug: slug ?? '',
         collection: 'posts',
-        req,
+        previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
+
+      return `/next/preview?${encodedParams.toString()}`
     },
     useAsTitle: 'title',
   },

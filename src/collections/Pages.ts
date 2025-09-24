@@ -3,9 +3,9 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
-import { generatePreviewPath } from '@/lib/generatePreviewPath'
 import { CollectionConfig } from 'payload'
 import { seoFields } from '@/fields/seo'
+import type { Page } from '@/payload-types'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -24,26 +24,29 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, req }) => {
-        return generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'pages',
-          req,
-        })
+      url: ({ data, collectionConfig }) => {
+        const { slug } = data as unknown as Page
+
+        return `/${collectionConfig?.slug === 'pages' ? (slug !== 'home' ? slug : '') : ''}`
       },
     },
-    preview: (data, { req }) => {
-      return generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
+    preview: (doc) => {
+      const { slug } = doc as unknown as Page
+
+      const encodedParams = new URLSearchParams({
+        slug: slug ?? '',
         collection: 'pages',
-        req,
+        previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
+
+      return `/next/preview?${encodedParams.toString()}`
     },
   },
   fields: [
     {
       name: 'title',
       type: 'text',
+      localized: true,
       required: true,
     },
     {
@@ -55,6 +58,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
+              localized: true,
               label: false,
               blockReferences: [
                 'cta',
@@ -91,6 +95,7 @@ export const Pages: CollectionConfig = {
     {
       name: 'publishedAt',
       type: 'date',
+      localized: true,
       admin: {
         position: 'sidebar',
       },

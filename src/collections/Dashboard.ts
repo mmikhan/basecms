@@ -3,7 +3,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
-import { generatePreviewPath } from '@/lib/generatePreviewPath'
+import type { Dashboard as DashboardType } from '@/payload-types'
 import { CollectionConfig } from 'payload'
 
 export const Dashboard: CollectionConfig = {
@@ -24,20 +24,26 @@ export const Dashboard: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, req }) => {
-        return generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'dashboard',
-          req,
-        })
+      url: ({ data, collectionConfig }) => {
+        const { slug } = data as unknown as DashboardType
+
+        return collectionConfig?.slug === 'dashboard'
+          ? slug === 'dashboard'
+            ? '/dashboard'
+            : `/dashboard/${slug}`
+          : ''
       },
     },
-    preview: (data, { req }) => {
-      return generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
+    preview: (doc) => {
+      const { slug } = doc as unknown as DashboardType
+
+      const encodedParams = new URLSearchParams({
+        slug: slug ?? '',
         collection: 'dashboard',
-        req,
+        previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
+
+      return `/next/preview?${encodedParams.toString()}`
     },
   },
   fields: [

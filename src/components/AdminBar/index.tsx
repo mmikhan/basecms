@@ -63,7 +63,6 @@ export const AdminBar: React.FC<{ adminBarProps?: PayloadAdminBarProps }> = ({ a
           onAuthChange={onAuthChange}
           onPreviewExit={() => {
             fetch('/next/exit-preview').then(() => {
-              router.push('/')
               router.refresh()
             })
           }}
