@@ -34,7 +34,11 @@ export async function GET(
 
   draft.enable()
 
-  redirect(
-    `/${collection === 'pages' ? (slug === 'home' ? '' : slug) : `${collection}/${slug}`}` as Route,
-  )
+  const redirectPath =
+    {
+      pages: slug === 'home' ? '' : slug,
+      dashboard: slug === 'dashboard' ? 'dashboard' : `dashboard/${slug}`,
+    }[collection] ?? `${collection}/${slug}`
+
+  redirect(`/${redirectPath}` as Route)
 }
