@@ -51,8 +51,7 @@ export const Posts: CollectionConfig = {
       const { slug } = doc as unknown as Post
 
       const encodedParams = new URLSearchParams({
-        slug: slug ?? '',
-        collection: 'posts',
+        path: `/posts/${slug}`,
         previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
 

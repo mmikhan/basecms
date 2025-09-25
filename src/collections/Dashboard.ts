@@ -36,10 +36,10 @@ export const Dashboard: CollectionConfig = {
     },
     preview: (doc) => {
       const { slug } = doc as unknown as DashboardType
+      const path = slug === 'dashboard' ? 'dashboard' : `dashboard/${slug}`
 
       const encodedParams = new URLSearchParams({
-        slug: slug ?? '',
-        collection: 'dashboard',
+        path: `/${path}`,
         previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
 

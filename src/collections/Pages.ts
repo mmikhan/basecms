@@ -32,10 +32,10 @@ export const Pages: CollectionConfig = {
     },
     preview: (doc) => {
       const { slug } = doc as unknown as Page
+      const path = slug === 'home' ? '' : slug
 
       const encodedParams = new URLSearchParams({
-        slug: slug ?? '',
-        collection: 'pages',
+        path: `/${path}`,
         previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
 

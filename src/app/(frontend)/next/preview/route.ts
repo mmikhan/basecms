@@ -14,13 +14,13 @@ export async function GET(
   } & NextRequest,
 ): Promise<Response> {
   const { searchParams } = new URL(req.url)
-  const { collection, slug, previewSecret } = Object.fromEntries(searchParams.entries())
+  const { path, previewSecret } = Object.fromEntries(searchParams.entries())
 
   if (previewSecret !== process.env.PREVIEW_SECRET) {
     return new Response('You are not allowed to preview this page', { status: 403 })
   }
 
-  if (!collection || !slug) {
+  if (!path) {
     return new Response('Insufficient search params', { status: 404 })
   }
 
@@ -34,11 +34,5 @@ export async function GET(
 
   draft.enable()
 
-  const redirectPath =
-    {
-      pages: slug === 'home' ? '' : slug,
-      dashboard: slug === 'dashboard' ? 'dashboard' : `dashboard/${slug}`,
-    }[collection] ?? `${collection}/${slug}`
-
-  redirect(`/${redirectPath}` as Route)
+  redirect(path as Route)
 }
