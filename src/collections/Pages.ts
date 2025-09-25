@@ -24,10 +24,10 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, collectionConfig }) => {
+      url: ({ data }) => {
         const { slug } = data as unknown as Page
 
-        return `/${collectionConfig?.slug === 'pages' ? (slug !== 'home' ? slug : '') : ''}`
+        return `/${slug === 'home' ? '' : slug}`
       },
     },
     preview: (doc) => {

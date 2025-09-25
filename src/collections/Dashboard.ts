@@ -24,14 +24,10 @@ export const Dashboard: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, collectionConfig }) => {
+      url: ({ data }) => {
         const { slug } = data as unknown as DashboardType
 
-        return collectionConfig?.slug === 'dashboard'
-          ? slug === 'dashboard'
-            ? '/dashboard'
-            : `/dashboard/${slug}`
-          : ''
+        return `/${slug === 'dashboard' ? 'dashboard' : `dashboard/${slug}`}`
       },
     },
     preview: (doc) => {
