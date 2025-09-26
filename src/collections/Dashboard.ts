@@ -47,6 +47,7 @@ export const Dashboard: CollectionConfig = {
     {
       name: 'title',
       type: 'text',
+      localized: true,
       required: true,
     },
     {
@@ -58,6 +59,7 @@ export const Dashboard: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
+              localized: true,
               label: false,
               blockReferences: [
                 'cta',

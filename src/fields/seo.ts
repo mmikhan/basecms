@@ -10,6 +10,7 @@ import type { Tab } from 'payload'
 export const seoFields: Tab = {
   name: 'meta',
   label: 'SEO',
+  localized: true,
   fields: [
     OverviewField({
       titlePath: 'meta.title',

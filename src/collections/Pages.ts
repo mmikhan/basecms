@@ -96,7 +96,6 @@ export const Pages: CollectionConfig = {
     {
       name: 'publishedAt',
       type: 'date',
-      localized: true,
       admin: {
         position: 'sidebar',
       },
