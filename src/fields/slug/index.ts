@@ -1,5 +1,5 @@
 import type { CheckboxField, TextField } from 'payload'
-import { formatSlugHook } from './formatSlug'
+import { slugify } from 'transliteration'
 
 type Overrides = {
   slugOverrides?: Partial<TextField>
@@ -26,12 +26,28 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
   const slugField: TextField = {
     name: 'slug',
     type: 'text',
+    localized: true,
     index: true,
     label: 'Slug',
     ...(slugOverrides || {}),
     hooks: {
-      // Kept this in for hook or API based updates
-      beforeValidate: [formatSlugHook(fieldToUse)],
+      beforeValidate: [
+        ({ data, operation, originalDoc, value }) => {
+          if (typeof value === 'string') {
+            return slugify(value, { trim: true })
+          }
+
+          if (operation === 'create' || !data?.slug) {
+            const fallbackData = data?.[fieldToUse] || originalDoc?.[fieldToUse]
+
+            if (fallbackData && typeof fallbackData === 'string') {
+              return slugify(fallbackData, { trim: true })
+            }
+          }
+
+          return value
+        },
+      ],
     },
     admin: {
       position: 'sidebar',
