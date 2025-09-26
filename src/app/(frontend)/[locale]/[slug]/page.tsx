@@ -36,10 +36,7 @@ type PageProps = {
   params: Promise<{ slug?: string; locale: Locale }>
 }
 
-// const localizedDefaultHome = { en: 'home', bn: 'হোম', nl: 'huis' }
-
 export default async function Page({ params }: PageProps) {
-  // const { locale, slug = localizedDefaultHome[locale as TypedLocale] } = await params
   const { locale, slug = 'home' } = await params
 
   if (!slug) return redirect({ href: '/', locale })
@@ -77,7 +74,6 @@ const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: T
     overrideAccess: draft,
     where: {
       slug: {
-        // equals: decodeURIComponent(slug),
         equals: slugify(decodeURIComponent(slug), { trim: true }),
       },
     },
@@ -87,7 +83,6 @@ const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: T
 })
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // const { locale, slug = localizedDefaultHome[locale as TypedLocale] } = await params
   const { locale, slug = 'home' } = await params
 
   const page = await queryPageBySlug({ slug, locale: locale as TypedLocale })
