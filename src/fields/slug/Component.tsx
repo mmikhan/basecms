@@ -12,16 +12,15 @@ import {
   useForm,
   useDebounce,
 } from '@payloadcms/ui'
-
-import { formatSlug } from './formatSlug'
 import './index.scss'
+import { slugify } from 'transliteration'
 
-type SlugComponentProps = {
+type SlugProps = {
   fieldToUse: string
   checkboxFieldPath: string
 } & TextFieldClientProps
 
-export const SlugComponent: React.FC<SlugComponentProps> = ({
+export const Slug: React.FC<SlugProps> = ({
   field,
   fieldToUse,
   checkboxFieldPath: checkboxFieldPathFromProps,
@@ -53,7 +52,7 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
 
   useEffect(() => {
     if (checkboxValue) {
-      const formattedSlug = formatSlug(debouncedValue || '')
+      const formattedSlug = slugify(debouncedValue, { trim: true })
 
       if (value !== formattedSlug) setValue(formattedSlug)
     }
