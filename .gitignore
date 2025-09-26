@@ -38,6 +38,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# i18n
+src/i18n/messages/*.d.json.ts
+
 .env
 
 /media

@@ -1,6 +1,7 @@
 import { getServerSideURL } from '@/lib/getURL'
 import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 const nextConfig: NextConfig = {
   typedRoutes: true,
@@ -41,4 +42,9 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+const withNextIntl = createNextIntlPlugin({
+  experimental: {
+    createMessagesDeclaration: './src/i18n/messages/en.json',
+  },
+})
+export default withNextIntl(withPayload(nextConfig, { devBundleServerPackages: false }))

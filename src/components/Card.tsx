@@ -3,9 +3,9 @@ import type { Post } from '@/payload-types'
 import type { CollectionSlug } from 'payload'
 import { Media } from './Media'
 import { Fragment } from 'react'
-import Link from 'next/link'
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 import type { Route } from 'next'
+import { Link } from '@/i18n/navigation'
 
 export type CardPostData = Pick<Post, 'title' | 'slug' | 'content' | 'heroImage' | 'categories'>
 

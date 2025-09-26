@@ -1,20 +1,11 @@
 import { draftMode } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { NextRequest } from 'next/server'
-import type { Route } from 'next'
 import { isAuth } from '@/actions/auth'
+import { redirect } from '@/i18n/navigation'
 
-export async function GET(
-  req: {
-    cookies: {
-      get: (name: string) => {
-        value: string
-      }
-    }
-  } & NextRequest,
-): Promise<Response> {
+export async function GET(req: NextRequest): Promise<Response> {
   const { searchParams } = new URL(req.url)
-  const { path, previewSecret } = Object.fromEntries(searchParams.entries())
+  const { path, locale, previewSecret } = Object.fromEntries(searchParams.entries())
 
   if (previewSecret !== process.env.PREVIEW_SECRET) {
     return new Response('You are not allowed to preview this page', { status: 403 })
@@ -34,5 +25,5 @@ export async function GET(
 
   draft.enable()
 
-  redirect(path as Route)
+  return redirect({ href: path, locale })
 }

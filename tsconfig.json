@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "allowJs": true,
+    "allowArbitraryExtensions": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -24,6 +25,6 @@
     },
     "target": "ES2022"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/types/**/*.d.ts"],
   "exclude": ["node_modules"]
 }

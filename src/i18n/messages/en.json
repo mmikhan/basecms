@@ -1,0 +1,16 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "SearchPage": {
+    "title": "Search Results",
+    "titleWithQuery": "Search Results for {query}",
+    "description": "Find what you are looking for",
+    "noResults": "No results found for {query}"
+  },
+  "NotFoundPage": {
+    "title": "Page Not Found",
+    "message": "Sorry, the page you are looking for does not exist.",
+    "goHome": "Go to Homepage"
+  }
+}

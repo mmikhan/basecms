@@ -1,8 +1,8 @@
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { ModeToggle } from '@/components/mode-toggle'
+import { Link } from '@/i18n/navigation'
 import { FooterBlock } from '@/payload-types'
-import Link from 'next/link'
 
 export const FooterBlockComponent: React.FC<FooterBlock> = async ({ links, media }) => {
   return (

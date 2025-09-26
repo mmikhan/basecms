@@ -1,0 +1,16 @@
+{
+  "HomePage": {
+    "title": "Hallo wereld!"
+  },
+  "SearchPage": {
+    "title": "Zoekresultaten",
+    "titleWithQuery": "Zoekresultaten voor {query}",
+    "description": "Vind wat je zoekt",
+    "noResults": "Geen resultaten gevonden voor {query}"
+  },
+  "NotFoundPage": {
+    "title": "Pagina Niet Gevonden",
+    "message": "Sorry, de pagina die je zoekt bestaat niet.",
+    "goHome": "Ga naar de Homepage"
+  }
+}

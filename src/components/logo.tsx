@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import Icon from './icon'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 
 interface LogoProps extends React.SVGProps<SVGSVGElement> {
   layout?: 'single' | 'double'

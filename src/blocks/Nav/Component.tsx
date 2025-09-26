@@ -1,8 +1,8 @@
 import { CMSLink } from '@/components/Link'
 import { SearchIcon } from 'lucide-react'
-import Link from 'next/link'
 import { NavBlock as NavBlockProps } from '@/payload-types'
 import { Media } from '@/components/Media'
+import { Link } from '@/i18n/navigation'
 
 export const NavBlock: React.FC<NavBlockProps> = async ({ media, links }) => {
   return (
