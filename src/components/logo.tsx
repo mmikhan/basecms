@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import Icon from './icon'
-import { Link } from '@/i18n/navigation'
+import Link from 'next/link'
+import type { Route } from 'next'
 
 interface LogoProps extends React.SVGProps<SVGSVGElement> {
   layout?: 'single' | 'double'
@@ -10,7 +11,7 @@ interface LogoProps extends React.SVGProps<SVGSVGElement> {
 
 export default function Logo({ layout = 'single', subtitle = true, className }: LogoProps) {
   return (
-    <Link href="/" className="flex items-center gap-4 no-underline">
+    <Link href={'/' as Route} className="flex items-center gap-4 no-underline">
       <Icon className={cn('size-5/12', className)} />
 
       <div className="flex flex-col">
