@@ -3,6 +3,7 @@ import { searchPlugin } from '@payloadcms/plugin-search'
 
 export default searchPlugin({
   collections: ['posts'],
+  localize: true,
   beforeSync: beforeSyncWithSearch,
   searchOverrides: {
     fields: ({ defaultFields }) => {
@@ -11,6 +12,7 @@ export default searchPlugin({
         {
           name: 'slug',
           type: 'text',
+          localized: true,
           index: true,
           admin: {
             readOnly: true,
@@ -19,6 +21,7 @@ export default searchPlugin({
         {
           name: 'content',
           type: 'text',
+          localized: true,
           label: 'Content',
           index: true,
           admin: {

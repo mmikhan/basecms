@@ -1,11 +1,12 @@
 import type { Config } from 'src/payload-types'
 import config from '@payload-config'
-import { CollectionSlug, getPayload } from 'payload'
+import { CollectionSlug, getPayload, TypedLocale } from 'payload'
 import { unstable_cache } from 'next/cache'
 
 type DocumentQueryParams = {
   collection: keyof Config['collections']
   slug: CollectionSlug
+  locale?: TypedLocale
   depth?: number | undefined
   draft?: boolean | undefined
   limit?: number | undefined
@@ -16,6 +17,7 @@ type DocumentQueryParams = {
 export const getCachedDocument = ({
   collection,
   slug,
+  locale,
   depth,
   draft,
   limit,
@@ -28,6 +30,7 @@ export const getCachedDocument = ({
 
       const page = await payload.find({
         collection,
+        locale,
         depth,
         draft,
         limit,

@@ -24,18 +24,19 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data }) => {
+      url: ({ data, locale }) => {
         const { slug } = data as unknown as Page
 
-        return `/${slug === 'home' ? '' : slug}`
+        return `/${locale}/${slug === 'home' ? '' : slug}`
       },
     },
-    preview: (doc) => {
+    preview: (doc, { locale }) => {
       const { slug } = doc as unknown as Page
       const path = slug === 'home' ? '' : slug
 
       const encodedParams = new URLSearchParams({
         path: `/${path}`,
+        locale,
         previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
 

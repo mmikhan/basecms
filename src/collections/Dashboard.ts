@@ -24,18 +24,19 @@ export const Dashboard: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data }) => {
+      url: ({ data, locale }) => {
         const { slug } = data as unknown as DashboardType
 
-        return `/${slug === 'dashboard' ? 'dashboard' : `dashboard/${slug}`}`
+        return `/${locale}/${slug === 'dashboard' ? 'dashboard' : `dashboard/${slug}`}`
       },
     },
-    preview: (doc) => {
+    preview: (doc, { locale }) => {
       const { slug } = doc as unknown as DashboardType
       const path = slug === 'dashboard' ? 'dashboard' : `dashboard/${slug}`
 
       const encodedParams = new URLSearchParams({
         path: `/${path}`,
+        locale,
         previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
 

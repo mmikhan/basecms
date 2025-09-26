@@ -1,7 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { defaultLexical } from './fields/defaultLexical'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, type LocalizationConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { resendAdapter } from '@payloadcms/email-resend'
@@ -39,6 +39,7 @@ import { ResetPasswordBlock } from './blocks/ResetPassword/config'
 import { AccountName } from './blocks/Account/Name/config'
 import { AccountPassword } from './blocks/Account/Password/config'
 import { Dashboard } from './collections/Dashboard'
+import { localization } from './i18n/localization'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -125,4 +126,5 @@ export default buildConfig({
     defaultFromName: 'AdMarket',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
+  localization: localization as LocalizationConfig,
 })

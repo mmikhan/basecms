@@ -41,17 +41,18 @@ export const Posts: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, collectionConfig }) => {
+      url: ({ data, collectionConfig, locale }) => {
         const { slug } = data as unknown as Post
 
-        return `/${collectionConfig?.slug}/${slug}`
+        return `/${locale}/${collectionConfig?.slug}/${slug}`
       },
     },
-    preview: (doc) => {
+    preview: (doc, { locale }) => {
       const { slug } = doc as unknown as Post
 
       const encodedParams = new URLSearchParams({
         path: `/posts/${slug}`,
+        locale,
         previewSecret: process.env.PREVIEW_SECRET ?? '',
       })
 
