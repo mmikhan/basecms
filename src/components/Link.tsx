@@ -1,7 +1,7 @@
 import { getUrl, type LinkType } from '@/lib/getURL'
 import { buttonVariants } from './ui/button'
 import { VariantProps } from 'class-variance-authority'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
 import type { Route } from 'next'
