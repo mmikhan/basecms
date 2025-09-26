@@ -131,6 +131,9 @@ importers:
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
+      transliteration:
+        specifier: ^2.3.5
+        version: 2.3.5
       zod:
         specifier: ^4.1.5
         version: 4.1.5

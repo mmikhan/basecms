@@ -65,6 +65,7 @@
     "states-us": "^1.1.1",
     "stripe": "^18.5.0",
     "tailwind-merge": "^3.3.1",
+    "transliteration": "^2.3.5",
     "zod": "^4.1.5"
   },
   "devDependencies": {
