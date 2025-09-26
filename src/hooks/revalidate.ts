@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, PayloadRequest } from 'payload'
 import { revalidatePath, revalidateTag } from 'next/cache'
-import type { Page, Post } from '@/payload-types'
+import type { Dashboard, Page, Post } from '@/payload-types'
 
 export const revalidateCacheTag =
   (tag: string) =>
@@ -21,17 +21,15 @@ export const revalidateCacheTag =
 export const getPath = (collectionSlug: string, docSlug: string): string => {
   switch (collectionSlug) {
     case 'pages':
-      return docSlug === 'home' ? '/' : `/${docSlug}`
+      return `/${docSlug === 'home' ? '' : docSlug}`
     case 'dashboard':
-      return docSlug === 'dashboard' ? '/dashboard' : `/dashboard/${docSlug}`
-    case 'posts':
-      return `/posts/${docSlug}`
+      return `/${docSlug === 'dashboard' ? 'dashboard' : `dashboard/${docSlug}`}`
     default:
       return `/${collectionSlug}/${docSlug}`
   }
 }
 
-export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post> = ({
+export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post | Dashboard> = ({
   doc,
   previousDoc,
   collection,
@@ -68,7 +66,7 @@ export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post> =
   return doc
 }
 
-export const revalidatePathAfterDelete: CollectionAfterDeleteHook<Page | Post> = ({
+export const revalidatePathAfterDelete: CollectionAfterDeleteHook<Page | Post | Dashboard> = ({
   doc,
   collection,
   req: { context },
