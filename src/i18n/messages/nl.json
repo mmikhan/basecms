@@ -12,5 +12,9 @@
     "title": "Pagina Niet Gevonden",
     "message": "Sorry, de pagina die je zoekt bestaat niet.",
     "goHome": "Ga naar de Homepage"
+  },
+  "LocaleSwitcher": {
+    "label": "Selecteer Taal",
+    "locale": "Taal: {locale}"
   }
 }

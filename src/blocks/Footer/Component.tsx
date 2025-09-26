@@ -1,4 +1,5 @@
 import { CMSLink } from '@/components/Link'
+import LocaleSwitcher from '@/components/LocaleSwitch/LocaleSwitcher'
 import { Media } from '@/components/Media'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Link } from '@/i18n/navigation'
@@ -14,6 +15,7 @@ export const FooterBlockComponent: React.FC<FooterBlock> = async ({ links, media
 
         <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
           <ModeToggle />
+          <LocaleSwitcher />
           <nav className="flex flex-col md:flex-row gap-4">
             {links?.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />

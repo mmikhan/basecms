@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const formSchema = z.object({
   search: z.string().min(1, 'Search term is required'),
@@ -14,10 +14,13 @@ const formSchema = z.object({
 
 export const SearchForm: React.FC = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const query = searchParams.get('q') || ''
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      search: '',
+      search: query,
     },
   })
 
