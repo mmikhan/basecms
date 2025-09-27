@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 import { getServerSideURL } from '@/lib/getURL'
+import { routing } from '@/i18n/routing'
 
 const getPagesSitemap = unstable_cache(
   async () => {
@@ -29,29 +30,32 @@ const getPagesSitemap = unstable_cache(
 
     const dateFallback = new Date().toISOString()
 
-    const defaultSitemap = [
-      {
-        loc: `${SITE_URL}/search`,
-        lastmod: dateFallback,
-      },
-      {
-        loc: `${SITE_URL}/posts`,
-        lastmod: dateFallback,
-      },
-    ]
+    return routing.locales.flatMap((locale) => {
+      const staticPages = [
+        {
+          loc: `${SITE_URL}/${locale}/search`,
+          lastmod: dateFallback,
+        },
+        {
+          loc: `${SITE_URL}/${locale}/posts`,
+          lastmod: dateFallback,
+        },
+      ]
 
-    const sitemap = results.docs
-      ? results.docs
-          .filter((page) => Boolean(page?.slug))
-          .map((page) => {
-            return {
-              loc: page?.slug === 'home' ? `${SITE_URL}/` : `${SITE_URL}/${page?.slug}`,
-              lastmod: page.updatedAt || dateFallback,
-            }
-          })
-      : []
+      const dynamicPages =
+        results.docs?.flatMap((page) => {
+          if (!page?.slug) return []
 
-    return [...defaultSitemap, ...sitemap]
+          const path = page.slug === 'home' ? '' : `/${page.slug}`
+
+          return {
+            loc: `${SITE_URL}/${locale}${path}`,
+            lastmod: page.updatedAt || dateFallback,
+          }
+        }) || []
+
+      return [...staticPages, ...dynamicPages]
+    })
   },
   ['pages-sitemap'],
   {
