@@ -24,7 +24,7 @@ export default async function SearchPage({ searchParams, params }: SearchPagePro
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'SearchPage' })
 
-  const { docs } = await querySearchByQuery({ query, locale })
+  const { docs } = await querySearchByQuery({ query, locale: locale as TypedLocale })
   const type = docs?.[0]?.type as CollectionSlug
 
   return (
@@ -48,30 +48,32 @@ export default async function SearchPage({ searchParams, params }: SearchPagePro
   )
 }
 
-const querySearchByQuery = cache(async ({ query, locale }: { query: string; locale: Locale }) => {
-  const payload = await getPayload({ config })
+const querySearchByQuery = cache(
+  async ({ query, locale }: { query: string; locale: TypedLocale }) => {
+    const payload = await getPayload({ config })
 
-  if (!query) return { docs: [] }
+    if (!query) return { docs: [] }
 
-  return await payload.find({
-    collection: 'search',
-    locale: locale as TypedLocale,
-    depth: 1,
-    limit: POSTS_PER_PAGE,
-    pagination: false,
-    ...(query
-      ? {
-          where: {
-            or: [
-              { title: { like: query } },
-              { slug: { like: slugify(query, { trim: true }) } },
-              { content: { like: query } },
-            ],
-          },
-        }
-      : {}),
-  })
-})
+    return await payload.find({
+      collection: 'search',
+      locale,
+      depth: 1,
+      limit: POSTS_PER_PAGE,
+      pagination: false,
+      ...(query
+        ? {
+            where: {
+              or: [
+                { title: { like: query } },
+                { slug: { like: slugify(query, { trim: true }) } },
+                { content: { like: query } },
+              ],
+            },
+          }
+        : {}),
+    })
+  },
+)
 
 export async function generateMetadata({
   searchParams,

@@ -42,7 +42,10 @@ export default async function PostPage({ params }: Props) {
   const { locale, slug } = await params
   const { isEnabled: draft } = await draftMode()
 
-  const post = await queryPostBySlug({ slug, locale: locale as TypedLocale })
+  const post = await queryPostBySlug({
+    slug: slug as CollectionSlug,
+    locale: locale as TypedLocale,
+  })
 
   if (!post) return <Redirects url={`/posts/${slug}`} locale={locale} />
 
@@ -78,7 +81,7 @@ export default async function PostPage({ params }: Props) {
 }
 
 const queryPostBySlug = cache(
-  async ({ slug, locale }: { slug: string | undefined; locale: TypedLocale }) => {
+  async ({ slug, locale }: { slug: CollectionSlug; locale: TypedLocale }) => {
     const { isEnabled: draft } = await draftMode()
     const payload = await getPayload({ config })
 

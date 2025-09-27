@@ -1,5 +1,5 @@
 import { draftMode } from 'next/headers'
-import { getPayload, type TypedLocale } from 'payload'
+import { CollectionSlug, getPayload, type TypedLocale } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
@@ -41,7 +41,10 @@ export default async function Page({ params }: PageProps) {
 
   if (!slug) return redirect({ href: '/', locale })
 
-  const page = await queryPageBySlug({ slug, locale: locale as TypedLocale })
+  const page = await queryPageBySlug({
+    slug: slug as CollectionSlug,
+    locale: locale as TypedLocale,
+  })
 
   if (!page) return <Redirects url={`/${slug}`} locale={locale} />
 
@@ -60,32 +63,37 @@ export default async function Page({ params }: PageProps) {
   )
 }
 
-const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: TypedLocale }) => {
-  const { isEnabled: draft } = await draftMode()
+const queryPageBySlug = cache(
+  async ({ slug, locale }: { slug: CollectionSlug; locale: TypedLocale }) => {
+    const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayload({ config })
+    const payload = await getPayload({ config })
 
-  const result = await payload.find({
-    collection: 'pages',
-    locale,
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slugify(decodeURIComponent(slug), { trim: true }),
+    const result = await payload.find({
+      collection: 'pages',
+      locale,
+      draft,
+      limit: 1,
+      pagination: false,
+      overrideAccess: draft,
+      where: {
+        slug: {
+          equals: slugify(decodeURIComponent(slug), { trim: true }),
+        },
       },
-    },
-  })
+    })
 
-  return result.docs?.[0] || null
-})
+    return result.docs?.[0] || null
+  },
+)
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug = 'home' } = await params
 
-  const page = await queryPageBySlug({ slug, locale: locale as TypedLocale })
+  const page = await queryPageBySlug({
+    slug: slug as CollectionSlug,
+    locale: locale as TypedLocale,
+  })
 
   return generateMeta({ doc: page })
 }
