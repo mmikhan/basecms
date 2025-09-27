@@ -1,17 +1,29 @@
 import type { Metadata } from 'next'
 import { PostsArchive } from '@/components/PostsArchive'
+import type { Locale } from 'next-intl'
+import type { TypedLocale } from 'payload'
+import { getTranslations } from 'next-intl/server'
 
-export default async function PostsArchivePage() {
-  return <PostsArchive page={1} />
+type Props = {
+  params: Promise<{ locale: Locale }>
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export default async function PostsArchivePage({ params }: Props) {
+  const { locale } = await params
+
+  return <PostsArchive page={1} locale={locale as TypedLocale} />
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'PostsPage' })
+
   return {
-    title: 'Posts',
-    description: 'A list of all posts on this site.',
+    title: t('title'),
+    description: t('description'),
     openGraph: {
-      title: 'Posts Archive',
-      description: 'A list of all posts on this site.',
+      title: t('title'),
+      description: t('description'),
       url: '/posts',
       type: 'website',
       siteName: 'AdMarket',

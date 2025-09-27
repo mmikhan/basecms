@@ -2,7 +2,7 @@ import React from 'react'
 import type { CollectionConfig, PaginatedDocs } from 'payload'
 
 export const PageRange: React.FC<
-  CollectionConfig['labels'] & PaginatedDocs & { className?: string }
+  Partial<CollectionConfig['labels']> & PaginatedDocs & { className?: string }
 > = ({ className, plural = 'Docs', singular = 'Doc', totalDocs, page, limit }) => {
   let indexStart = (page ? page - 1 : 1) * (limit || 1) + 1
   if (totalDocs && indexStart > totalDocs) indexStart = 0

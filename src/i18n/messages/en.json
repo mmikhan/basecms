@@ -2,6 +2,10 @@
   "HomePage": {
     "title": "Hello world!"
   },
+  "PostsPage": {
+    "title": "Posts",
+    "description": "A list of all posts on this site."
+  },
   "SearchPage": {
     "title": "Search Results",
     "titleWithQuery": "Search Results for {query}",

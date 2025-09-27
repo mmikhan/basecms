@@ -2,6 +2,10 @@
   "HomePage": {
     "title": "Hallo wereld!"
   },
+  "PostsPage": {
+    "title": "Berichten",
+    "description": "Een lijst van alle berichten op deze site."
+  },
   "SearchPage": {
     "title": "Zoekresultaten",
     "titleWithQuery": "Zoekresultaten voor {query}",

@@ -1,14 +1,17 @@
-import { unstable_cache } from 'next/cache'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+import { getPayload, type TypedLocale } from 'payload'
+import config from '@payload-config'
 import { PageRange } from './PageRange'
 import { CollectionArchive } from './CollectionArchive'
 import { PaginationComponent } from './Pagination'
 import { POSTS_PER_PAGE } from '@/lib/utils'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 
-export const PostsArchive: React.FC<{ page: number }> = async ({ page }) => {
-  const { posts, slug, labels } = await getCachedPosts({ page })
+export const PostsArchive: React.FC<{ page: number; locale: TypedLocale }> = async ({
+  page,
+  locale,
+}) => {
+  const posts = await queryPosts({ page, locale })
 
   if (page > posts.totalPages && posts.totalDocs > 0) notFound()
 
@@ -21,34 +24,25 @@ export const PostsArchive: React.FC<{ page: number }> = async ({ page }) => {
       </div>
 
       <div className="mb-8">
-        <PageRange {...posts} {...labels} limit={POSTS_PER_PAGE} />
+        <PageRange {...posts} limit={POSTS_PER_PAGE} />
       </div>
 
-      <CollectionArchive data={posts.docs} collectionSlug={slug} />
+      <CollectionArchive data={posts.docs} collectionSlug={'posts'} />
 
       <PaginationComponent {...posts} />
     </div>
   )
 }
 
-const getCachedPosts = unstable_cache(
-  async ({ page }: { page: number }) => {
-    const payload = await getPayload({ config: configPromise })
+const queryPosts = cache(async ({ page, locale }: { page: number; locale: TypedLocale }) => {
+  const payload = await getPayload({ config })
 
-    const posts = await payload.find({
-      collection: 'posts',
-      depth: 1,
-      limit: POSTS_PER_PAGE,
-      page,
-      overrideAccess: false,
-    })
-
-    const config = payload.collections.posts.config
-    const slug = config.slug
-    const labels = config.labels
-
-    return { posts, slug, labels }
-  },
-  ['posts'],
-  { tags: ['posts'] },
-)
+  return await payload.find({
+    collection: 'posts',
+    locale,
+    depth: 1,
+    limit: POSTS_PER_PAGE,
+    page,
+    overrideAccess: false,
+  })
+})

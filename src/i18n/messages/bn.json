@@ -2,6 +2,10 @@
   "HomePage": {
     "title": "হ্যালো বিশ্ব!"
   },
+  "PostsPage": {
+    "title": "পোস্টসমূহ",
+    "description": "এই সাইটের সমস্ত পোস্টের একটি তালিকা।"
+  },
   "SearchPage": {
     "title": "সার্চ ফলাফল",
     "titleWithQuery": "{query} এর জন্য সার্চ ফলাফল",
