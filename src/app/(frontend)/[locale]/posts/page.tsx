@@ -16,7 +16,7 @@ export default async function PostsArchivePage({ params }: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'PostsPage' })
+  const t = await getTranslations({ locale, namespace: 'PostsArchivePage' })
 
   return {
     title: t('title'),

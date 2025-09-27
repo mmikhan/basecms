@@ -2,11 +2,13 @@
   "HomePage": {
     "title": "Hallo wereld!"
   },
-  "PostsPage": {
+  "PostsArchivePage": {
     "title": "Berichten",
-    "description": "Een lijst van alle berichten op deze site."
+    "description": "Een lijst van alle berichten op deze site.",
+    "range": "Toon {currentPage, plural, =0 {geen pagina's} =1 {1 pagina} other {# pagina's}} van {totalPages, plural, =0 {geen pagina's} =1 {1 pagina} other {# pagina's}}",
+    "noResults": "Geen berichten gevonden."
   },
-  "PaginatedPostsPage": {
+  "PaginatedPostsArchivePage": {
     "title": "Berichten {pageNumber}",
     "description": "Een lijst van alle berichten op deze site."
   },

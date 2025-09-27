@@ -2,11 +2,13 @@
   "HomePage": {
     "title": "হ্যালো বিশ্ব!"
   },
-  "PostsPage": {
+  "PostsArchivePage": {
     "title": "পোস্টসমূহ",
-    "description": "এই সাইটের সমস্ত পোস্টের একটি তালিকা।"
+    "description": "এই সাইটের সমস্ত পোস্টের একটি তালিকা।",
+    "range": "দেখানো হচ্ছে {currentPage, plural, =0 {কোন পৃষ্ঠা} =1 {1 পৃষ্ঠা} other {# পৃষ্ঠা}} এর মধ্যে {totalPages, plural, =0 {কোন পৃষ্ঠা} =1 {1 পৃষ্ঠা} other {# পৃষ্ঠা}}",
+    "noResults": "কোন পোস্ট পাওয়া যায়নি।"
   },
-  "PaginatedPostsPage": {
+  "PaginatedPostsArchivePage": {
     "title": "পোস্টসমূহ {pageNumber}",
     "description": "এই সাইটের সমস্ত পোস্টের একটি তালিকা।"
   },

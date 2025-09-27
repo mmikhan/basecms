@@ -24,12 +24,12 @@ export const PostsArchive: React.FC<{ page: number; locale: TypedLocale }> = asy
       </div>
 
       <div className="mb-8">
-        <PageRange {...posts} limit={POSTS_PER_PAGE} />
+        <PageRange {...posts} limit={POSTS_PER_PAGE} locale={locale} />
       </div>
 
       <CollectionArchive data={posts.docs} collectionSlug={'posts'} />
 
-      <PaginationComponent {...posts} />
+      {posts.totalDocs > 0 && <PaginationComponent {...posts} />}
     </div>
   )
 }

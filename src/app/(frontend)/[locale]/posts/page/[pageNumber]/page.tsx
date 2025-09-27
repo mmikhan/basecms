@@ -44,7 +44,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PostsPaginationPageProps): Promise<Metadata> {
   const { pageNumber, locale } = await params
-  const t = await getTranslations({ locale, namespace: 'PaginatedPostsPage' })
+  const t = await getTranslations({ locale, namespace: 'PaginatedPostsArchivePage' })
 
   const title = t('title', { pageNumber })
   const description = t('description')

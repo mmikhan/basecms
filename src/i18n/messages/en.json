@@ -2,11 +2,13 @@
   "HomePage": {
     "title": "Hello world!"
   },
-  "PostsPage": {
+  "PostsArchivePage": {
     "title": "Posts",
-    "description": "A list of all posts on this site."
+    "description": "A list of all posts on this site.",
+    "range": "Showing {currentPage, plural, =0 {no pages} =1 {1 page} other {# pages}} of {totalPages, plural, =0 {no pages} =1 {1 page} other {# pages}}",
+    "noResults": "No posts found."
   },
-  "PaginatedPostsPage": {
+  "PaginatedPostsArchivePage": {
     "title": "Posts {pageNumber}",
     "description": "A list of all posts on this site."
   },
