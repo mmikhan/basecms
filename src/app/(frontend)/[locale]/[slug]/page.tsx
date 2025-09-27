@@ -43,7 +43,7 @@ export default async function Page({ params }: PageProps) {
 
   const page = await queryPageBySlug({ slug, locale: locale as TypedLocale })
 
-  if (!page) return <Redirects url={`/${slug}`} />
+  if (!page) return <Redirects url={`/${slug}`} locale={locale} />
 
   const { layout } = page
 
@@ -51,7 +51,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <Redirects disableNotFound url={`/${slug}`} />
+      <Redirects disableNotFound url={`/${slug}`} locale={locale} />
 
       {draft && <RefreshRouteOnSave />}
 

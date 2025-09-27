@@ -10,6 +10,7 @@ import { generateMeta } from '@/lib/generateMeta'
 import { Card } from '@/components/Card'
 import { getCachedDocument } from '@/lib/getDocument'
 import type { Post } from '@/payload-types'
+import { Locale } from 'next-intl'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -33,11 +34,11 @@ export async function generateStaticParams() {
 }
 
 type Props = {
-  params: Promise<{ slug?: string }>
+  params: Promise<{ slug?: string; locale: Locale }>
 }
 
 export default async function PostPage({ params }: Props) {
-  const { slug } = await params
+  const { locale, slug } = await params
   const { isEnabled: draft } = await draftMode()
 
   const post = (await getCachedDocument({
@@ -49,11 +50,11 @@ export default async function PostPage({ params }: Props) {
     pagination: false,
   })()) as Post
 
-  if (!post) return <Redirects url={`/posts/${slug}`} />
+  if (!post) return <Redirects url={`/posts/${slug}`} locale={locale} />
 
   return (
     <article className="py-16">
-      <Redirects disableNotFound url={`/posts/${slug}`} />
+      <Redirects disableNotFound url={`/posts/${slug}`} locale={locale} />
 
       {draft && <RefreshRouteOnSave />}
 
