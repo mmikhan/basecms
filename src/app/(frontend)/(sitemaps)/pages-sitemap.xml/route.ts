@@ -43,32 +43,28 @@ const getPagesSitemap = unstable_cache(
 
     return [
       // Static pages for all locales
-      ...routing.locales.flatMap((locale) => [
-        {
-          loc: `${SITE_URL}/${locale}/search`,
-          lastmod: dateFallback,
-          alternateRefs: generateAlternateRefs('/search', locale),
-        },
-        {
-          loc: `${SITE_URL}/${locale}/posts`,
-          lastmod: dateFallback,
-          alternateRefs: generateAlternateRefs('/posts', locale),
-        },
-      ]),
+      {
+        loc: `${SITE_URL}/${routing.defaultLocale}/search`,
+        lastmod: dateFallback,
+        alternateRefs: generateAlternateRefs('/search', routing.defaultLocale),
+      },
+      {
+        loc: `${SITE_URL}/${routing.defaultLocale}/posts`,
+        lastmod: dateFallback,
+        alternateRefs: generateAlternateRefs('/posts', routing.defaultLocale),
+      },
 
       // Dynamic pages for all locales
       ...(results.docs?.flatMap((page) => {
         if (!page?.slug) return []
 
-        return routing.locales.map((locale) => {
-          const path = page.slug === 'home' ? '' : `/${page.slug}`
+        const path = page.slug === 'home' ? '' : `/${page.slug}`
 
-          return {
-            loc: `${SITE_URL}/${locale}${path}`,
-            lastmod: page.updatedAt || dateFallback,
-            alternateRefs: generateAlternateRefs(path, locale),
-          }
-        })
+        return {
+          loc: `${SITE_URL}/${routing.defaultLocale}${path}`,
+          lastmod: page.updatedAt || dateFallback,
+          alternateRefs: generateAlternateRefs(path, routing.defaultLocale),
+        }
       }) || []),
     ]
   },
