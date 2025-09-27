@@ -30,8 +30,9 @@ const getPagesSitemap = unstable_cache(
 
     const dateFallback = new Date().toISOString()
 
-    return routing.locales.flatMap((locale) => {
-      const staticPages = [
+    return [
+      // Static pages for all locales
+      ...routing.locales.flatMap((locale) => [
         {
           loc: `${SITE_URL}/${locale}/search`,
           lastmod: dateFallback,
@@ -40,22 +41,22 @@ const getPagesSitemap = unstable_cache(
           loc: `${SITE_URL}/${locale}/posts`,
           lastmod: dateFallback,
         },
-      ]
+      ]),
 
-      const dynamicPages =
-        results.docs?.flatMap((page) => {
-          if (!page?.slug) return []
+      // Dynamic pages for all locales
+      ...(results.docs?.flatMap((page) => {
+        if (!page?.slug) return []
 
+        return routing.locales.map((locale) => {
           const path = page.slug === 'home' ? '' : `/${page.slug}`
 
           return {
             loc: `${SITE_URL}/${locale}${path}`,
             lastmod: page.updatedAt || dateFallback,
           }
-        }) || []
-
-      return [...staticPages, ...dynamicPages]
-    })
+        })
+      }) || []),
+    ]
   },
   ['pages-sitemap'],
   {
