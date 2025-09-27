@@ -2,13 +2,19 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { getServerSideURL } from '@/lib/getURL'
+import { hasLocale } from 'next-intl'
+import { routing } from '@/i18n/routing'
 
 export const GET = async (request: NextRequest) => {
-  const url = new URL(request.url)
-  const token = url.searchParams.get('token')
+  const { searchParams } = new URL(request.url)
+  const { token, locale } = Object.fromEntries(searchParams.entries())
 
   if (!token) {
     return NextResponse.json({ message: 'Token is required' }, { status: 400 })
+  }
+
+  if (!hasLocale(routing.locales, locale)) {
+    return NextResponse.json({ error: 'Invalid locale' }, { status: 400 })
   }
 
   try {
@@ -16,9 +22,9 @@ export const GET = async (request: NextRequest) => {
 
     await payload.verifyEmail({ collection: 'customers', token, req: request })
 
-    const response = NextResponse.redirect(`${getServerSideURL()}/login`)
+    const response = NextResponse.redirect(`${getServerSideURL()}/${locale}/login`)
     response.cookies.set('verified', 'true', {
-      path: '/',
+      path: `/${locale}`,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
