@@ -4,6 +4,7 @@ import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 import { getServerSideURL } from '@/lib/getURL'
 import { routing } from '@/i18n/routing'
+import type { Locale } from 'next-intl'
 
 const getPagesSitemap = unstable_cache(
   async () => {
@@ -30,16 +31,28 @@ const getPagesSitemap = unstable_cache(
 
     const dateFallback = new Date().toISOString()
 
+    // Helper function to generate alternateRefs for a given path (excluding current locale)
+    const generateAlternateRefs = (path: string, currentLocale: Locale) => {
+      return routing.locales
+        .filter((locale) => locale !== currentLocale)
+        .map((locale) => ({
+          href: `${SITE_URL}/${locale}${path}`,
+          hreflang: locale,
+        }))
+    }
+
     return [
       // Static pages for all locales
       ...routing.locales.flatMap((locale) => [
         {
           loc: `${SITE_URL}/${locale}/search`,
           lastmod: dateFallback,
+          alternateRefs: generateAlternateRefs('/search', locale),
         },
         {
           loc: `${SITE_URL}/${locale}/posts`,
           lastmod: dateFallback,
+          alternateRefs: generateAlternateRefs('/posts', locale),
         },
       ]),
 
@@ -53,6 +66,7 @@ const getPagesSitemap = unstable_cache(
           return {
             loc: `${SITE_URL}/${locale}${path}`,
             lastmod: page.updatedAt || dateFallback,
+            alternateRefs: generateAlternateRefs(path, locale),
           }
         })
       }) || []),
