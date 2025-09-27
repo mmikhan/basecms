@@ -29,7 +29,7 @@ export const PostsArchive: React.FC<{ page: number; locale: TypedLocale }> = asy
 
       <CollectionArchive data={posts.docs} collectionSlug={'posts'} />
 
-      {posts.totalDocs > 0 && <PaginationComponent {...posts} />}
+      {posts.totalDocs > 0 && <PaginationComponent {...posts} locale={locale} />}
     </div>
   )
 }
