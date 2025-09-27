@@ -21,7 +21,7 @@ export const createCheckoutSession = async (
     automatic_tax: { enabled: true },
     tax_id_collection: { enabled: true },
     metadata: customer ? { id: customer.id, name: customer.name, email: customer.email } : {},
-    success_url: `${getServerSideURL()}/checkout?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${getServerSideURL()}/cancel?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${getServerSideURL()}/next/checkout?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${getServerSideURL()}/next/cancel?session_id={CHECKOUT_SESSION_ID}`,
   })
 }
