@@ -3,6 +3,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 import { getServerSideURL } from '@/lib/getURL'
+import { generateAlternateRefs } from '@/lib/sitemap'
+import { routing } from '@/i18n/routing'
 
 const getPostsSitemap = unstable_cache(
   async () => {
@@ -29,16 +31,21 @@ const getPostsSitemap = unstable_cache(
 
     const dateFallback = new Date().toISOString()
 
-    const sitemap = results.docs
-      ? results.docs
-          .filter((post) => Boolean(post?.slug))
-          .map((post) => ({
-            loc: `${SITE_URL}/posts/${post?.slug}`,
-            lastmod: post.updatedAt || dateFallback,
-          }))
-      : []
+    return (
+      results.docs
+        ?.map((post) => {
+          if (!post?.slug) return null
 
-    return sitemap
+          const path = `/posts/${post.slug}`
+
+          return {
+            loc: `${SITE_URL}/${routing.defaultLocale}${path}`,
+            lastmod: post.updatedAt || dateFallback,
+            alternateRefs: generateAlternateRefs(path, routing.defaultLocale),
+          }
+        })
+        .filter((item) => item !== null) || []
+    )
   },
   ['posts-sitemap'],
   {
