@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { cache } from 'react'
 import './styles.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { type Metadata } from 'next'
@@ -8,11 +8,12 @@ import { AdminBar } from '@/components/AdminBar'
 import { draftMode } from 'next/headers'
 import type { Footer, Header } from '@/payload-types'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { getCachedGlobal } from '@/lib/getGlobals'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { Locale, NextIntlClientProvider } from 'next-intl'
+import { getPayload, type GlobalSlug, type TypedLocale } from 'payload'
+import config from '@payload-config'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -36,8 +37,16 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   const messages = await getMessages({ locale })
 
   const { isEnabled } = await draftMode()
-  const { layout: headerLayout } = (await getCachedGlobal({ slug: 'header', depth: 1 })()) as Header
-  const { layout: footerLayout } = (await getCachedGlobal({ slug: 'footer', depth: 1 })()) as Footer
+  const { layout: headerLayout } = (await queryGlobal({
+    locale: locale as TypedLocale,
+    slug: 'header',
+    depth: 1,
+  })) as Header
+  const { layout: footerLayout } = (await queryGlobal({
+    locale: locale as TypedLocale,
+    slug: 'footer',
+    depth: 1,
+  })) as Footer
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -59,6 +68,18 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     </html>
   )
 }
+
+const queryGlobal = cache(
+  async ({ locale, slug, depth }: { locale: TypedLocale; slug: GlobalSlug; depth: number }) => {
+    const payload = await getPayload({ config })
+
+    return await payload.findGlobal({
+      locale,
+      slug,
+      depth,
+    })
+  },
+)
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),

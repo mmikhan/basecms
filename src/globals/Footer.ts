@@ -16,6 +16,7 @@ export const Footer: GlobalConfig = {
     {
       name: 'layout',
       type: 'blocks',
+      localized: true,
       label: false,
       blockReferences: ['footerBlock'],
       blocks: [],

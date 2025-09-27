@@ -16,6 +16,7 @@ export const Header: GlobalConfig = {
     {
       name: 'layout',
       type: 'blocks',
+      localized: true,
       label: false,
       blockReferences: ['nav'],
       blocks: [],
