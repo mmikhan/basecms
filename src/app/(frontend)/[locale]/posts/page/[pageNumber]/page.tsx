@@ -1,27 +1,30 @@
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+import { getPayload, type TypedLocale } from 'payload'
+import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { POSTS_PER_PAGE } from '@/lib/utils'
 import { PostsArchive } from '@/components/PostsArchive'
+import type { Locale } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
 type PostsPaginationPageProps = {
   params: Promise<{
     pageNumber: string
+    locale: Locale
   }>
 }
 
 export default async function PostsPaginationPage({ params }: PostsPaginationPageProps) {
-  const { pageNumber } = await params
+  const { pageNumber, locale } = await params
   const page = parseInt(pageNumber, 10)
 
   if (isNaN(page)) notFound()
 
-  return <PostsArchive page={page} />
+  return <PostsArchive page={page} locale={locale as TypedLocale} />
 }
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload({ config })
 
   const { totalDocs } = await payload.count({
     collection: 'posts',
@@ -40,9 +43,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PostsPaginationPageProps): Promise<Metadata> {
-  const { pageNumber } = await params
-  const title = `Posts - Page ${pageNumber}`
-  const description = 'An archive of all posts.'
+  const { pageNumber, locale } = await params
+  const t = await getTranslations({ locale, namespace: 'PaginatedPostsPage' })
+
+  const title = t('title', { pageNumber })
+  const description = t('description')
 
   return {
     title,
@@ -50,7 +55,7 @@ export async function generateMetadata({ params }: PostsPaginationPageProps): Pr
     openGraph: {
       title,
       description,
-      url: `/posts/page/${pageNumber}`,
+      url: `/${locale}/posts/page/${pageNumber}`,
     },
   }
 }

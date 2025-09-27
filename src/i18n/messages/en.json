@@ -6,6 +6,10 @@
     "title": "Posts",
     "description": "A list of all posts on this site."
   },
+  "PaginatedPostsPage": {
+    "title": "Posts {pageNumber}",
+    "description": "A list of all posts on this site."
+  },
   "SearchPage": {
     "title": "Search Results",
     "titleWithQuery": "Search Results for {query}",

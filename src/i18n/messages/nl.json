@@ -6,6 +6,10 @@
     "title": "Berichten",
     "description": "Een lijst van alle berichten op deze site."
   },
+  "PaginatedPostsPage": {
+    "title": "Berichten {pageNumber}",
+    "description": "Een lijst van alle berichten op deze site."
+  },
   "SearchPage": {
     "title": "Zoekresultaten",
     "titleWithQuery": "Zoekresultaten voor {query}",

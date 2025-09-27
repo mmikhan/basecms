@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: t('title'),
       description: t('description'),
-      url: '/posts',
+      url: `/${locale}/posts`,
       type: 'website',
       siteName: 'AdMarket',
       images: [{ url: '/website-template-OG.webp' }],

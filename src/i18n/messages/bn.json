@@ -6,6 +6,10 @@
     "title": "পোস্টসমূহ",
     "description": "এই সাইটের সমস্ত পোস্টের একটি তালিকা।"
   },
+  "PaginatedPostsPage": {
+    "title": "পোস্টসমূহ {pageNumber}",
+    "description": "এই সাইটের সমস্ত পোস্টের একটি তালিকা।"
+  },
   "SearchPage": {
     "title": "সার্চ ফলাফল",
     "titleWithQuery": "{query} এর জন্য সার্চ ফলাফল",
