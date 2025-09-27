@@ -1,6 +1,6 @@
 import { draftMode } from 'next/headers'
-import { CollectionSlug, getPayload } from 'payload'
-import configPromise from '@payload-config'
+import { type CollectionSlug, getPayload, type TypedLocale } from 'payload'
+import config from '@payload-config'
 import { Redirects } from '@/components/Redirects'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import RichText from '@/components/RichText'
@@ -11,9 +11,10 @@ import { Card } from '@/components/Card'
 import { getCachedDocument } from '@/lib/getDocument'
 import type { Post } from '@/payload-types'
 import { Locale } from 'next-intl'
+import { cache } from 'react'
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload({ config })
 
   const posts = await payload.find({
     collection: 'posts',
@@ -41,14 +42,7 @@ export default async function PostPage({ params }: Props) {
   const { locale, slug } = await params
   const { isEnabled: draft } = await draftMode()
 
-  const post = (await getCachedDocument({
-    collection: 'posts',
-    slug: slug as CollectionSlug,
-    draft,
-    limit: 1,
-    overrideAccess: draft,
-    pagination: false,
-  })()) as Post
+  const post = await queryPostBySlug({ slug, locale: locale as TypedLocale })
 
   if (!post) return <Redirects url={`/posts/${slug}`} locale={locale} />
 
@@ -82,6 +76,29 @@ export default async function PostPage({ params }: Props) {
     </article>
   )
 }
+
+const queryPostBySlug = cache(
+  async ({ slug, locale }: { slug: string | undefined; locale: TypedLocale }) => {
+    const { isEnabled: draft } = await draftMode()
+    const payload = await getPayload({ config })
+
+    const result = await payload.find({
+      collection: 'posts',
+      locale,
+      draft,
+      limit: 1,
+      overrideAccess: draft,
+      pagination: false,
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    })
+
+    return result.docs?.[0] || null
+  },
+)
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
