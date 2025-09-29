@@ -42,6 +42,9 @@ import { Dashboard } from './collections/Dashboard'
 import { localization } from './i18n/localization'
 import { Accordion } from './blocks/Accordion/config'
 import { Carousel } from './blocks/Carousel/config'
+import { en } from '@payloadcms/translations/languages/en'
+import { nl } from '@payloadcms/translations/languages/nl'
+import { bnBd } from '@payloadcms/translations/languages/bnBd'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -131,4 +134,8 @@ export default buildConfig({
     apiKey: process.env.RESEND_API_KEY || '',
   }),
   localization: localization as LocalizationConfig,
+  i18n: {
+    supportedLanguages: { en, nl, 'bn-BD': bnBd },
+    fallbackLanguage: 'en',
+  },
 })
