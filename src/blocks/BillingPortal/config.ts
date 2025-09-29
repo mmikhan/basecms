@@ -14,6 +14,7 @@ export const BillingPortal: Block = {
     {
       name: 'label',
       type: 'text',
+      localized: true,
       defaultValue: 'Manage Billing Portal',
       required: true,
     },

@@ -14,10 +14,12 @@ export const AccountName: Block = {
     {
       name: 'title',
       type: 'text',
+      localized: true,
     },
     {
       name: 'description',
       type: 'text',
+      localized: true,
     },
   ],
 }

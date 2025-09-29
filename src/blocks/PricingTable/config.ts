@@ -29,18 +29,21 @@ export const PricingTable: Block = {
           name: 'name',
           label: 'Name',
           type: 'text',
+          localized: true,
           required: true,
         },
         {
           name: 'price',
           label: 'Price',
           type: 'number',
+          localized: true,
           required: true,
         },
         {
           name: 'description',
           label: 'Description',
           type: 'richText',
+          localized: true,
           editor: lexicalEditor({
             features: ({ rootFeatures }) => {
               return [

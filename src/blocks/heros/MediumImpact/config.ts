@@ -21,6 +21,8 @@ export const MediumImpactHero: Block = {
     {
       name: 'richText',
       type: 'richText',
+      localized: true,
+      label: false,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -33,7 +35,6 @@ export const MediumImpactHero: Block = {
           ]
         },
       }),
-      label: false,
     },
     linkGroup({
       overrides: { maxRows: 2, dbName: 'links' },
