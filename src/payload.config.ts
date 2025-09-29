@@ -41,6 +41,7 @@ import { AccountPassword } from './blocks/Account/Password/config'
 import { Dashboard } from './collections/Dashboard'
 import { localization } from './i18n/localization'
 import { Accordion } from './blocks/Accordion/config'
+import { Carousel } from './blocks/Carousel/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -107,6 +108,7 @@ export default buildConfig({
     AccountName,
     AccountPassword,
     Accordion,
+    Carousel,
   ],
   collections: [Pages, Users, Media, Categories, Posts, Orders, Customers, Dashboard],
   editor: defaultLexical,
