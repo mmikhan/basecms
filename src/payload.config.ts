@@ -40,6 +40,7 @@ import { AccountName } from './blocks/Account/Name/config'
 import { AccountPassword } from './blocks/Account/Password/config'
 import { Dashboard } from './collections/Dashboard'
 import { localization } from './i18n/localization'
+import { Accordion } from './blocks/Accordion/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -105,6 +106,7 @@ export default buildConfig({
     ResetPasswordBlock,
     AccountName,
     AccountPassword,
+    Accordion,
   ],
   collections: [Pages, Users, Media, Categories, Posts, Orders, Customers, Dashboard],
   editor: defaultLexical,

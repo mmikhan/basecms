@@ -81,6 +81,7 @@ export const Pages: CollectionConfig = {
                 'registerBlock',
                 'forgotPasswordBlock',
                 'resetPasswordBlock',
+                'accordion',
               ],
               blocks: [],
               required: true,

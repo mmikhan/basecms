@@ -88,6 +88,7 @@ export interface Config {
     resetPasswordBlock: ResetPasswordBlock;
     accountName: AccountNameBlock;
     accountPassword: AccountPasswordBlock;
+    accordion: AccordionBlock;
   };
   collections: {
     pages: Page;
@@ -275,6 +276,7 @@ export interface Page {
     | RegisterBlock
     | ForgotPasswordBlock
     | ResetPasswordBlock
+    | AccordionBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1511,6 +1513,53 @@ export interface AccountPasswordBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'accountPassword';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordionBlock".
+ */
+export interface AccordionBlock {
+  title?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  items: {
+    title: string;
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  spacingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  spacingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingBottom?: ('none' | 'small' | 'medium' | 'large') | null;
+  paddingTop?: ('none' | 'small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordion';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

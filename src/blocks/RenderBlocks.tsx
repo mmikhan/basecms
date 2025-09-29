@@ -20,6 +20,7 @@ import { ForgotPasswordBlock } from './ForgotPassword/Component'
 import { ResetPasswordBlock } from './ResetPassword/Component'
 import { AccountNameBlock } from './Account/Name/Component'
 import { AccountPasswordBlock } from './Account/Password/Component'
+import { AccordionBlock } from './Accordion/Component'
 
 type LayoutBlock =
   | Page['layout'][number]
@@ -56,6 +57,7 @@ const blockComponents: BlockComponentMap = {
   resetPasswordBlock: ResetPasswordBlock,
   accountName: AccountNameBlock,
   accountPassword: AccountPasswordBlock,
+  accordion: AccordionBlock,
 }
 
 // Generic helper preserves the specific block subtype
