@@ -5,7 +5,7 @@ import { seed } from './run'
 import { NextResponse } from 'next/server'
 import { isAdmin, isAuth } from '@/actions/auth'
 
-export async function GET(): Promise<NextResponse> {
+export async function POST(): Promise<NextResponse> {
   const { user } = await isAuth(await headers())
 
   if (!user) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
