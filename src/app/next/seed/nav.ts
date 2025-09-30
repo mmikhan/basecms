@@ -1,0 +1,54 @@
+import type { Header, Media, Page } from '@/payload-types'
+
+type NavArgs = {
+  logo: Media
+  homepage: Page
+  samplePage: Page
+}
+
+export const nav: (
+  args: NavArgs,
+) => Omit<Header, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'sizes'> = ({
+  logo,
+  homepage,
+  samplePage,
+}) => {
+  return {
+    layout: [
+      {
+        media: logo,
+        blockName: null,
+        links: [
+          {
+            link: {
+              type: 'reference',
+              newTab: null,
+              reference: {
+                relationTo: 'pages',
+                value: homepage,
+              },
+              url: null,
+              label: 'Home',
+              appearance: 'link',
+            },
+          },
+          {
+            link: {
+              type: 'reference',
+              newTab: null,
+              reference: {
+                relationTo: 'pages',
+                value: samplePage,
+              },
+              url: null,
+              label: 'Sample',
+              appearance: 'link',
+            },
+          },
+        ],
+        blockType: 'nav',
+      },
+    ],
+    globalType: 'header',
+  }
+}
