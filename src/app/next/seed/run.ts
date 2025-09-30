@@ -4,6 +4,7 @@ import { media } from './media'
 import { home } from './pages/home'
 import { nav } from './nav'
 import { Footer, Header } from '@/payload-types'
+import { footer } from './footer'
 
 export const seed = async ({ req }: { req: PayloadRequest }) => {
   const payload = req.payload
@@ -59,6 +60,13 @@ export const seed = async ({ req }: { req: PayloadRequest }) => {
     payload.updateGlobal({
       slug: 'header',
       data: nav({ logo: baseCMSLogo, homepage, samplePage: samplePageDoc }),
+      req,
+      depth: 0,
+    }),
+
+    payload.updateGlobal({
+      slug: 'footer',
+      data: footer({ logo: baseCMSLogo, homepage, samplePage: samplePageDoc }),
       req,
       depth: 0,
     }),

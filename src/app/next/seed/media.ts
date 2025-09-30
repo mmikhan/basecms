@@ -4,13 +4,14 @@ import { fetchFileByURL } from './fetch'
 export const media = async ({ payload }: { payload: Payload }) => {
   payload.logger.info('Creating media...')
 
-  const [shoesShop, bigBuckBunny] = await Promise.all([
+  const [shoesShop, bigBuckBunny, baseCMSLogo] = await Promise.all([
     fetchFileByURL(
       'https://ecommerce.mandala.sh/api/media/file/shoes-shop-hero-image-for-first-section-background%201.png',
     ),
     fetchFileByURL(
       'https://github.com/bower-media-samples/big-buck-bunny-1080p-30s/raw/refs/heads/master/video.mp4',
     ),
+    fetchFileByURL('https://0hq06sm3rm.ufs.sh/f/bsPnLPBQxLjJ3f1aPOSYaAoWHTsIvZDpJztb1regq0NjE7hK'),
   ])
 
   return await Promise.all([
@@ -31,6 +32,15 @@ export const media = async ({ payload }: { payload: Payload }) => {
         requiresSignedURL: false,
       },
       file: bigBuckBunny,
+    }),
+    payload.create({
+      collection: 'media',
+      data: {
+        alt: 'Base CMS Logo',
+        isPrivate: false,
+        requiresSignedURL: false,
+      },
+      file: baseCMSLogo,
     }),
   ])
 }
