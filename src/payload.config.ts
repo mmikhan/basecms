@@ -60,6 +60,7 @@ export default buildConfig({
         ? { email: 'john@example.com', password: 'password', prefillOnly: true }
         : false,
     components: {
+      beforeDashboard: ['@/components/BeforeDashboard'],
       graphics: {
         Icon: '@/components/icon',
         Logo: '@/components/logo',

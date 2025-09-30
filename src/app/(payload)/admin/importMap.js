@@ -42,6 +42,7 @@ import { SubscriptFeatureClient as SubscriptFeatureClient_e70f5e05f09f93e00b997e
 import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_f8022cf35b3d492829ec1a405bd134e9 } from '@/components/icon'
 import { default as default_7a89b5675912f3f4f82dd41bbb03d52e } from '@/components/logo'
+import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 
 export const importMap = {
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
@@ -87,5 +88,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#SubscriptFeatureClient": SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#StrikethroughFeatureClient": StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/icon#default": default_f8022cf35b3d492829ec1a405bd134e9,
-  "@/components/logo#default": default_7a89b5675912f3f4f82dd41bbb03d52e
+  "@/components/logo#default": default_7a89b5675912f3f4f82dd41bbb03d52e,
+  "@/components/BeforeDashboard#default": default_1a7510af427896d367a49dbf838d2de6
 }

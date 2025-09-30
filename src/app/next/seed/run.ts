@@ -54,6 +54,42 @@ export const seed = async ({ req }: { req: PayloadRequest }) => {
       req,
       depth: 0,
     }),
+
+    payload.create({
+      collection: 'users',
+      data: {
+        name: 'John Doe',
+        email: 'john@example.com',
+        password: 'password',
+        roles: 'admin',
+      },
+      req,
+      depth: 0,
+    }),
+
+    payload.create({
+      collection: 'users',
+      data: {
+        name: 'Jane Doe',
+        email: 'jane@example.com',
+        password: 'password',
+        roles: 'user',
+      },
+      req,
+      depth: 0,
+    }),
+
+    payload.create({
+      collection: 'customers',
+      data: {
+        name: 'Seed Customer',
+        email: 'seed@resend.dev',
+        password: 'password',
+        _verified: true,
+      },
+      req,
+      depth: 0,
+    }),
   ])
 
   await Promise.all([
