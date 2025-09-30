@@ -1,10 +1,29 @@
 import type { Page } from '@/payload-types'
 import type { Payload } from 'payload'
+import { fetchFileByURL } from '../fetch'
 
 export const samplePage = async ({ payload }: { payload: Payload }) => {
   payload.logger.info('Creating sample page...')
 
-  const data: Omit<Page, 'id' | 'updatedAt' | 'createdAt' | 'publishedAt'> = {
+  const [image] = await Promise.all([
+    fetchFileByURL(
+      'https://ecommerce.mandala.sh/api/media/file/shoes-shop-hero-image-for-first-section-background%201.png',
+    ),
+  ])
+
+  const [imageDoc] = await Promise.all([
+    payload.create({
+      collection: 'media',
+      data: {
+        alt: 'Shoes shop hero image for first section background',
+      },
+      file: image,
+    }),
+  ])
+
+  payload.logger.info(`Created media with ID: ${imageDoc.id}`)
+
+  const pageDoc: Omit<Page, 'id' | 'updatedAt' | 'createdAt' | 'publishedAt'> = {
     title: 'Sample',
     layout: [
       {
@@ -61,6 +80,11 @@ export const samplePage = async ({ payload }: { payload: Payload }) => {
         links: [],
         blockType: 'lowImpactHero',
       },
+      {
+        media: imageDoc.id,
+        blockName: null,
+        blockType: 'mediaBlock',
+      },
     ],
     meta: {
       title: null,
@@ -73,11 +97,13 @@ export const samplePage = async ({ payload }: { payload: Payload }) => {
   }
 
   try {
-    await payload.create({
+    const createdPage = await payload.create({
       collection: 'pages',
-      data,
+      data: pageDoc,
       locale: 'en',
     })
+
+    payload.logger.info(`Created page with ID: ${createdPage.id}`)
   } catch (error) {
     payload.logger.error('🌱 Error creating sample page:', error)
 
