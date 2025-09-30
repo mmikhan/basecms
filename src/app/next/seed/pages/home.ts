@@ -1,10 +1,14 @@
-import type { Media, Page } from '@/payload-types'
-import type { Payload } from 'payload'
+import type { Media } from '@/payload-types'
+import type { RequiredDataFromCollectionSlug } from 'payload'
 
-export const homepage = async ({ payload, media }: { payload: Payload; media: Media }) => {
-  payload.logger.info('Creating homepage...')
+type HomeArgs = {
+  heroMedia: Media
+}
 
-  const homepageDoc: Omit<Page, 'id' | 'updatedAt' | 'createdAt' | 'publishedAt'> = {
+export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
+  heroMedia,
+}) => {
+  return {
     title: 'Home',
     layout: [
       {
@@ -76,7 +80,7 @@ export const homepage = async ({ payload, media }: { payload: Payload; media: Me
             direction: 'ltr',
           },
         },
-        media,
+        media: heroMedia,
         blockName: null,
         links: [
           {
@@ -98,20 +102,6 @@ export const homepage = async ({ payload, media }: { payload: Payload; media: Me
       description: null,
     },
     slug: 'home',
-    slugLock: true,
     _status: 'published',
-  }
-
-  try {
-    const homepageCreated = await payload.create({
-      collection: 'pages',
-      data: homepageDoc,
-    })
-
-    payload.logger.info(`Created homepage with ID: ${homepageCreated.id}`)
-  } catch (error) {
-    payload.logger.error('Error creating homepage:', error)
-
-    throw error
   }
 }

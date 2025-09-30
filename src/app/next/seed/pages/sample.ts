@@ -1,10 +1,14 @@
-import type { Media, Page } from '@/payload-types'
-import type { Payload } from 'payload'
+import type { Media } from '@/payload-types'
+import type { RequiredDataFromCollectionSlug } from 'payload'
 
-export const samplePage = async ({ payload, media }: { payload: Payload; media: Media }) => {
-  payload.logger.info('Creating sample page...')
+type SamplePageArgs = {
+  contentMedia: Media
+}
 
-  const pageDoc: Omit<Page, 'id' | 'updatedAt' | 'createdAt' | 'publishedAt'> = {
+export const samplePage: (args: SamplePageArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
+  contentMedia,
+}) => {
+  return {
     title: 'Sample',
     layout: [
       {
@@ -62,7 +66,7 @@ export const samplePage = async ({ payload, media }: { payload: Payload; media: 
         blockType: 'lowImpactHero',
       },
       {
-        media,
+        media: contentMedia,
         blockName: null,
         blockType: 'mediaBlock',
       },
@@ -73,21 +77,6 @@ export const samplePage = async ({ payload, media }: { payload: Payload; media: 
       description: null,
     },
     slug: 'sample',
-    slugLock: true,
     _status: 'published',
-  }
-
-  try {
-    const createdPage = await payload.create({
-      collection: 'pages',
-      data: pageDoc,
-      locale: 'en',
-    })
-
-    payload.logger.info(`Created page with ID: ${createdPage.id}`)
-  } catch (error) {
-    payload.logger.error('🌱 Error creating sample page:', error)
-
-    throw error
   }
 }

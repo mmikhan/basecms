@@ -1,9 +1,9 @@
-import type { CollectionSlug, Payload } from 'payload'
+import type { CollectionSlug, Payload, PayloadRequest } from 'payload'
 import { samplePage } from './pages/sample'
 import { media } from './media'
-import { homepage } from './pages/home'
+import { home } from './pages/home'
 
-export const seed = async ({ req }: { req: { payload: Payload } }) => {
+export const seed = async ({ req }: { req: PayloadRequest }) => {
   if (!process.env.PAYLOAD_SECRET)
     throw new Error('PAYLOAD_SECRET environment variable is required')
 
@@ -55,6 +55,19 @@ export const seed = async ({ req }: { req: { payload: Payload } }) => {
 export const seedPages = async ({ payload }: { payload: Payload }) => {
   const [shoesShop, bigBuckBunny] = await media({ payload })
 
-  await homepage({ payload, media: bigBuckBunny })
-  await samplePage({ payload, media: shoesShop })
+  await Promise.all([
+    payload.create({
+      collection: 'pages',
+      data: home({ heroMedia: bigBuckBunny }),
+      depth: 0,
+    }),
+  ])
+
+  await Promise.all([
+    payload.create({
+      collection: 'pages',
+      data: samplePage({ contentMedia: shoesShop }),
+      depth: 0,
+    }),
+  ])
 }
