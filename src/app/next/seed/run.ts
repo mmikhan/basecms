@@ -1,5 +1,6 @@
 import type { CollectionSlug, Payload } from 'payload'
 import { samplePage } from './pages/sample'
+import { media } from './media'
 
 export const seed = async ({ req }: { req: { payload: Payload } }) => {
   if (!process.env.PAYLOAD_SECRET)
@@ -51,5 +52,7 @@ export const seed = async ({ req }: { req: { payload: Payload } }) => {
 }
 
 export const seedPages = async ({ payload }: { payload: Payload }) => {
-  await samplePage({ payload })
+  const [shoesShop] = await media({ payload })
+
+  await samplePage({ payload, media: shoesShop })
 }
