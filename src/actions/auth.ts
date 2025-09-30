@@ -3,14 +3,20 @@
 import { cache } from 'react'
 import { headers as NextHeaders } from 'next/headers'
 import config from '@payload-config'
-import { CollectionSlug, getPayload, PayloadRequest } from 'payload'
+import { type CollectionSlug, getPayload, type PayloadRequest } from 'payload'
 import * as auth from '@payloadcms/next/auth'
-import { Customer } from '@/payload-types'
+import type { Customer, User } from '@/payload-types'
 
 export const isAuth = cache(async (headers?: Headers) => {
   const payload = await getPayload({ config })
 
   return await payload.auth({ headers: headers ?? (await NextHeaders()) })
+})
+
+export const isAdmin = cache(async (headers?: Headers) => {
+  const { user } = await isAuth(headers)
+
+  return user && user.collection === 'users' && (user as User).roles === 'admin'
 })
 
 export const login = async ({
