@@ -7,6 +7,7 @@ import search from './search'
 import formBuilder from './formBuilder'
 import stripe from './stripe'
 import cloudinary from './cloudinary'
+import importExport from './importExport'
 
 export const plugins: Plugin[] = [
   payloadCloudPlugin(),
@@ -17,4 +18,5 @@ export const plugins: Plugin[] = [
   search,
   formBuilder,
   cloudinary,
+  importExport,
 ]
