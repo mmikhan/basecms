@@ -4,6 +4,7 @@ type NavArgs = {
   logo: Media
   homepage: Page
   samplePage: Page
+  loginPage: Page
 }
 
 export const nav: (
@@ -12,6 +13,7 @@ export const nav: (
   logo,
   homepage,
   samplePage,
+  loginPage,
 }) => {
   return {
     layout: [
@@ -43,6 +45,19 @@ export const nav: (
               url: null,
               label: 'Sample',
               appearance: 'link',
+            },
+          },
+          {
+            link: {
+              type: 'reference',
+              newTab: null,
+              reference: {
+                relationTo: 'pages',
+                value: loginPage,
+              },
+              url: null,
+              label: 'Login',
+              appearance: 'default',
             },
           },
         ],

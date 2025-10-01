@@ -1,12 +1,15 @@
 import type { Media } from '@/payload-types'
+import { Route } from 'next'
 import type { RequiredDataFromCollectionSlug } from 'payload'
 
 type HomeArgs = {
   heroMedia: Media
+  registerPage: Route
 }
 
 export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> = ({
   heroMedia,
+  registerPage,
 }) => {
   return {
     title: 'Home',
@@ -90,6 +93,15 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
               url: 'https://base-cms.com',
               label: 'Learn more',
               appearance: 'default',
+            },
+          },
+          {
+            link: {
+              type: 'custom',
+              newTab: null,
+              url: registerPage,
+              label: 'Get Started',
+              appearance: 'outline',
             },
           },
         ],

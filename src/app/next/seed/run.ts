@@ -5,6 +5,12 @@ import { home } from './pages/home'
 import { nav } from './nav'
 import { Footer, Header } from '@/payload-types'
 import { footer } from './footer'
+import { accountPage } from './pages/account'
+import { dashboard } from './pages/dashboard'
+import { forgotPasswordPage } from './pages/forgotPassword'
+import type { Route } from 'next'
+import { registerPage } from './pages/register'
+import { loginPage } from './pages/login'
 
 export const seed = async ({ req }: { req: PayloadRequest }) => {
   const payload = req.payload
@@ -43,7 +49,7 @@ export const seed = async ({ req }: { req: PayloadRequest }) => {
   const [homepage, samplePageDoc] = await Promise.all([
     payload.create({
       collection: 'pages',
-      data: home({ heroMedia: bigBuckBunny }),
+      data: home({ heroMedia: bigBuckBunny, registerPage: '/register' as Route }),
       req,
       depth: 0,
     }),
@@ -92,10 +98,54 @@ export const seed = async ({ req }: { req: PayloadRequest }) => {
     }),
   ])
 
+  const accountPageDoc = await payload.create({
+    collection: 'dashboard',
+    data: accountPage,
+    req,
+    depth: 0,
+  })
+
+  const dashboardDoc = await payload.create({
+    collection: 'dashboard',
+    data: dashboard({ accountPage: accountPageDoc, logoutRedirect: homepage }),
+    req,
+    depth: 0,
+  })
+
+  const forgotPasswordPageDoc = await payload.create({
+    collection: 'pages',
+    data: forgotPasswordPage({ loginPage: '/login' as Route }),
+    req,
+    depth: 0,
+  })
+
+  const registerPageDoc = await payload.create({
+    collection: 'pages',
+    data: registerPage({ loginPage: '/login' as Route }),
+    req,
+    depth: 0,
+  })
+
+  const loginPageDoc = await payload.create({
+    collection: 'pages',
+    data: loginPage({
+      registerPage: registerPageDoc,
+      forgotPasswordPage: forgotPasswordPageDoc,
+      redirectPage: dashboardDoc,
+    }),
+    req,
+    depth: 0,
+  })
+
   await Promise.all([
     payload.updateGlobal({
       slug: 'header',
-      data: nav({ logo: baseCMSLogo, homepage, samplePage: samplePageDoc }),
+      data: nav({
+        logo: baseCMSLogo,
+        homepage,
+        samplePage: samplePageDoc,
+        loginPage: loginPageDoc,
+      }),
       req,
       depth: 0,
     }),
