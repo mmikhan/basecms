@@ -4,7 +4,7 @@ import { fetchFileByURL } from './fetch'
 export const media = async ({ payload }: { payload: Payload }) => {
   payload.logger.info('Creating media...')
 
-  const [shoesShop, bigBuckBunny, baseCMSLogo] = await Promise.all([
+  const [shoesShop, bigBuckBunny, baseCMSLogo, imagePost1, imagePost2] = await Promise.all([
     fetchFileByURL(
       'https://ecommerce.mandala.sh/api/media/file/shoes-shop-hero-image-for-first-section-background%201.png',
     ),
@@ -12,6 +12,12 @@ export const media = async ({ payload }: { payload: Payload }) => {
       'https://github.com/bower-media-samples/big-buck-bunny-1080p-30s/raw/refs/heads/master/video.mp4',
     ),
     fetchFileByURL('https://0hq06sm3rm.ufs.sh/f/bsPnLPBQxLjJ3f1aPOSYaAoWHTsIvZDpJztb1regq0NjE7hK'),
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
+    ),
+    fetchFileByURL(
+      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
+    ),
   ])
 
   return await Promise.all([
@@ -41,6 +47,24 @@ export const media = async ({ payload }: { payload: Payload }) => {
         requiresSignedURL: false,
       },
       file: baseCMSLogo,
+    }),
+    payload.create({
+      collection: 'media',
+      data: {
+        alt: 'Image Post 1',
+        isPrivate: false,
+        requiresSignedURL: false,
+      },
+      file: imagePost1,
+    }),
+    payload.create({
+      collection: 'media',
+      data: {
+        alt: 'Image Post 2',
+        isPrivate: false,
+        requiresSignedURL: false,
+      },
+      file: imagePost2,
     }),
   ])
 }

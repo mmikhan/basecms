@@ -49,6 +49,15 @@ export const nav: (
           },
           {
             link: {
+              type: 'custom',
+              newTab: null,
+              url: '/posts',
+              label: 'Posts',
+              appearance: 'link',
+            },
+          },
+          {
+            link: {
               type: 'reference',
               newTab: null,
               reference: {

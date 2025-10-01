@@ -11,6 +11,10 @@ import { forgotPasswordPage } from './pages/forgotPassword'
 import type { Route } from 'next'
 import { registerPage } from './pages/register'
 import { loginPage } from './pages/login'
+import { carCategory } from './categories/car'
+import { animalCategory } from './categories/animal'
+import { helloWorldPost } from './posts/helloWorld'
+import { toyotaIsTheLeaderPost } from './posts/toyota-is-the-leader'
 
 export const seed = async ({ req }: { req: PayloadRequest }) => {
   const payload = req.payload
@@ -44,9 +48,9 @@ export const seed = async ({ req }: { req: PayloadRequest }) => {
 
   payload.logger.info('— Creating seed data...')
 
-  const [shoesShop, bigBuckBunny, baseCMSLogo] = await media({ payload })
+  const [shoesShop, bigBuckBunny, baseCMSLogo, imagePost1, imagePost2] = await media({ payload })
 
-  const [homepage, samplePageDoc] = await Promise.all([
+  const [homepage, samplePageDoc, admin, user] = await Promise.all([
     payload.create({
       collection: 'pages',
       data: home({ heroMedia: bigBuckBunny, registerPage: '/register' as Route }),
@@ -157,6 +161,38 @@ export const seed = async ({ req }: { req: PayloadRequest }) => {
       depth: 0,
     }),
   ])
+
+  const carCategoryDoc = await payload.create({
+    collection: 'categories',
+    data: carCategory({}),
+    req,
+    depth: 0,
+  })
+
+  const animalCategoryDoc = await payload.create({
+    collection: 'categories',
+    data: animalCategory({ parent: carCategoryDoc }),
+    req,
+    depth: 0,
+  })
+
+  await payload.create({
+    collection: 'posts',
+    data: helloWorldPost({ heroImage: imagePost1, categories: [carCategoryDoc], author: admin }),
+    req,
+    depth: 0,
+  })
+
+  await payload.create({
+    collection: 'posts',
+    data: toyotaIsTheLeaderPost({
+      heroImage: imagePost2,
+      categories: [animalCategoryDoc],
+      author: user,
+    }),
+    req,
+    depth: 0,
+  })
 
   payload.logger.info('🌱 Seeding completed successfully')
 }
