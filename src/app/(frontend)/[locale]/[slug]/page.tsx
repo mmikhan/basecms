@@ -1,5 +1,10 @@
 import { draftMode } from 'next/headers'
-import { CollectionSlug, getPayload, type TypedLocale } from 'payload'
+import {
+  type CollectionSlug,
+  getPayload,
+  type RequiredDataFromCollectionSlug,
+  type TypedLocale,
+} from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
@@ -11,6 +16,7 @@ import { cache } from 'react'
 import { redirect } from '@/i18n/navigation'
 import { Locale } from 'next-intl'
 import { slugify } from 'transliteration'
+import { homeStatic } from '@/app/next/seed/pages/homeStatic'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config })
@@ -41,10 +47,14 @@ export default async function Page({ params }: PageProps) {
 
   if (!slug) return redirect({ href: '/', locale })
 
-  const page = await queryPageBySlug({
+  let page: RequiredDataFromCollectionSlug<'pages'> | null
+
+  page = await queryPageBySlug({
     slug: slug as CollectionSlug,
     locale: locale as TypedLocale,
   })
+
+  if (!page && slug === 'home') page = homeStatic
 
   if (!page) return <Redirects url={`/${slug}`} locale={locale} />
 
