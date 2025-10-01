@@ -5,10 +5,12 @@ export default function NotFoundPage() {
   const t = useTranslations('NotFoundPage')
 
   return (
-    <main>
-      <h1>{t('title')}</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-white p-6 dark:bg-black">
+      <h1 className="text-2xl font-bold">{t('title')}</h1>
 
-      <Link href={'/'}>{t('goHome')}</Link>
+      <Link className="text-blue-500 hover:underline" href={'/'}>
+        {t('goHome')}
+      </Link>
     </main>
   )
 }
