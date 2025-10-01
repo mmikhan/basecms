@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/lib/utils'
 import type { Post } from '@/payload-types'
 import type { CollectionSlug } from 'payload'
@@ -6,6 +8,7 @@ import { Fragment } from 'react'
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 import type { Route } from 'next'
 import { Link } from '@/i18n/navigation'
+import useClickableCard from '@/hooks/useClickableCard'
 
 export type CardPostData = Pick<Post, 'title' | 'slug' | 'content' | 'heroImage' | 'categories'>
 
@@ -27,12 +30,19 @@ export const Card: React.FC<CardProps> = ({
   showCategories,
   customTitle,
 }) => {
+  const { card, link } = useClickableCard({})
   const title = customTitle ?? propTitle
   const href = `/${collectionSlug}/${slug}`
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
 
   return (
-    <article className={cn('border border-border rounded-lg overflow-hidden bg-card', className)}>
+    <article
+      className={cn(
+        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        className,
+      )}
+      ref={card.ref}
+    >
       <div className="relative w-full">
         {heroImage && typeof heroImage === 'object' ? (
           <Media resource={heroImage} sizes="33vw" />
@@ -71,7 +81,7 @@ export const Card: React.FC<CardProps> = ({
 
         <div className="prose">
           <h3>
-            <Link className="not-prose text-primary" href={href as Route}>
+            <Link className="not-prose text-primary" href={href as Route} ref={link.ref}>
               {title}
             </Link>
           </h3>
