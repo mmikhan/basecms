@@ -22,14 +22,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import Link from 'next/link'
 import { register } from '@/actions/auth'
 import { useState } from 'react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { AlertCircleIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { RegisterBlock } from '@/payload-types'
-import type { Route } from 'next'
+import { CMSLink } from '@/components/Link'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -37,8 +35,7 @@ const formSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 })
 
-export const RegisterForm: React.FC<RegisterBlock> = ({ redirect: link }) => {
-  const router = useRouter()
+export const RegisterForm: React.FC<RegisterBlock> = ({ login }) => {
   const [isRegistered, setIsRegistered] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,8 +48,6 @@ export const RegisterForm: React.FC<RegisterBlock> = ({ redirect: link }) => {
       setError(null)
       await register({ ...data })
       setIsRegistered(true)
-
-      router.push((link?.url as Route) ?? '/')
     } catch (error) {
       setIsRegistered(false)
       setError(error instanceof Error ? error.message : 'Unknown error')
@@ -66,7 +61,7 @@ export const RegisterForm: React.FC<RegisterBlock> = ({ redirect: link }) => {
           <CardTitle>Registration Successful</CardTitle>
           <CardDescription>Please check your email to verify your account.</CardDescription>
           <CardAction>
-            <Link href={(link?.url as Route) ?? '/'}>Login</Link>
+            <CMSLink {...login} />
           </CardAction>
         </CardHeader>
         <CardContent>Thank you for registering!</CardContent>
@@ -80,7 +75,7 @@ export const RegisterForm: React.FC<RegisterBlock> = ({ redirect: link }) => {
         <CardTitle>Register to your account</CardTitle>
         <CardDescription>Enter your email below to register for an account</CardDescription>
         <CardAction>
-          <Button variant="link">Login</Button>
+          <CMSLink {...login} />
         </CardAction>
       </CardHeader>
       <Form {...form}>
@@ -117,15 +112,7 @@ export const RegisterForm: React.FC<RegisterBlock> = ({ redirect: link }) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <div className="flex items-center justify-between">
-                    <FormLabel>Password</FormLabel>
-                    <Link
-                      href="#"
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                    >
-                      Forgot your password?
-                    </Link>
-                  </div>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>

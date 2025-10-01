@@ -14,10 +14,9 @@ export const RegisterBlock: Block = {
   fields: [
     link({
       overrides: {
-        name: 'redirect',
+        name: 'login',
       },
       appearances: false,
-      disableLabel: true,
     }),
   ],
 }

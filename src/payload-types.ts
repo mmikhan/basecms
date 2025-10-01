@@ -1419,7 +1419,7 @@ export interface LogoutBlock {
  * via the `definition` "RegisterBlock".
  */
 export interface RegisterBlock {
-  redirect?: {
+  login: {
     type?: ('reference' | 'custom') | null;
     newTab?: boolean | null;
     reference?:
@@ -1436,6 +1436,7 @@ export interface RegisterBlock {
           value: number | Dashboard;
         } | null);
     url?: string | null;
+    label: string;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1446,7 +1447,7 @@ export interface RegisterBlock {
  * via the `definition` "ForgotPasswordBlock".
  */
 export interface ForgotPasswordBlock {
-  redirect: {
+  login: {
     type?: ('reference' | 'custom') | null;
     newTab?: boolean | null;
     reference?:

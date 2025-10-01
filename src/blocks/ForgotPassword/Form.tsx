@@ -33,7 +33,7 @@ const formSchema = z.object({
   email: z.string().min(1, 'Email is required'),
 })
 
-export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ redirect: link }) => {
+export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ login }) => {
   const [isSent, setIsSent] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -61,7 +61,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ redirect: li
             Please check your email for password reset instructions.
           </CardDescription>
           <CardAction>
-            <CMSLink {...link} />
+            <CMSLink {...login} />
           </CardAction>
         </CardHeader>
       </Card>
@@ -71,10 +71,10 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordBlock> = ({ redirect: li
   return (
     <Card className="container mx-auto w-full max-w-sm">
       <CardHeader>
-        <CardTitle>Register to your account</CardTitle>
-        <CardDescription>Enter your email below to register for an account</CardDescription>
+        <CardTitle>Forgot Password</CardTitle>
+        <CardDescription>Enter your email below to reset your password</CardDescription>
         <CardAction>
-          <CMSLink {...link} />
+          <CMSLink {...login} />
         </CardAction>
       </CardHeader>
       <Form {...form}>
