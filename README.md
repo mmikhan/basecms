@@ -1,67 +1,258 @@
-# Payload Blank Template
+<div align="center">
+  <img src="https://res.cloudinary.com/dpvyuluiq/image/upload/q_auto/f_auto/wave-flow_hjnjtt" alt="Base CMS Logo" width="200" />
+</div>
 
-This template comes configured with the bare minimum to get started on anything you need.
+# _Base_ CMS
 
-## Quick start
+A barebone CMS based on **Payload CMS** and **Next.js** designed as a starter template for modern web applications. Base CMS comes with minimal styles and a powerful block-based architecture, giving you full control over your content and UI through the Payload dashboard.
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+## ✨ Features
 
-## Quick Start - local setup
+- **Block-Based Content Management**: Flexible block system for building dynamic pages
+- **Headless CMS**: Powered by Payload CMS with a modern admin interface
+- **Next.js Frontend**: Server-side rendering and optimal performance
+- **Multi-language Support**: Built-in internationalization (i18n)
+- **Authentication & User Management**: Complete user authentication system
+- **Media Management**: Advanced media handling with Cloudinary integration
+- **E-commerce Ready**: Stripe integration for payments and subscriptions
+- **SEO Optimized**: Built-in SEO fields and meta generation
+- **Form Builder**: Dynamic form creation and management
+- **Minimal Styling**: Clean, minimal design ready for customization
 
-To spin up this template locally, follow these steps:
+## 🚀 Quick Start
 
-### Clone
+### Prerequisites
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+- Node.js 18+
+- pnpm (recommended) or npm
+- PostgreSQL database
 
-### Development
+### Environment Setup
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URI` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+1. **Create a new project from this template**
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+   **Option A: Using GitHub Web Interface**
+   - Click the "Use this template" button on the GitHub repository page
+   - Choose "Create a new repository"
+   - Fill in your repository name and settings
+   - Clone your new repository:
+   ```bash
+   git clone <your-new-repo-url>
+   cd your-project-name
+   ```
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+   **Option B: Using GitHub CLI**
+   ```bash
+   gh repo create your-project-name --template mmikhan/basecms --clone
+   cd your-project-name
+   ```
 
-#### Docker (Optional)
+2. **Copy environment variables**
+   ```bash
+   cp .env.example .env
+   ```
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+3. **Configure your `.env` file** (see [Environment Variables](#environment-variables) section below)
 
-To do so, follow these steps:
+4. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
 
-- Modify the `MONGODB_URI` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URI` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+5. **Start the development server**
+   ```bash
+   pnpm dev
+   ```
 
-## How it works
+6. **Access your application**
+   - Frontend: `http://localhost:3000`
+   - Admin Panel: `http://localhost:3000/admin`
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+### First Time Setup
 
-### Collections
+1. Navigate to `http://localhost:3000/admin`
+2. Create your first admin user account
+3. Start building your content using the block-based system!
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+## 🔧 Environment Variables
 
-- #### Users (Authentication)
+Create a `.env` file in your project root with the following variables:
 
-  Users are auth-enabled collections that have access to the admin panel.
+### Required Variables
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+```bash
+# Application URL
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 
-- #### Media
+# Database Configuration
+DATABASE_URI=postgres://username:password@localhost:5432/your_database_name
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+# Payload CMS Secret (generate a secure random string)
+PAYLOAD_SECRET=your-super-secret-key-here
 
-### Docker
+# Preview Secret (for draft preview functionality)
+PREVIEW_SECRET=your-preview-secret-here
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+# Environment
+NODE_ENV=development
+```
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+### Optional Integrations
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+```bash
+# Stripe (for e-commerce features)
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOKS_ENDPOINT_SECRET=whsec_...
 
-## Questions
+# Cloudinary (for advanced media management)
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
 
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+# Resend (for email functionality)
+RESEND_API_KEY=re_...
+```
+
+### Setting Up Your Database
+
+**Option 1: Local PostgreSQL**
+1. Install PostgreSQL on your system
+2. Create a new database: `createdb your_database_name`
+3. Update `DATABASE_URI` in your `.env` file
+
+**Option 2: Docker**
+```bash
+# Start PostgreSQL with Docker
+docker run --name basecms-postgres -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:15
+
+# Update your .env
+DATABASE_URI=postgres://postgres:password@localhost:5432/postgres
+```
+
+## 🏗️ Project Structure
+
+Base CMS follows a modular architecture:
+
+```
+src/
+├── blocks/           # Content blocks (CallToAction, Hero, Content, etc.)
+├── collections/      # Payload collections (Pages, Posts, Users, Media)
+├── components/       # Reusable React components
+├── globals/          # Global configurations (Header, Footer, General)
+├── hooks/           # Custom React hooks
+├── lib/             # Utility functions and helpers
+├── plugins/         # Payload plugins configuration
+├── app/             # Next.js app directory
+│   ├── (frontend)/  # Public-facing pages
+│   └── (payload)/   # Admin panel routes
+└── payload.config.ts # Main Payload configuration
+```
+
+## 🧱 Available Blocks
+
+Base CMS comes with a comprehensive set of pre-built blocks:
+
+- **Hero Blocks**: High, Medium, and Low impact hero sections
+- **Content Block**: Rich text content with media
+- **Call to Action**: Conversion-focused sections
+- **Media Block**: Image and video display
+- **Banner**: Announcement and promotional banners
+- **Code Block**: Syntax-highlighted code snippets
+- **Form Block**: Dynamic form builder
+- **Archive Block**: Content listing and filtering
+- **Accordion**: Collapsible content sections
+- **Carousel**: Image and content sliders
+- **Pricing Table**: Subscription and pricing display
+- **Authentication Blocks**: Login, Register, Password Reset
+
+## 📚 Collections
+
+### Content Collections
+- **Pages**: Dynamic page builder with blocks
+- **Posts**: Blog posts and articles
+- **Categories**: Content categorization
+- **Media**: File and image management
+
+### E-commerce Collections
+- **Orders**: Order management
+- **Customers**: Customer data
+- **Dashboard**: Analytics and reporting
+
+### System Collections
+- **Users**: User authentication and roles
+
+## 🎨 Customization
+
+Base CMS is designed to be easily customizable:
+
+1. **Styling**: Modify the minimal CSS in `src/components/ui/`
+2. **Blocks**: Create new blocks in `src/blocks/`
+3. **Collections**: Add new collections in `src/collections/`
+4. **Components**: Build custom components in `src/components/`
+
+## 🔧 Development Commands
+
+```bash
+# Development
+pnpm dev              # Start development server
+pnpm devsafe          # Clean start (removes .next)
+pnpm dev:prod         # Production simulation
+
+# Building
+pnpm build            # Build for production
+pnpm start            # Start production server
+
+# Database
+pnpm payload          # Payload CLI commands
+pnpm dev:seed         # Seed development data
+
+# Code Quality
+pnpm lint             # ESLint
+pnpm typecheck        # TypeScript checking
+pnpm test             # Run all tests
+pnpm test:e2e         # End-to-end tests
+pnpm test:int         # Integration tests
+```
+
+## 🚀 Deployment
+
+Base CMS can be deployed to various platforms:
+
+- **Vercel**: Optimized for Next.js (recommended)
+- **Netlify**: Static and serverless deployment
+- **Railway**: Full-stack deployment with database
+- **Self-hosted**: Docker support included
+
+### Docker Deployment
+
+```bash
+# Build and run with Docker
+docker-compose up --build
+
+# Or build individually
+docker build -t basecms .
+docker run -p 3000:3000 basecms
+```
+
+## 📖 Documentation
+
+- [Payload CMS Documentation](https://payloadcms.com/docs)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Block Development Guide](./docs/blocks.md) _(coming soon)_
+- [Customization Guide](./docs/customization.md) _(coming soon)_
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit issues and enhancement requests.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 💬 Support
+
+If you have any questions or need help:
+
+- [Create an issue](https://github.com/your-username/basecms/issues)
+- [Join the Payload Discord](https://discord.com/invite/payload)
+- [Payload CMS Discussions](https://github.com/payloadcms/payload/discussions)

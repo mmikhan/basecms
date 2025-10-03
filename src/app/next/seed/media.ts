@@ -11,7 +11,7 @@ export const media = async ({ payload }: { payload: Payload }) => {
     fetchFileByURL(
       'https://github.com/bower-media-samples/big-buck-bunny-1080p-30s/raw/refs/heads/master/video.mp4',
     ),
-    fetchFileByURL('https://0hq06sm3rm.ufs.sh/f/bsPnLPBQxLjJ3f1aPOSYaAoWHTsIvZDpJztb1regq0NjE7hK'),
+    fetchFileByURL('https://0hq06sm3rm.ufs.sh/f/bsPnLPBQxLjJLTlQD9RRm0o2zsBHjGiJAlI65FeMgQydPLtD'),
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
     ),
