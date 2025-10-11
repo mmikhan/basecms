@@ -16,5 +16,4 @@ export const localization = {
     },
   ],
   defaultLocale: 'en',
-  defaultLocalePublishOption: 'active',
 }
