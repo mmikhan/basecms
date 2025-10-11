@@ -15,7 +15,7 @@ import type { Page } from '@/payload-types'
 import { cache } from 'react'
 import { redirect } from '@/i18n/navigation'
 import { Locale } from 'next-intl'
-import { slugify } from 'transliteration'
+import { slugify } from 'payload/shared'
 import { homeStatic } from '@/app/next/seed/pages/homeStatic'
 
 export async function generateStaticParams() {
@@ -88,7 +88,7 @@ const queryPageBySlug = cache(
       overrideAccess: draft,
       where: {
         slug: {
-          equals: slugify(decodeURIComponent(slug), { trim: true }),
+          equals: slugify(decodeURIComponent(slug)),
         },
       },
     })

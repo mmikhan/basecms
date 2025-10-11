@@ -6,7 +6,7 @@ import { type CollectionSlug, getPayload, type TypedLocale } from 'payload'
 import config from '@payload-config'
 import type { Locale } from 'next-intl'
 import { cache } from 'react'
-import { slugify } from 'transliteration'
+import { slugify } from 'payload/shared'
 
 type DashboardSlugPageProps = {
   params: Promise<{ slug?: string; locale: Locale }>
@@ -47,7 +47,7 @@ const queryPageBySlug = cache(
       pagination: true,
       where: {
         slug: {
-          equals: slugify(decodeURIComponent(slug), { trim: true }),
+          equals: slugify(decodeURIComponent(slug)),
         },
       },
     })
