@@ -102,6 +102,5 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
     description: null,
   },
   slug: 'home-static',
-  slugLock: true,
   _status: 'published',
 }

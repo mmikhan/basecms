@@ -1,10 +1,9 @@
 import { admin } from '@/access/admin'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
-import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
 import type { Dashboard as DashboardType } from '@/payload-types'
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, slugField } from 'payload'
 
 export const Dashboard: CollectionConfig = {
   slug: 'dashboard',
@@ -101,7 +100,7 @@ export const Dashboard: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    ...slugField(),
+    slugField(),
   ],
   hooks: {
     beforeChange: [populatePublishedAt],

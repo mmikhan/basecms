@@ -1,7 +1,6 @@
 import { admin } from '@/access/admin'
 import { anyone } from '@/access/anyone'
 import { seoFields } from '@/fields/seo'
-import { slugField } from '@/fields/slug'
 import { populateAuthors } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
 import type { Post } from '@/payload-types'
@@ -13,7 +12,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import type { CollectionConfig } from 'payload'
+import { slugField, type CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -188,7 +187,7 @@ export const Posts: CollectionConfig = {
         },
       ],
     },
-    ...slugField(),
+    slugField(),
   ],
   hooks: {
     afterRead: [populateAuthors],

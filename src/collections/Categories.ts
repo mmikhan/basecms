@@ -1,7 +1,6 @@
 import { admin } from '@/access/admin'
 import { anyone } from '@/access/anyone'
-import { slugField } from '@/fields/slug'
-import type { CollectionConfig } from 'payload'
+import { slugField, type CollectionConfig } from 'payload'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -20,6 +19,6 @@ export const Categories: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    ...slugField(),
+    slugField(),
   ],
 }

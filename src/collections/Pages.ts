@@ -1,9 +1,8 @@
 import { admin } from '@/access/admin'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
-import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, slugField } from 'payload'
 import { seoFields } from '@/fields/seo'
 import type { Page } from '@/payload-types'
 
@@ -102,7 +101,7 @@ export const Pages: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    ...slugField(),
+    slugField(),
   ],
   hooks: {
     beforeChange: [populatePublishedAt],
