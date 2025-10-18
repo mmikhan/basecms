@@ -65,6 +65,7 @@ export default buildConfig({
         Icon: '@/components/icon',
         Logo: '@/components/logo',
       },
+      settingsMenu: ['@/components/Settings/Menu#Menu'],
     },
     livePreview: {
       breakpoints: [
