@@ -11,7 +11,7 @@ export default cloudinaryStorage({
   collections: {
     media: {
       folder: {
-        path: 'admarket',
+        path: process.env.NODE_ENV === 'development' ? 'admarket-dev' : 'admarket',
         enableDynamic: true,
         fieldName: 'cloudinaryFolder',
         skipFieldCreation: true,
