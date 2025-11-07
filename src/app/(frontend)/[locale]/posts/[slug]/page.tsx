@@ -11,7 +11,6 @@ import { Card } from '@/components/Card'
 import { getCachedDocument } from '@/lib/getDocument'
 import type { Post } from '@/payload-types'
 import { Locale } from 'next-intl'
-import { cache } from 'react'
 import { setRequestLocale } from 'next-intl/server'
 
 export async function generateStaticParams() {
@@ -47,10 +46,15 @@ export default async function PostPage({ params }: Props) {
 
   const { isEnabled: draft } = await draftMode()
 
-  const post = await queryPostBySlug({
+  const post = (await getCachedDocument({
+    collection: 'posts',
     slug: slug as CollectionSlug,
     locale: locale as TypedLocale,
-  })
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+  })()) as Post
 
   if (!post) return <Redirects url={`/posts/${slug}`} locale={locale} />
 
@@ -85,35 +89,16 @@ export default async function PostPage({ params }: Props) {
   )
 }
 
-const queryPostBySlug = cache(
-  async ({ slug, locale }: { slug: CollectionSlug; locale: TypedLocale }) => {
-    const { isEnabled: draft } = await draftMode()
-    const payload = await getPayload({ config })
-
-    const result = await payload.find({
-      collection: 'posts',
-      locale,
-      draft,
-      limit: 1,
-      overrideAccess: draft,
-      pagination: false,
-      where: {
-        slug: {
-          equals: slug,
-        },
-      },
-    })
-
-    return result.docs?.[0] || null
-  },
-)
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
+  const { locale, slug } = await params
 
   const post = (await getCachedDocument({
     collection: 'posts',
     slug: slug as CollectionSlug,
+    locale: locale as TypedLocale,
+    limit: 1,
+    pagination: false,
+    overrideAccess: false,
   })()) as Post
 
   return generateMeta({ doc: post })

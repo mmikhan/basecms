@@ -5,8 +5,8 @@ import { CollectionArchive } from './CollectionArchive'
 import { PaginationComponent } from './Pagination'
 import { POSTS_PER_PAGE } from '@/lib/utils'
 import { notFound } from 'next/navigation'
-import { cache } from 'react'
 import { setRequestLocale } from 'next-intl/server'
+import { unstable_cache } from 'next/cache'
 
 export const PostsArchive: React.FC<{ page: number; locale: TypedLocale }> = async ({
   page,
@@ -38,15 +38,21 @@ export const PostsArchive: React.FC<{ page: number; locale: TypedLocale }> = asy
   )
 }
 
-const queryPosts = cache(async ({ page, locale }: { page: number; locale: TypedLocale }) => {
-  const payload = await getPayload({ config })
+const queryPosts = unstable_cache(
+  async ({ page, locale }: { page: number; locale: TypedLocale }) => {
+    const payload = await getPayload({ config })
 
-  return await payload.find({
-    collection: 'posts',
-    locale,
-    depth: 1,
-    limit: POSTS_PER_PAGE,
-    page,
-    overrideAccess: false,
-  })
-})
+    return await payload.find({
+      collection: 'posts',
+      locale,
+      depth: 1,
+      limit: POSTS_PER_PAGE,
+      page,
+      overrideAccess: false,
+    })
+  },
+  ['posts_archive'],
+  {
+    tags: ['posts'],
+  },
+)

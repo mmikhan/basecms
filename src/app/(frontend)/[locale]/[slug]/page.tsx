@@ -12,12 +12,11 @@ import { Redirects } from '@/components/Redirects'
 import { type Metadata } from 'next'
 import { generateMeta } from '@/lib/generateMeta'
 import type { Page } from '@/payload-types'
-import { cache } from 'react'
 import { redirect } from '@/i18n/navigation'
 import { Locale } from 'next-intl'
-import { slugify } from 'payload/shared'
 import { homeStatic } from '@/app/next/seed/pages/homeStatic'
 import { setRequestLocale } from 'next-intl/server'
+import { getCachedDocument } from '@/lib/getDocument'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config })
@@ -53,18 +52,23 @@ export default async function Page({ params }: PageProps) {
 
   let page: RequiredDataFromCollectionSlug<'pages'> | null
 
-  page = await queryPageBySlug({
+  const { isEnabled: draft } = await draftMode()
+
+  page = (await getCachedDocument({
+    collection: 'pages',
     slug: slug as CollectionSlug,
     locale: locale as TypedLocale,
-  })
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: false,
+  })()) as Page
 
   if (!page && slug === 'home') page = homeStatic
 
   if (!page) return <Redirects url={`/${slug}`} locale={locale} />
 
   const { layout } = page
-
-  const { isEnabled: draft } = await draftMode()
 
   return (
     <>
@@ -77,37 +81,17 @@ export default async function Page({ params }: PageProps) {
   )
 }
 
-const queryPageBySlug = cache(
-  async ({ slug, locale }: { slug: CollectionSlug; locale: TypedLocale }) => {
-    const { isEnabled: draft } = await draftMode()
-
-    const payload = await getPayload({ config })
-
-    const result = await payload.find({
-      collection: 'pages',
-      locale,
-      draft,
-      limit: 1,
-      pagination: false,
-      overrideAccess: draft,
-      where: {
-        slug: {
-          equals: slugify(decodeURIComponent(slug)),
-        },
-      },
-    })
-
-    return result.docs?.[0] || null
-  },
-)
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug = 'home' } = await params
 
-  const page = await queryPageBySlug({
+  const page = (await getCachedDocument({
+    collection: 'pages',
     slug: slug as CollectionSlug,
     locale: locale as TypedLocale,
-  })
+    limit: 1,
+    pagination: false,
+    overrideAccess: false,
+  })()) as Page
 
   return generateMeta({ doc: page })
 }
