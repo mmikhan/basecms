@@ -17,6 +17,7 @@ import { redirect } from '@/i18n/navigation'
 import { Locale } from 'next-intl'
 import { slugify } from 'payload/shared'
 import { homeStatic } from '@/app/next/seed/pages/homeStatic'
+import { setRequestLocale } from 'next-intl/server'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config })
@@ -44,6 +45,9 @@ type PageProps = {
 
 export default async function Page({ params }: PageProps) {
   const { locale, slug = 'home' } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
 
   if (!slug) return redirect({ href: '/', locale })
 

@@ -33,7 +33,18 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     notFound()
   }
 
+  /*
+   * Enable static rendering
+   *
+   * Set the locale to all layout and pages to statically render reliably.
+   * This must be called before any usage of `next-intl` hooks or components.
+   * i.e. `useTranslations` or `getMessages`.
+   *
+   * @see https://github.com/amannn/next-intl/issues/663#issuecomment-1882675561
+   * @docs https://next-intl.dev/docs/routing/setup#add-setrequestlocale-to-all-relevant-layouts-and-pages
+   */
   setRequestLocale(locale)
+
   const messages = await getMessages({ locale })
 
   const { isEnabled } = await draftMode()

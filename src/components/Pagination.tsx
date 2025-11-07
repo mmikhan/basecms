@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/pagination'
 import { cn } from '@/lib/utils'
 import type { Route } from 'next'
+import { setRequestLocale } from 'next-intl/server'
 
 type PaginationProps = PaginatedDocs & {
   className?: string
@@ -22,6 +23,9 @@ export const PaginationComponent: React.FC<PaginationProps> = ({
   totalPages,
   locale,
 }) => {
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const hasNextPage = page < totalPages
   const hasPrevPage = page > 1
 

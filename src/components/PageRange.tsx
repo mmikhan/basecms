@@ -1,10 +1,13 @@
 import React from 'react'
 import type { PaginatedDocs, TypedLocale } from 'payload'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 export const PageRange: React.FC<
   PaginatedDocs & { className?: string; locale: TypedLocale }
 > = async ({ className, totalDocs, page, limit, locale }) => {
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const t = await getTranslations({ locale, namespace: 'PostsArchivePage' })
 
   let indexStart = (page ? page - 1 : 1) * (limit || 1) + 1

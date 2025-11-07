@@ -6,7 +6,7 @@ import { SearchForm } from '@/components/searchForm'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { CardPostData } from '@/components/Card'
 import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Locale } from 'next-intl'
 import { slugify } from 'payload/shared'
 
@@ -22,6 +22,10 @@ type SearchPageProps = {
 export default async function SearchPage({ searchParams, params }: SearchPageProps) {
   const { q: query } = await searchParams
   const { locale } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const t = await getTranslations({ locale, namespace: 'SearchPage' })
 
   const { docs } = await querySearchByQuery({ query, locale: locale as TypedLocale })

@@ -6,11 +6,15 @@ import { PaginationComponent } from './Pagination'
 import { POSTS_PER_PAGE } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
+import { setRequestLocale } from 'next-intl/server'
 
 export const PostsArchive: React.FC<{ page: number; locale: TypedLocale }> = async ({
   page,
   locale,
 }) => {
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const posts = await queryPosts({ page, locale })
 
   if (page > posts.totalPages && posts.totalDocs > 0) notFound()

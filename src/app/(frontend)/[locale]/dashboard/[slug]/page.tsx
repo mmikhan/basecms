@@ -7,6 +7,7 @@ import config from '@payload-config'
 import type { Locale } from 'next-intl'
 import { cache } from 'react'
 import { slugify } from 'payload/shared'
+import { setRequestLocale } from 'next-intl/server'
 
 type DashboardSlugPageProps = {
   params: Promise<{ slug?: string; locale: Locale }>
@@ -14,6 +15,9 @@ type DashboardSlugPageProps = {
 
 export default async function DashboardSlugPage({ params }: DashboardSlugPageProps) {
   const { slug = 'dashboard', locale } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
 
   const { isEnabled: draft } = await draftMode()
 

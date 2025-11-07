@@ -5,7 +5,7 @@ import { Metadata } from 'next'
 import { POSTS_PER_PAGE } from '@/lib/utils'
 import { PostsArchive } from '@/components/PostsArchive'
 import type { Locale } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 type PostsPaginationPageProps = {
   params: Promise<{
@@ -16,6 +16,10 @@ type PostsPaginationPageProps = {
 
 export default async function PostsPaginationPage({ params }: PostsPaginationPageProps) {
   const { pageNumber, locale } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const page = parseInt(pageNumber, 10)
 
   if (isNaN(page)) notFound()

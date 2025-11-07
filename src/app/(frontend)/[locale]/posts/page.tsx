@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { PostsArchive } from '@/components/PostsArchive'
 import type { Locale } from 'next-intl'
 import type { TypedLocale } from 'payload'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 type Props = {
   params: Promise<{ locale: Locale }>
@@ -10,6 +10,9 @@ type Props = {
 
 export default async function PostsArchivePage({ params }: Props) {
   const { locale } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
 
   return <PostsArchive page={1} locale={locale as TypedLocale} />
 }

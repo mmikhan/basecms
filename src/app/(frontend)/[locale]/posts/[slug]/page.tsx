@@ -12,6 +12,7 @@ import { getCachedDocument } from '@/lib/getDocument'
 import type { Post } from '@/payload-types'
 import { Locale } from 'next-intl'
 import { cache } from 'react'
+import { setRequestLocale } from 'next-intl/server'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config })
@@ -40,6 +41,10 @@ type Props = {
 
 export default async function PostPage({ params }: Props) {
   const { locale, slug } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const { isEnabled: draft } = await draftMode()
 
   const post = await queryPostBySlug({
