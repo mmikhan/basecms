@@ -48,6 +48,6 @@ export const getCachedDocument = ({
     },
     [collection, slug],
     {
-      tags: [`${collection}_${slug}`],
+      tags: [collection],
     },
   )
