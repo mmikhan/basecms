@@ -37,7 +37,7 @@ export default async function SearchPage({ searchParams, params }: SearchPagePro
         <div className="prose dark:prose-invert max-w-none text-center">
           <h1 className="mb-8 lg:mb-16">Search</h1>
 
-          <div className="max-w-[50rem] mx-auto">
+          <div className="max-w-200 mx-auto">
             <SearchForm />
           </div>
         </div>

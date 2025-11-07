@@ -64,10 +64,10 @@ export default async function PostPage({ params }: Props) {
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+          <RichText className="max-w-3xl mx-auto" data={post.content} enableGutter={false} />
 
           {post.relatedPosts && post.relatedPosts.length > 0 && (
-            <div className="mt-12 max-w-[52rem] lg:container lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]">
+            <div className="mt-12 max-w-208 lg:container lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-stretch">
                 {post.relatedPosts
                   .filter((post) => typeof post === 'object')

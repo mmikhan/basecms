@@ -61,7 +61,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-[100vh] flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
