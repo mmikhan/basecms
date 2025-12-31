@@ -137,6 +137,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'nl' | 'bn') | ('en' | 'nl' | 'bn')[];
   globals: {
     general: General;
     header: Header;
