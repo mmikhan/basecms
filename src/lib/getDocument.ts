@@ -2,7 +2,7 @@ import type { Config } from 'src/payload-types'
 import config from '@payload-config'
 import { CollectionSlug, getPayload, TypedLocale } from 'payload'
 import { unstable_cache } from 'next/cache'
-import { slugify } from 'payload/shared'
+import slugify from 'slugify'
 
 type DocumentQueryParams = {
   collection: keyof Config['collections']
@@ -39,7 +39,7 @@ export const getCachedDocument = ({
         overrideAccess,
         where: {
           slug: {
-            equals: slugify(decodeURIComponent(slug)),
+            equals: slugify(decodeURIComponent(slug), { lower: true, strict: true }),
           },
         },
       })

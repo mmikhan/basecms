@@ -8,7 +8,7 @@ import { CardPostData } from '@/components/Card'
 import { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Locale } from 'next-intl'
-import { slugify } from 'payload/shared'
+import slugify from 'slugify'
 
 type SearchPageProps = {
   searchParams: Promise<{
@@ -69,7 +69,7 @@ const querySearchByQuery = cache(
             where: {
               or: [
                 { title: { like: query } },
-                { slug: { like: slugify(query) } },
+                { slug: { like: slugify(query, { lower: true, strict: true }) } },
                 { content: { like: query } },
               ],
             },

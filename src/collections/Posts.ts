@@ -13,6 +13,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { slugField, type CollectionConfig } from 'payload'
+import slugify from 'slugify'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -187,7 +188,12 @@ export const Posts: CollectionConfig = {
         },
       ],
     },
-    slugField(),
+    slugField({
+      slugify: ({ valueToSlugify }) =>
+        typeof valueToSlugify === 'string'
+          ? slugify(valueToSlugify, { lower: true, strict: true })
+          : '',
+    }),
   ],
   hooks: {
     afterRead: [populateAuthors],

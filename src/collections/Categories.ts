@@ -1,6 +1,7 @@
 import { admin } from '@/access/admin'
 import { anyone } from '@/access/anyone'
 import { slugField, type CollectionConfig } from 'payload'
+import slugify from 'slugify'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -19,6 +20,11 @@ export const Categories: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    slugField(),
+    slugField({
+      slugify: ({ valueToSlugify }) =>
+        typeof valueToSlugify === 'string'
+          ? slugify(valueToSlugify, { lower: true, strict: true })
+          : '',
+    }),
   ],
 }

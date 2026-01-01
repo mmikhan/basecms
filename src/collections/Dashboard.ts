@@ -4,6 +4,7 @@ import { populatePublishedAt } from '@/hooks/populate'
 import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/revalidate'
 import type { Dashboard as DashboardType } from '@/payload-types'
 import { CollectionConfig, slugField } from 'payload'
+import slugify from 'slugify'
 
 export const Dashboard: CollectionConfig = {
   slug: 'dashboard',
@@ -100,7 +101,12 @@ export const Dashboard: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    slugField(),
+    slugField({
+      slugify: ({ valueToSlugify }) =>
+        typeof valueToSlugify === 'string'
+          ? slugify(valueToSlugify, { lower: true, strict: true })
+          : '',
+    }),
   ],
   hooks: {
     beforeChange: [populatePublishedAt],

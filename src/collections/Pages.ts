@@ -5,6 +5,7 @@ import { revalidatePathAfterChange, revalidatePathAfterDelete } from '@/hooks/re
 import { CollectionConfig, slugField } from 'payload'
 import { seoFields } from '@/fields/seo'
 import type { Page } from '@/payload-types'
+import slugify from 'slugify'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -101,7 +102,12 @@ export const Pages: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    slugField(),
+    slugField({
+      slugify: ({ valueToSlugify }) =>
+        typeof valueToSlugify === 'string'
+          ? slugify(valueToSlugify, { lower: true, strict: true })
+          : '',
+    }),
   ],
   hooks: {
     beforeChange: [populatePublishedAt],
