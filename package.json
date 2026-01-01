@@ -81,7 +81,6 @@
     "@eslint/eslintrc": "^3.3.3",
     "@faker-js/faker": "^10.1.0",
     "@lingual/i18n-check": "^0.8.16",
-    "@next/bundle-analyzer": "15.5.9",
     "@playwright/test": "1.56.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
