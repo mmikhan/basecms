@@ -16,4 +16,5 @@ export const localization = {
     },
   ],
   defaultLocale: 'en',
+  localizeStatus: true,
 }
