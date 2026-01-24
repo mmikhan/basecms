@@ -122,6 +122,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
+    strictDraftTypes: true,
   },
   db: postgresAdapter({
     pool: {
