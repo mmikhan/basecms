@@ -49,8 +49,14 @@ export const Users: CollectionConfig = {
         },
       ],
       access: {
-        create: admin,
-        update: admin,
+        create: ({ req: { user } }) => {
+          if (user?.collection !== 'users') return false
+          return user.roles?.includes('admin') || false
+        },
+        update: ({ req: { user } }) => {
+          if (user?.collection !== 'users') return false
+          return user.roles?.includes('admin') || false
+        },
       },
       hooks: {
         beforeChange: [

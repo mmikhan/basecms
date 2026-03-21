@@ -5,7 +5,7 @@ import { AccountPasswordForm } from './Form'
 export const AccountPasswordBlock: React.FC<AccountPasswordBlockProps> = async (props) => {
   const { user } = await isAuth()
 
-  if (!user) return
+  if (!user || user.collection !== 'customers') return
 
   return <AccountPasswordForm {...props} user={user} />
 }

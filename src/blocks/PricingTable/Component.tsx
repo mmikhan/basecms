@@ -59,7 +59,7 @@ export const PricingTableBlock: React.FC<PricingTableBlockProps> = async ({ plan
                       adjustable_quantity: { enabled: true, minimum: 1 },
                     },
                   ],
-                  customer ?? undefined,
+                  customer?.collection === 'customers' ? customer : undefined,
                 )
                 redirect(session.url as Route)
               }}

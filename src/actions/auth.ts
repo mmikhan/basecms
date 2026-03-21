@@ -3,7 +3,7 @@
 import { cache } from 'react'
 import { headers as NextHeaders } from 'next/headers'
 import config from '@payload-config'
-import { type CollectionSlug, getPayload, type PayloadRequest } from 'payload'
+import { getPayload, type PayloadRequest } from 'payload'
 import * as auth from '@payloadcms/next/auth'
 import type { Customer, User } from '@/payload-types'
 
@@ -19,18 +19,10 @@ export const isAdmin = cache(async (headers?: Headers) => {
   return user && user.collection === 'users' && (user as User).roles === 'admin'
 })
 
-export const login = async ({
-  email,
-  password,
-  collection = 'customers',
-}: {
-  email: string
-  password: string
-  collection?: CollectionSlug
-}) => {
+export const login = async ({ email, password }: { email: string; password: string }) => {
   try {
     return await auth.login({
-      collection,
+      collection: 'customers',
       config,
       email,
       password,
@@ -62,16 +54,13 @@ export async function register({
   name,
   email,
   password,
-  collection = 'customers',
-}: Pick<Customer, 'name' | 'email' | 'password'> & {
-  collection?: CollectionSlug
-}) {
+}: Pick<Customer, 'name' | 'email' | 'password'>) {
   try {
     const payload = await getPayload({ config })
     const req = { headers: await NextHeaders() } as PayloadRequest
 
     return await payload.create({
-      collection,
+      collection: 'customers',
       req,
       data: {
         name,
@@ -86,15 +75,14 @@ export async function register({
 
 export async function forgotPassword({
   email,
-  collection = 'customers',
   disableEmail = false,
-}: Pick<Customer, 'email'> & { collection?: CollectionSlug; disableEmail?: boolean }) {
+}: Pick<Customer, 'email'> & { disableEmail?: boolean }) {
   try {
     const payload = await getPayload({ config })
     const req = { headers: await NextHeaders() } as PayloadRequest
 
     return await payload.forgotPassword({
-      collection,
+      collection: 'customers',
       req,
       data: {
         email,
@@ -109,14 +97,13 @@ export async function forgotPassword({
 export async function resetPassword({
   password,
   resetPasswordToken,
-  collection = 'customers',
-}: Pick<Customer, 'password' | 'resetPasswordToken'> & { collection?: CollectionSlug }) {
+}: Pick<Customer, 'password' | 'resetPasswordToken'>) {
   try {
     const payload = await getPayload({ config })
     const req = { headers: await NextHeaders() } as PayloadRequest
 
     return await payload.resetPassword({
-      collection,
+      collection: 'customers',
       req,
       data: {
         token: resetPasswordToken ?? '',
@@ -129,17 +116,13 @@ export async function resetPassword({
   }
 }
 
-export async function updatePassword({
-  email,
-  password,
-  collection = 'customers',
-}: Pick<Customer, 'email' | 'password'> & { collection?: CollectionSlug }) {
+export async function updatePassword({ email, password }: Pick<Customer, 'email' | 'password'>) {
   try {
     const payload = await getPayload({ config })
     const req = { headers: await NextHeaders() } as PayloadRequest
 
     const token = await payload.forgotPassword({
-      collection,
+      collection: 'customers',
       req,
       data: { email },
       disableEmail: false,
@@ -154,18 +137,14 @@ export async function updatePassword({
   }
 }
 
-export async function updateAccount({
-  id,
-  name,
-  collection = 'customers',
-}: Pick<Customer, 'id' | 'name'> & { collection?: CollectionSlug }) {
+export async function updateAccount({ id, name }: Pick<Customer, 'id' | 'name'>) {
   try {
     const payload = await getPayload({ config })
     const req = { headers: await NextHeaders() } as PayloadRequest
 
     return await payload.update({
       id,
-      collection,
+      collection: 'customers',
       req,
       data: {
         name,

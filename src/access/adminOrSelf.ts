@@ -1,9 +1,9 @@
-import { User } from '@/payload-types'
+import type { Access } from 'payload'
 
-export const adminOrSelf = ({ req: { user } }: { req: { user: User | null } }) => {
+export const adminOrSelf: Access = ({ req: { user } }) => {
   if (!user) return false
 
-  if (user.roles?.includes('admin')) return true
+  if (user.collection === 'users' && user.roles?.includes('admin')) return true
 
   return {
     id: {

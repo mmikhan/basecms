@@ -1,7 +1,7 @@
-import { User } from '../payload-types'
+import type { Access } from 'payload'
 
-export const admin = ({ req: { user } }: { req: { user: User | null } }) => {
-  if (!user) return false
+export const admin: Access = ({ req: { user } }) => {
+  if (user?.collection !== 'users') return false
 
   return user.roles?.includes('admin') || false
 }

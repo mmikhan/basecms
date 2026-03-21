@@ -152,13 +152,7 @@ export interface Config {
   };
   locale: 'en' | 'nl' | 'bn';
   strictDraftTypes: true;
-  user:
-    | (User & {
-        collection: 'users';
-      })
-    | (Customer & {
-        collection: 'customers';
-      });
+  user: User | Customer;
   jobs: {
     tasks: {
       createCollectionExport: TaskCreateCollectionExport;
@@ -570,6 +564,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1684,6 +1679,7 @@ export interface Customer {
       }[]
     | null;
   password?: string | null;
+  collection: 'customers';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
