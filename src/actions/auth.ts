@@ -77,7 +77,7 @@ export async function register({
         name,
         email,
         password,
-      },
+      } as Customer,
     })
   } catch (error) {
     throw new Error(`${error instanceof Error ? error.message : 'Unknown error'}`)
