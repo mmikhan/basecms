@@ -2,6 +2,7 @@ import { getServerSideURL } from '@/lib/getURL'
 import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
+import path from 'path'
 
 const nextConfig: NextConfig = {
   typedRoutes: true,
@@ -24,6 +25,7 @@ const nextConfig: NextConfig = {
         as: '*.js',
       },
     },
+    root: path.resolve(path.dirname(__filename)),
   },
   images: {
     qualities: [25, 50, 75, 100],

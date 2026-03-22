@@ -5,13 +5,12 @@ import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 
 export const config = {
-  runtime: 'nodejs',
   matcher: ['/((?!admin|api|trpc|next|_vercel|.*\\..*).*)'],
 }
 
 const handleI18nRouting = createMiddleware(routing)
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   if (request.nextUrl.pathname.includes('/dashboard')) {
     const auth = await isAuth(request.headers)
 

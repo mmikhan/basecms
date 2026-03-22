@@ -30,7 +30,7 @@ export const Card: React.FC<CardProps> = ({
   showCategories,
   customTitle,
 }) => {
-  const { card, link } = useClickableCard({})
+  const { cardRef, linkRef } = useClickableCard({})
   const title = customTitle ?? propTitle
   const href = `/${collectionSlug}/${slug}`
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
@@ -41,7 +41,7 @@ export const Card: React.FC<CardProps> = ({
         'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
         className,
       )}
-      ref={card.ref}
+      ref={cardRef}
     >
       <div className="relative w-full">
         {heroImage && typeof heroImage === 'object' ? (
@@ -81,7 +81,7 @@ export const Card: React.FC<CardProps> = ({
 
         <div className="prose">
           <h3>
-            <Link className="not-prose text-primary" href={href as Route} ref={link.ref}>
+            <Link className="not-prose text-primary" href={href as Route} ref={linkRef}>
               {title}
             </Link>
           </h3>

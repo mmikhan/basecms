@@ -12,7 +12,7 @@ export const revalidateCacheTag =
   ({ doc, req: { payload } }: { doc: unknown; req: PayloadRequest }) => {
     payload.logger.info(`Revalidating ${tag}`)
 
-    revalidateTag(tag)
+    revalidateTag(tag, 'max')
 
     return doc
   }
@@ -53,8 +53,8 @@ export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post | 
     payload.logger.info(`Revalidating ${collection.slug} at path: ${path}`)
 
     revalidatePath(path)
-    revalidateTag(sitemapTag)
-    revalidateTag(collection.slug)
+    revalidateTag(sitemapTag, 'max')
+    revalidateTag(collection.slug, 'max')
   }
 
   // Revalidate the old path when a document is unpublished
@@ -64,8 +64,8 @@ export const revalidatePathAfterChange: CollectionAfterChangeHook<Page | Post | 
     payload.logger.info(`Revalidating old ${collection.slug} path: ${oldPath}`)
 
     revalidatePath(oldPath)
-    revalidateTag(sitemapTag)
-    revalidateTag(collection.slug)
+    revalidateTag(sitemapTag, 'max')
+    revalidateTag(collection.slug, 'max')
   }
 
   return doc
@@ -80,8 +80,8 @@ export const revalidatePathAfterDelete: CollectionAfterDeleteHook<Page | Post | 
     const path = getPath(collection.slug, doc.slug, locale as TypedLocale)
 
     revalidatePath(path)
-    revalidateTag(`${collection.slug}-sitemap`)
-    revalidateTag(collection.slug)
+    revalidateTag(`${collection.slug}-sitemap`, 'max')
+    revalidateTag(collection.slug, 'max')
   }
 
   return doc
